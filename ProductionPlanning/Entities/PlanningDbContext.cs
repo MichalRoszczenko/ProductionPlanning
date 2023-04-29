@@ -15,5 +15,34 @@ namespace ProductionPlanning.Entities
         public DbSet<Material> Materials { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Production>(etb =>
+            {
+                etb.Property(p=>p.Start).IsRequired();
+                etb.Property(p=> p.End).IsRequired();
+            });
+
+            modelBuilder.Entity<InjectionMold>()
+                .Property(m => m.Name).IsRequired()
+                .HasColumnType("varchar(50)")
+                .HasMaxLength(30);
+
+            modelBuilder.Entity<InjectionMoldingMachine>(etb =>
+            {
+                etb.Property(m => m.Name).IsRequired()
+                    .HasColumnType("varchar(50)");
+            });
+
+            modelBuilder.Entity<Material>(etb =>
+            {
+                etb.Property(m => m.Name).IsRequired().HasColumnType("varchar(50)");
+                etb.Property(m => m.Description).HasMaxLength(200);
+                etb.Property(m => m.Cost).HasColumnType("decimal(5,2").IsRequired();
+            });
+
+            modelBuilder.Entity<Ingredient>()
+                .Property(i => i.Name).IsRequired();
+        }
     }
 }
