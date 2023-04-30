@@ -7,5 +7,6 @@
         public bool Online { get; set; }
         public int Tonnage { get; set; }
         public string Size { get; set; }
+        public List<Production> Productions { get; set; } = new List<Production>();
     }
 }
