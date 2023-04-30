@@ -21,12 +21,24 @@ namespace ProductionPlanning.Entities
             {
                 etb.Property(p=>p.Start).IsRequired();
                 etb.Property(p=> p.End).IsRequired();
+                etb.HasOne(m => m.InjectionMold)
+                .WithMany(p => p.Productions)
+                .HasForeignKey(f => f.InjectionMoldId);
+                etb.HasOne(m => m.InjectionMoldingMachine)
+                .WithMany(p => p.Productions)
+                .HasForeignKey(f => f.InjectionMoldingMachineId);
             });
 
-            modelBuilder.Entity<InjectionMold>()
-                .Property(m => m.Name).IsRequired()
+            modelBuilder.Entity<InjectionMold>(etb =>
+            {
+                etb.Property(m => m.Name).IsRequired()
                 .HasColumnType("varchar(50)")
                 .HasMaxLength(30);
+                etb.HasMany(i => i.Ingredients)
+                .WithOne(m => m.InjectionMold)
+                .HasForeignKey(s => s.InjectionMoldId);
+            });
+                
 
             modelBuilder.Entity<InjectionMoldingMachine>(etb =>
             {
