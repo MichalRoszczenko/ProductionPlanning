@@ -37,6 +37,9 @@ namespace ProductionPlanning.Entities
                 etb.HasMany(i => i.Ingredients)
                 .WithOne(m => m.InjectionMold)
                 .HasForeignKey(s => s.InjectionMoldId);
+                etb.HasOne(m => m.Material)
+                .WithOne(i => i.InjectionMold)
+                .HasForeignKey<Material>(f => f.InjectionMoldId);
             });
                 
 
@@ -50,7 +53,7 @@ namespace ProductionPlanning.Entities
             {
                 etb.Property(m => m.Name).IsRequired().HasColumnType("varchar(50)");
                 etb.Property(m => m.Description).HasMaxLength(200);
-                etb.Property(m => m.Cost).HasColumnType("decimal(5,2").IsRequired();
+                etb.Property(m => m.Cost).HasColumnType("decimal(5,2)").IsRequired();
             });
 
             modelBuilder.Entity<Ingredient>()

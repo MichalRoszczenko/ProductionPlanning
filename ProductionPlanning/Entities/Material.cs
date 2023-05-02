@@ -8,6 +8,6 @@
         public string Description { get; set; }
         public decimal Cost { get; set; }
         public InjectionMold InjectionMold { get; set; }
-        public int InjectionMoldId { get; set; }
+        public Guid InjectionMoldId { get; set; }
     }
 }
