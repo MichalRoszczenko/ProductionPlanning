@@ -1,4 +1,4 @@
-﻿namespace ProductionPlanning.Entities
+﻿namespace Production.Domain.Entities
 {
     public class Material
     {
@@ -7,7 +7,7 @@
         public string Type { get; set; } = default!;
         public string Description { get; set; } = default!;
         public decimal Cost { get; set; }
-        public InjectionMold? InjectionMold { get; set; }
+        public InjectionMold InjectionMold { get; set; } = new InjectionMold();
         public Guid InjectionMoldId { get; set; }
     }
 }

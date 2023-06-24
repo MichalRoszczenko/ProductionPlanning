@@ -21,6 +21,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+using var scope = app.Services.CreateScope();
+var dbContext = scope.ServiceProvider.GetService<PlanningDbContext>();
+var pendingMigration = dbContext.Database.GetPendingMigrations();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
