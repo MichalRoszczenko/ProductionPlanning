@@ -6,8 +6,8 @@
         public string Name { get; set; } = default!;
         public string Producer { get; set; } = default!;
         public string Size { get; set; } = default!;
-        public List<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
-        public List<Production> Productions { get; set; } = new List<Production>();
+        public List<Ingredient>? Ingredients { get; set; }
+        public List<Production>? Productions { get; set; }
         public Material? Material { get; set; }
     }
 }

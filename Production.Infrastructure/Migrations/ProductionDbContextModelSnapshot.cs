@@ -44,7 +44,7 @@ namespace Production.Infrastructure.Migrations
 
                     b.HasIndex("InjectionMoldId");
 
-                    b.ToTable("Ingredients");
+                    b.ToTable("Ingredients", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.InjectionMold", b =>
@@ -68,7 +68,7 @@ namespace Production.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InjectionMolds");
+                    b.ToTable("InjectionMolds", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.InjectionMoldingMachine", b =>
@@ -95,7 +95,7 @@ namespace Production.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InjectionMoldingMachines");
+                    b.ToTable("InjectionMoldingMachines", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Material", b =>
@@ -130,7 +130,7 @@ namespace Production.Infrastructure.Migrations
                     b.HasIndex("InjectionMoldId")
                         .IsUnique();
 
-                    b.ToTable("Materials");
+                    b.ToTable("Materials", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Production", b =>
@@ -162,7 +162,7 @@ namespace Production.Infrastructure.Migrations
 
                     b.HasIndex("InjectionMoldingMachineId");
 
-                    b.ToTable("Productions");
+                    b.ToTable("Productions", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Ingredient", b =>
