@@ -1,11 +1,18 @@
 using Production.Infrastructure.Extensions;
+using Production.Application.Extensions;
+using Production.Infrastructure.Seeders;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 
 var app = builder.Build();
+var scope = app.Services.CreateScope();
+ProductionSeeder seeder = scope.ServiceProvider.GetRequiredService<ProductionSeeder>();
+await seeder.Seed();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
