@@ -2,6 +2,7 @@
 {
     public interface IProductionRepository
     {
-        Task<IEnumerable<Domain.Entities.Production>> GetAll();
+        Task<IEnumerable<Entities.Production>> GetAll();
+        Task Create(Entities.Production production);
     }
 }

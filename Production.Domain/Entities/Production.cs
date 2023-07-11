@@ -11,6 +11,6 @@
         public InjectionMoldingMachine InjectionMoldingMachine { get; set; } = default!;
         public int InjectionMoldingMachineId { get; set; }
 
-        public void ProductionTimeCalculation() => ProductionTimeInHours = Start.Hour - End.Hour;
+        public void ProductionTimeCalculation() => ProductionTimeInHours = (End - Start).Hours;
     }
 }

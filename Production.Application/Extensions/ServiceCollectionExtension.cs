@@ -1,5 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.Extensions.DependencyInjection;
 using Production.Application.Mappings;
+using Production.Application.Production.Validators;
 using Production.Application.Services;
 
 namespace Production.Application.Extensions
@@ -10,6 +13,10 @@ namespace Production.Application.Extensions
         {
             services.AddScoped<IProductionService, ProductionService>();
             services.AddAutoMapper(typeof(ProductionMappingProfile));
+
+            services.AddValidatorsFromAssemblyContaining<ProductionDtoInputValidator>()
+                .AddFluentValidationAutoValidation()
+                .AddFluentValidationClientsideAdapters();
         }
     }
 }
