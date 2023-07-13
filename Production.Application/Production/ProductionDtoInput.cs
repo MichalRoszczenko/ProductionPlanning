@@ -1,7 +1,4 @@
-﻿using System.Data;
-using System.Data.SqlTypes;
-
-namespace Production.Application.Production
+﻿namespace Production.Application.Production
 {
     public class ProductionDtoInput
     {

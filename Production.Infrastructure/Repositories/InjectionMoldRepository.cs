@@ -14,6 +14,13 @@ namespace Production.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task<IEnumerable<InjectionMold>?> GetAll()
+        {
+            var moulds = await _dbContext.InjectionMolds.ToListAsync();
+
+            return moulds;
+        }
+
         public async Task<InjectionMold?> GetById(Guid moldId)
         {
             var injecitonMold = await _dbContext.InjectionMolds.FirstOrDefaultAsync(x => x.Id == moldId);
