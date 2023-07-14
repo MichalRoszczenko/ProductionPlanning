@@ -7,8 +7,10 @@ namespace Production.Application.Services
     public interface IProductionService
     {
         Task<IEnumerable<ProductionDtoOutput>> GetAll();
+        Task<ProductionDtoInput> GetById(int id);
         Task Create(ProductionDtoInput productionDto);
         Task Remove(int productionId);
+        Task Update(int productionId, ProductionDtoInput productionDto);
     }
 
     public class ProductionService : IProductionService
@@ -29,6 +31,16 @@ namespace Production.Application.Services
 
             return productionDto;
         }
+        public async Task<ProductionDtoInput> GetById(int id)
+        {
+            var productions = await _productionRepository.GetAll();
+
+            var production = productions.FirstOrDefault(p => p.Id == id);
+
+            var productionDto = _mapper.Map<ProductionDtoInput>(production);
+
+            return productionDto;
+        }
 
         public async Task Create(ProductionDtoInput productionDto)
         {
@@ -45,6 +57,21 @@ namespace Production.Application.Services
             var production = productions.FirstOrDefault(p => p.Id == productionId);
 
             await _productionRepository.Remove(production!);
+        }
+
+        public async Task Update(int productionId, ProductionDtoInput productionDto)
+        {
+            var productions = await _productionRepository.GetAll();
+
+            var production = productions.FirstOrDefault(p => p.Id == productionId);
+
+            production!.Start = productionDto.Start;
+            production.End = productionDto.End;
+            production.InjectionMoldingMachineId = productionDto.InjectionMoldingMachineId;
+            production.InjectionMoldId = productionDto.InjectionMoldId;
+            production.ProductionTimeCalculation();
+
+            await _productionRepository.Commit();
         }
     }
 }

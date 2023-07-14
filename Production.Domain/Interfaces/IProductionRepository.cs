@@ -7,5 +7,6 @@ namespace Production.Domain.Interfaces
         Task<IEnumerable<Entities.Production>> GetAll();
         Task Create(Entities.Production production);
         Task Remove(Entities.Production production);
+        Task Commit();
     }
 }

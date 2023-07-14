@@ -27,13 +27,15 @@ namespace Production.Infrastructure.Repositories
             var assignedProduction = await _assignProduction.AssignProductionById(production);
 
             await _dbContext.Productions.AddAsync(assignedProduction);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task Remove(Domain.Entities.Production production)
         {
             _dbContext.Productions.Remove(production);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
+
+        public async Task Commit() => await _dbContext.SaveChangesAsync();
     }
 }

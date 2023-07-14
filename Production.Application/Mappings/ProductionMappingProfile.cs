@@ -21,6 +21,10 @@ namespace Production.Application.Mappings
                 {
                     Id = src.InjectionMoldId
                 }));
+
+            CreateMap<Domain.Entities.Production, ProductionDtoInput>()
+                .ForMember(x => x.InjectionMoldId, opt => opt.MapFrom(src => src.InjectionMoldId))
+                .ForMember(x => x.InjectionMoldingMachineId, opt => opt.MapFrom(src => src.InjectionMoldingMachineId));
         }
     }
 }

@@ -33,12 +33,36 @@ namespace Production.Presentation.Controllers
             }
 
             await _productionService.Create(productionDto);
+
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Remove(int productionId)
         {
             await _productionService.Remove(productionId);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Route("Production/{productionId}/Edit")]
+        public async Task<IActionResult> Edit(int productionId)
+        {
+            var production = await _productionService.GetById(productionId);
+
+            return View(production);
+        }
+
+        [HttpPost]
+        [Route("Production/{productionId}/Edit")]
+        public async Task<IActionResult> Edit(int productionId, ProductionDtoInput productionDto)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            await _productionService.Update(productionId, productionDto);
+
             return RedirectToAction(nameof(Index));
         }
     }
