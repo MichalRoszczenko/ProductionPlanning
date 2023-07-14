@@ -29,5 +29,11 @@ namespace Production.Infrastructure.Repositories
             await _dbContext.Productions.AddAsync(assignedProduction);
             _dbContext.SaveChanges();
         }
+
+        public async Task Remove(Domain.Entities.Production production)
+        {
+            _dbContext.Productions.Remove(production);
+            _dbContext.SaveChanges();
+        }
     }
 }

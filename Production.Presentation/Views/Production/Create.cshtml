@@ -4,31 +4,30 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Create Production</h1>
 
-<h4>ProductionDto</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Start" class="control-label"></label>
+                <label asp-for="Start" class="control-label">Scheduled start of production</label>
                 <input asp-for="Start" class="form-control" />
                 <span asp-validation-for="Start" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="End" class="control-label"></label>
+                <label asp-for="End" class="control-label">Scheduled end of production</label>
                 <input asp-for="End" class="form-control" />
                 <span asp-validation-for="End" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InjectionMoldId" class="control-label"></label>
+                <label asp-for="InjectionMoldId" class="control-label">Injection mold ID</label>
                 <input asp-for="InjectionMoldId" class="form-control" />
                 <span asp-validation-for="InjectionMoldId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="InjectionMoldingMachineId" class="control-label"></label>
+                <label asp-for="InjectionMoldingMachineId" class="control-label">Injection molding machine ID</label>
                 <input asp-for="InjectionMoldingMachineId" class="form-control" />
                 <span asp-validation-for="InjectionMoldingMachineId" class="text-danger"></span>
             </div>

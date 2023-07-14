@@ -35,5 +35,11 @@ namespace Production.Presentation.Controllers
             await _productionService.Create(productionDto);
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Remove(int productionId)
+        {
+            await _productionService.Remove(productionId);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

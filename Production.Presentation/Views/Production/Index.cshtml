@@ -13,22 +13,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                Id
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Start)
+                Start
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.End)
+                End
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductionTimeInHours)
+                Production Time In Hours
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InjectionMoldName)
+                Injection Mold
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InjectionMoldingMachineName)
+                Injection Molding Machine
             </th>
             <th></th>
         </tr>
@@ -57,7 +57,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a asp-controller="Production" asp-action="Remove" asp-route-productionId="@item.Id">Remove</a>
             </td>
         </tr>
 }

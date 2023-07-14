@@ -8,6 +8,7 @@ namespace Production.Application.Services
     {
         Task<IEnumerable<ProductionDtoOutput>> GetAll();
         Task Create(ProductionDtoInput productionDto);
+        Task Remove(int productionId);
     }
 
     public class ProductionService : IProductionService
@@ -36,6 +37,14 @@ namespace Production.Application.Services
             production.ProductionTimeCalculation();
 
             await _productionRepository.Create(production);
+        }
+
+        public async Task Remove(int productionId)
+        {
+            var productions = await _productionRepository.GetAll();
+            var production = productions.FirstOrDefault(p => p.Id == productionId);
+
+            await _productionRepository.Remove(production!);
         }
     }
 }
