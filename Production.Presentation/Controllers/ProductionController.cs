@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Production.Application.Production;
 using Production.Application.Services;
+using Production.Domain.Interfaces;
 
 namespace Production.Presentation.Controllers
 {
@@ -11,6 +12,7 @@ namespace Production.Presentation.Controllers
         public ProductionController(IProductionService productionService)
         {
             _productionService = productionService;
+            _injectionMoldRepository = injectionMoldRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -21,6 +23,10 @@ namespace Production.Presentation.Controllers
 
         public IActionResult Create()
         {
+            var molds = _injectionMoldRepository.GetAll().Result;
+
+            ViewBag.Molds = molds;
+
             return View();
         }
 
