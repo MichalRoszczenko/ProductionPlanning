@@ -55,7 +55,7 @@
                 @Html.DisplayFor(modelItem => item.InjectionMoldingMachineName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  productionId = item.Id  }) |
+                <a asp-controller="Production" asp-action="Edit" asp-route-productionId="@item.Id">Edit</a> |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 <a asp-controller="Production" asp-action="Remove" asp-route-productionId="@item.Id">Remove</a>
             </td>

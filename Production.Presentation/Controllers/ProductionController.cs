@@ -2,17 +2,23 @@
 using Production.Application.Production;
 using Production.Application.Services;
 using Production.Domain.Interfaces;
+using Production.Presentation.Models;
 
 namespace Production.Presentation.Controllers
 {
     public class ProductionController : Controller
     {
         private readonly IProductionService _productionService;
+        private readonly IInjectionMoldRepository _moldRepository;
+        private readonly IInjectionMoldingMachineRepository _machineRepository;
 
-        public ProductionController(IProductionService productionService)
+        public ProductionController(IProductionService productionService,IInjectionMoldRepository moldRepository,
+            IInjectionMoldingMachineRepository machineRepository)
         {
             _productionService = productionService;
-            _injectionMoldRepository = injectionMoldRepository;
+            _moldRepository = moldRepository;
+            _machineRepository = machineRepository;
+            
         }
 
         public async Task<IActionResult> Index()
@@ -23,9 +29,7 @@ namespace Production.Presentation.Controllers
 
         public IActionResult Create()
         {
-            var molds = _injectionMoldRepository.GetAll().Result;
-
-            ViewBag.Molds = molds;
+            AddToolsToViewBag();
 
             return View();
         }
@@ -33,7 +37,9 @@ namespace Production.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProductionDtoInput productionDto)
         {
-            if(!ModelState.IsValid)
+            AddToolsToViewBag();
+
+            if (!ModelState.IsValid)
             {
                 return View();
             }
@@ -53,6 +59,8 @@ namespace Production.Presentation.Controllers
         [Route("Production/{productionId}/Edit")]
         public async Task<IActionResult> Edit(int productionId)
         {
+            AddToolsToViewBag();
+
             var production = await _productionService.GetById(productionId);
 
             return View(production);
@@ -62,14 +70,27 @@ namespace Production.Presentation.Controllers
         [Route("Production/{productionId}/Edit")]
         public async Task<IActionResult> Edit(int productionId, ProductionDtoInput productionDto)
         {
-            if(!ModelState.IsValid)
+            AddToolsToViewBag();
+
+            var production = await _productionService.GetById(productionId);
+
+            if (!ModelState.IsValid)
             {
-                return View();
+                return View(production);
             }
 
             await _productionService.Update(productionId, productionDto);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        private void AddToolsToViewBag()
+        {
+            IEnumerable<Domain.Entities.InjectionMold>? molds = _moldRepository.GetAll().Result;
+
+            IEnumerable<Domain.Entities.InjectionMoldingMachine> machines = _machineRepository.GetAll().Result;
+
+            this.CreateViewBagOfTools(machines, molds!);
         }
     }
 }

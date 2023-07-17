@@ -24,12 +24,24 @@
             </div>
             <div class="form-group">
                 <label asp-for="InjectionMoldId" class="control-label"></label>
-                <input asp-for="InjectionMoldId" class="form-control" />
+                <select class="form-control" asp-for="InjectionMoldId">
+                    <option value="" disabled selected>-- Select an item --</option>
+                    @foreach (var mold in ViewBag.Molds)
+                    {
+                        <option value="@mold.Id">@mold.Name</option>
+                    }
+                </select>
                 <span asp-validation-for="InjectionMoldId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="InjectionMoldingMachineId" class="control-label"></label>
-                <input asp-for="InjectionMoldingMachineId" class="form-control" />
+                <select class="form-control" asp-for="InjectionMoldingMachineId">
+                    <option value="" disabled selected>-- Select an item --</option>
+                    @foreach (var machines in ViewBag.Machines)
+                    {
+                        <option value="@machines.Id">@machines.Name</option>
+                    }
+                </select>
                 <span asp-validation-for="InjectionMoldingMachineId" class="text-danger"></span>
             </div>
             <div class="form-group">

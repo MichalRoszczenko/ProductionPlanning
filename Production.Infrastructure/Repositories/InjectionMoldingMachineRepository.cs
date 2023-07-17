@@ -14,6 +14,12 @@ namespace Production.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task<IEnumerable<InjectionMoldingMachine>> GetAll()
+        {
+            var machines = await _dbContext.InjectionMoldingMachines.ToListAsync();
+            return machines;
+        }
+
         public async Task<InjectionMoldingMachine?> GetById(int machineId)
         {
             var machine = await _dbContext.InjectionMoldingMachines.FirstOrDefaultAsync(p => p.Id == machineId);
