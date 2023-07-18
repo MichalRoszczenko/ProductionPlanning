@@ -2,7 +2,7 @@
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 using Production.Application.Mappings;
-using Production.Application.Production.Validators;
+using Production.Application.Productions.Validators;
 using Production.Application.Services;
 
 namespace Production.Application.Extensions
@@ -12,6 +12,7 @@ namespace Production.Application.Extensions
         public static void AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IProductionService, ProductionService>();
+            services.AddScoped<IInjectionMoldService, InjectionMoldService>();
             services.AddAutoMapper(typeof(ProductionMappingProfile));
 
             services.AddValidatorsFromAssemblyContaining<ProductionDtoInputValidator>()

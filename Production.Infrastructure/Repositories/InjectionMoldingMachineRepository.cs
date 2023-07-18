@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Production.Domain.Entities;
 using Production.Domain.Interfaces;
 using Production.Infrastructure.Persistence;
@@ -17,6 +18,8 @@ namespace Production.Infrastructure.Repositories
         public async Task<IEnumerable<InjectionMoldingMachine>> GetAll()
         {
             var machines = await _dbContext.InjectionMoldingMachines.ToListAsync();
+
+
             return machines;
         }
 

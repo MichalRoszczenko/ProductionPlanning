@@ -14,11 +14,22 @@ namespace Production.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task Commit()
+        {
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task Create(InjectionMold injectionMold)
+        {
+            _dbContext.InjectionMolds.Add(injectionMold);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<InjectionMold>?> GetAll()
         {
-            var moulds = await _dbContext.InjectionMolds.ToListAsync();
+            var molds = await _dbContext.InjectionMolds.ToListAsync();
 
-            return moulds;
+            return molds;
         }
 
         public async Task<InjectionMold?> GetById(Guid moldId)
@@ -26,6 +37,15 @@ namespace Production.Infrastructure.Repositories
             var injecitonMold = await _dbContext.InjectionMolds.FirstOrDefaultAsync(x => x.Id == moldId);
 
             return injecitonMold;
+        }
+
+        public async Task Remove(Guid moldId)
+        {
+            var mold = await GetById(moldId);
+
+            _dbContext.InjectionMolds.Remove(mold!);
+
+            _dbContext.SaveChanges();
         }
     }
 }

@@ -1,0 +1,58 @@
+﻿@using Production.Application.InjectionMolds;
+
+@model IEnumerable<InjectionMoldDto>
+@{
+    int count = 1;
+}
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Injection Molds</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Producer
+            </th>
+            <th>
+                Size
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @(count++)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                <a asp-controller="InjectionMold" asp-action="Edit" asp-route-moldId="@item.Id">Edit</a> |
+                <a asp-controller="InjectionMold" asp-action="Details">Details</a> |
+                <a asp-controller="InjectionMold" asp-action="Remove" asp-route-moldId="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

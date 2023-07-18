@@ -1,4 +1,4 @@
-﻿namespace Production.Application.Production
+﻿namespace Production.Application.Productions
 {
     public class ProductionDtoOutput
     {

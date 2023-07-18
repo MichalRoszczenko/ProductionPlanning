@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Production.Domain.Interfaces;
 
-namespace Production.Application.Production.Validators
+namespace Production.Application.Productions.Validators
 {
     public class ProductionDtoInputValidator : AbstractValidator<ProductionDtoInput>
     {
@@ -18,15 +18,15 @@ namespace Production.Application.Production.Validators
                 .NotNull()
                 .GreaterThan(s => s.Start)
                 .WithMessage("End of production cannot take place before start of production.");
-        
+
             RuleFor(e => e.InjectionMoldId)
                 .NotEmpty()
                 .NotNull()
                 .Custom((value, context) =>
                 {
                     var existingMachine = moldRepository.GetById(value).Result;
-        
-                    if (existingMachine == null) 
+
+                    if (existingMachine == null)
                     {
                         context.AddFailure($"Mould ID: \"{value}\" doesn't exist.");
                     }

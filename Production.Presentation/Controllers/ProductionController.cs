@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Production.Application.Production;
+using Production.Application.InjectionMolds;
+using Production.Application.Productions;
 using Production.Application.Services;
 using Production.Domain.Interfaces;
 using Production.Presentation.Models;
@@ -9,16 +10,15 @@ namespace Production.Presentation.Controllers
     public class ProductionController : Controller
     {
         private readonly IProductionService _productionService;
-        private readonly IInjectionMoldRepository _moldRepository;
-        private readonly IInjectionMoldingMachineRepository _machineRepository;
+        private readonly IInjectionMoldService _moldService;
+        private readonly IInjectionMoldingMachineRepository _machineRepository; //ToDo
 
-        public ProductionController(IProductionService productionService,IInjectionMoldRepository moldRepository,
+        public ProductionController(IProductionService productionService,IInjectionMoldService moldService,
             IInjectionMoldingMachineRepository machineRepository)
         {
             _productionService = productionService;
-            _moldRepository = moldRepository;
+            _moldService = moldService;
             _machineRepository = machineRepository;
-            
         }
 
         public async Task<IActionResult> Index()
@@ -86,7 +86,7 @@ namespace Production.Presentation.Controllers
 
         private void AddToolsToViewBag()
         {
-            IEnumerable<Domain.Entities.InjectionMold>? molds = _moldRepository.GetAll().Result;
+            IEnumerable<InjectionMoldDto>? molds = _moldService.GetAll().Result;
 
             IEnumerable<Domain.Entities.InjectionMoldingMachine> machines = _machineRepository.GetAll().Result;
 
