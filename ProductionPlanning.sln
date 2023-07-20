@@ -11,11 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Infrastructure",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Presentation", "Production.Presentation\Production.Presentation.csproj", "{5244001B-1EF5-4C48-90FF-AB6EB584C5E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Production.Domain.Tests", "Production.Domain.Tests\Production.Domain.Tests.csproj", "{6F546A9B-F7A6-4F7A-A3C1-2A902C7A419E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Domain.Tests", "Production.Domain.Tests\Production.Domain.Tests.csproj", "{6F546A9B-F7A6-4F7A-A3C1-2A902C7A419E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{990AA624-9740-4B29-9127-42A53F717BE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Production.Application.Tests", "Production.Application.Tests\Production.Application.Tests.csproj", "{24E70175-E9A2-4CAB-9E16-3244705AF06B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Production.Application.Tests", "Production.Application.Tests\Production.Application.Tests.csproj", "{24E70175-E9A2-4CAB-9E16-3244705AF06B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +53,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6F546A9B-F7A6-4F7A-A3C1-2A902C7A419E} = {990AA624-9740-4B29-9127-42A53F717BE2}
+		{24E70175-E9A2-4CAB-9E16-3244705AF06B} = {990AA624-9740-4B29-9127-42A53F717BE2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D0C6A8B-A9A4-4C31-9934-7F94C7184D06}
