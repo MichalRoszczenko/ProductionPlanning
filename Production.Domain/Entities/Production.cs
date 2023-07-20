@@ -11,6 +11,13 @@
         public InjectionMoldingMachine InjectionMoldingMachine { get; set; } = default!;
         public int InjectionMoldingMachineId { get; set; }
 
-        public void ProductionTimeCalculation() => ProductionTimeInHours = (int)Math.Ceiling((End - Start).TotalMinutes/60);
+        public void ProductionTimeCalculation()
+        {
+            if(Start > End )
+            {
+                throw new ArgumentException("End of production cannot take place before start of production.");
+            }
+            ProductionTimeInHours = (int)Math.Ceiling((End - Start).TotalMinutes / 60);
+        }
     }
 }
