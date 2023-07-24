@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Production.Application.InjectionMoldMachines.InjectionMoldingMachineDto>
+
+@{
+    ViewData["Title"] = "Injection Molidng Machines";
+}
+
+<h1>Injection Molidng Machines</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Online)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tonnage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Online)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tonnage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                <a asp-controller="InjectionMoldingMachine" asp-action="Edit" asp-route-machineId="@item.Id">Edit</a> |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                <a asp-controller="InjectionMoldingMachine" asp-action="Remove" asp-route-machineId="@item.Id">Remove</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

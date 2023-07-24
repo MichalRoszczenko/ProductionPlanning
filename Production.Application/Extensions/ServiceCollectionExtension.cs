@@ -13,6 +13,7 @@ namespace Production.Application.Extensions
         {
             services.AddScoped<IProductionService, ProductionService>();
             services.AddScoped<IInjectionMoldService, InjectionMoldService>();
+            services.AddScoped<IInjectionMoldingMachineService, InjectionMoldingMachineService>();
             services.AddAutoMapper(typeof(ProductionMappingProfile));
 
             services.AddValidatorsFromAssemblyContaining<ProductionDtoValidator>()

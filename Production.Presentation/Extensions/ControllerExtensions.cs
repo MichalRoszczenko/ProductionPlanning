@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Production.Application.InjectionMoldMachines;
 using Production.Application.InjectionMolds;
-using Production.Domain.Entities;
 
-namespace Production.Presentation.Models
+namespace Production.Presentation.Extensions
 {
     public static class ControllerExtensions
     {
-        public static void CreateViewBagOfTools(this Controller controller, IEnumerable<InjectionMoldingMachine> machine, 
+        public static void CreateViewBagOfTools(this Controller controller, IEnumerable<InjectionMoldingMachineDto> machine,
             IEnumerable<InjectionMoldDto> mold)
         {
             controller.ViewBag.Molds = mold;

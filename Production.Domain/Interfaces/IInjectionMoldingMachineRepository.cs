@@ -6,5 +6,8 @@ namespace Production.Domain.Interfaces
     {
         Task<InjectionMoldingMachine?> GetById(int machineId);
         Task<IEnumerable<InjectionMoldingMachine>> GetAll();
+        Task Create(InjectionMoldingMachine injectionMachine);
+        Task Remove(int machineId);
+        Task Commit();
     }
 }
