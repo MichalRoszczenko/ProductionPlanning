@@ -3,29 +3,29 @@ using System.Collections;
 
 namespace Production.Presentation.Tests.TestsData
 {
-	public class ProductionOutputDtoTestData : IEnumerable<object[]>
+	public class ProductionDtoTestData : IEnumerable<object[]>
 	{
 		public IEnumerator<object[]> GetEnumerator()
 		{
 			yield return new object[]
 			{
-				new List<ProductionDtoOutput>()
+				new List<ProductionDto>()
 				{
-					new ProductionDtoOutput()
+					new ProductionDto()
 					{
 						Start = new DateTime(2023,08,15,15,20,00),
 						End = new DateTime(2023,08,15,15,20,00),
 						InjectionMoldingMachineName = "TestMachine1",
 						InjectionMoldName = "TestMold1"
 					},
-					new ProductionDtoOutput()
+					new ProductionDto()
 					{
 						Start = new DateTime(2023,08,15,15,20,00),
 						End = new DateTime(2023,08,15,15,20,00),
 						InjectionMoldingMachineName = "TestMachine2",
 						InjectionMoldName = "TestMold2"
 					},
-					new ProductionDtoOutput()
+					new ProductionDto()
 					{
 						Start = new DateTime(2023,08,15,15,20,00),
 						End = new DateTime(2023,08,15,15,20,00),

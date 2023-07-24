@@ -24,7 +24,7 @@ namespace Production.Application.Tests.TestsData
 					Size = "medium",
 					Tonnage = 2000
 				},
-				new ProductionDtoInput()
+				new ProductionDto()
 				{
 					Start = DateTime.Now,
 					End = DateTime.Now.AddMinutes(59), //invalid end time
@@ -48,7 +48,7 @@ namespace Production.Application.Tests.TestsData
 					Size = "medium",
 					Tonnage = 2000
 				},
-				new ProductionDtoInput()
+				new ProductionDto()
 				{
 					Start = DateTime.Now,
 					End = DateTime.Now,
@@ -60,7 +60,7 @@ namespace Production.Application.Tests.TestsData
 			{
 				new InjectionMold(),	//nulls
 				new InjectionMoldingMachine(),
-				new ProductionDtoInput()
+				new ProductionDto()
 			};
 
 		}

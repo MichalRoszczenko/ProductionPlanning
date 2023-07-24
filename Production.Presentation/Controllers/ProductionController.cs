@@ -35,7 +35,7 @@ namespace Production.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProductionDtoInput productionDto)
+        public async Task<IActionResult> Create(ProductionDto productionDto)
         {
             AddToolsToViewBag();
 
@@ -78,7 +78,7 @@ namespace Production.Presentation.Controllers
 
         [HttpPost]
         [Route("Production/{productionId}/Edit")]
-        public async Task<IActionResult> Edit(int productionId, ProductionDtoInput productionDto)
+        public async Task<IActionResult> Edit(int productionId, ProductionDto productionDto)
         {
             AddToolsToViewBag();
 

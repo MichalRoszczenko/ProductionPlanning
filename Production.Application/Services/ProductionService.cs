@@ -6,11 +6,11 @@ namespace Production.Application.Services
 {
     public interface IProductionService
     {
-        Task<IEnumerable<ProductionDtoOutput>> GetAll();
-        Task<ProductionDtoInput> GetById(int id);
-        Task Create(ProductionDtoInput productionDto);
+        Task<IEnumerable<ProductionDto>> GetAll();
+        Task<ProductionDto> GetById(int id);
+        Task Create(ProductionDto productionDto);
         Task Remove(int productionId);
-        Task Update(int productionId, ProductionDtoInput productionDto);
+        Task Update(int productionId, ProductionDto productionDto);
     }
 
     public class ProductionService : IProductionService
@@ -23,24 +23,24 @@ namespace Production.Application.Services
             _productionRepository = productionRepository;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<ProductionDtoOutput>> GetAll()
+        public async Task<IEnumerable<ProductionDto>> GetAll()
         {
             var production = await _productionRepository.GetAll();
 
-            var productionDto = _mapper.Map<IEnumerable<ProductionDtoOutput>>(production);
+            var productionDto = _mapper.Map<IEnumerable<ProductionDto>>(production);
 
             return productionDto;
         }
-        public async Task<ProductionDtoInput> GetById(int id)
+        public async Task<ProductionDto> GetById(int id)
         {
             var production = await _productionRepository.GetById(id);
 
-            var productionDto = _mapper.Map<ProductionDtoInput>(production);
+            var productionDto = _mapper.Map<ProductionDto>(production);
 
             return productionDto;
         }
 
-        public async Task Create(ProductionDtoInput productionDto)
+        public async Task Create(ProductionDto productionDto)
         {
             var production = _mapper.Map<Domain.Entities.Production>(productionDto);
 
@@ -56,7 +56,7 @@ namespace Production.Application.Services
             await _productionRepository.Remove(production!);
         }
 
-        public async Task Update(int productionId, ProductionDtoInput productionDto)
+        public async Task Update(int productionId, ProductionDto productionDto)
         {
             var productions = await _productionRepository.GetAll();
 

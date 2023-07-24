@@ -12,7 +12,7 @@ namespace Production.Application.Productions.Validators.Tests
         [Theory()]
 		[ClassData(typeof(ValidProductionTestData))]
 		public void ProductionValidator_ShouldNotHaveValidationError_ForValidData(InjectionMold mold,
-			InjectionMoldingMachine machine, ProductionDtoInput productionDto)
+			InjectionMoldingMachine machine, ProductionDto productionDto)
 		{
 			//arrange
 
@@ -30,7 +30,7 @@ namespace Production.Application.Productions.Validators.Tests
 		[Theory()]
 		[ClassData(typeof(InvalidProductionTestData))]
 		public void ProductionValidator_ShouldHaveValidationErrors_ForInvalidtData(InjectionMold mold,
-			InjectionMoldingMachine machine, ProductionDtoInput productionDto)
+			InjectionMoldingMachine machine, ProductionDto productionDto)
 		{
 			//arrange
 
@@ -45,7 +45,7 @@ namespace Production.Application.Productions.Validators.Tests
 			result.ShouldHaveAnyValidationError();
 		}
 
-		private ProductionDtoInputValidator CreateValidatorWithMockedMoldAndMachine(InjectionMold mold,
+		private ProductionDtoValidator CreateValidatorWithMockedMoldAndMachine(InjectionMold mold,
 			InjectionMoldingMachine machine)
 		{
 			var moldRepositoryMock = new Mock<IInjectionMoldRepository>();
@@ -58,7 +58,7 @@ namespace Production.Application.Productions.Validators.Tests
 				=> s.GetById(machine.Id))
 				.ReturnsAsync(machine);
 
-			var validator = new ProductionDtoInputValidator(moldRepositoryMock.Object, machineRepositoryMock.Object);
+			var validator = new ProductionDtoValidator(moldRepositoryMock.Object, machineRepositoryMock.Object);
 
 			return validator;
 		}

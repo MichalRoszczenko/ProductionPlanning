@@ -3,9 +3,9 @@ using Production.Domain.Interfaces;
 
 namespace Production.Application.Productions.Validators
 {
-    public class ProductionDtoInputValidator : AbstractValidator<ProductionDtoInput>
+    public class ProductionDtoValidator : AbstractValidator<ProductionDto>
     {
-        public ProductionDtoInputValidator(IInjectionMoldRepository moldRepository, IInjectionMoldingMachineRepository machineRepository)
+        public ProductionDtoValidator(IInjectionMoldRepository moldRepository, IInjectionMoldingMachineRepository machineRepository)
         {
             RuleFor(e => e.Start)
                 .NotNull()

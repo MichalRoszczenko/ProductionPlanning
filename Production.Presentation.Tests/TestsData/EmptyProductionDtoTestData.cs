@@ -3,17 +3,17 @@ using System.Collections;
 
 namespace Production.Presentation.Tests.TestsData
 {
-	public class EmptyProductionOutputDtoTestData : IEnumerable<object[]>
+	public class EmptyProductionDtoTestData : IEnumerable<object[]>
 	{
 		public IEnumerator<object[]> GetEnumerator()
 		{
 			yield return new object[]
 			{
-				new List<ProductionDtoOutput>()
+				new List<ProductionDto>()
 				{
-					new ProductionDtoOutput(),
-					new ProductionDtoOutput(),
-					new ProductionDtoOutput()
+					new ProductionDto(),
+					new ProductionDto(),
+					new ProductionDto()
 				}
 			};
 		}

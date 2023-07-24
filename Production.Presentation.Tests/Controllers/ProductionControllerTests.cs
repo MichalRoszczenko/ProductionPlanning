@@ -19,8 +19,8 @@ namespace Production.Presentation.Controllers.Tests
 		}
 
         [Theory()]
-		[ClassData(typeof(ProductionOutputDtoTestData))]
-		public async Task Index_ReturnsViewWithExpectedData_ForExistingProductions(List<ProductionDtoOutput> productionsDto)
+		[ClassData(typeof(ProductionDtoTestData))]
+		public async Task Index_ReturnsViewWithExpectedData_ForExistingProductions(List<ProductionDto> productionsDto)
 		{
             //arrange
 
@@ -46,8 +46,8 @@ namespace Production.Presentation.Controllers.Tests
 		}
 
 		[Theory()]
-		[ClassData(typeof(EmptyProductionOutputDtoTestData))]
-		public async Task Index_ReturnsEmptyView_ForNoExistingProductions(List<ProductionDtoOutput> productionsDto)
+		[ClassData(typeof(EmptyProductionDtoTestData))]
+		public async Task Index_ReturnsEmptyView_ForNoExistingProductions(List<ProductionDto> productionsDto)
 		{
 			//arrange
 
@@ -71,7 +71,7 @@ namespace Production.Presentation.Controllers.Tests
 			}
 		}
 
-		private HttpClient CreateClientWithProductionServiceMock(List<ProductionDtoOutput> productionsDto)
+		private HttpClient CreateClientWithProductionServiceMock(List<ProductionDto> productionsDto)
 		{
             var productionServiceMock = new Mock<IProductionService>();
 

@@ -15,7 +15,7 @@ namespace Production.Application.Extensions
             services.AddScoped<IInjectionMoldService, InjectionMoldService>();
             services.AddAutoMapper(typeof(ProductionMappingProfile));
 
-            services.AddValidatorsFromAssemblyContaining<ProductionDtoInputValidator>()
+            services.AddValidatorsFromAssemblyContaining<ProductionDtoValidator>()
                 .AddFluentValidationAutoValidation()
                 .AddFluentValidationClientsideAdapters();
         }

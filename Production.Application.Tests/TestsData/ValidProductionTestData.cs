@@ -24,7 +24,7 @@ namespace Production.Application.Tests.TestsData
 					Size = "medium",
 					Tonnage = 2000
 				},
-				new ProductionDtoInput()
+				new ProductionDto()
 				{
 					Start = DateTime.Now,
 					End = DateTime.Now.AddMinutes(60),
@@ -48,7 +48,7 @@ namespace Production.Application.Tests.TestsData
 					Size = "medium",
 					Tonnage = 2000
 				},
-				new ProductionDtoInput()
+				new ProductionDto()
 				{
 					Start = DateTime.Now,
 					End = DateTime.Now.AddHours(1),
