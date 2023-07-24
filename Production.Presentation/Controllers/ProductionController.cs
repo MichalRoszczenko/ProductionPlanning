@@ -49,7 +49,17 @@ namespace Production.Presentation.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Remove(int productionId)
+        [Route("Production/{productionId}/Remove")]
+        public IActionResult Remove(int productionId)
+        {
+            var production = _productionService.GetById(productionId).Result;
+
+            return View(production);
+        }
+
+        [HttpPost]
+        [Route("Production/{productionId}/Remove")]
+        public async Task<IActionResult> RemoveConfirmed(int productionId)
         {
             await _productionService.Remove(productionId);
 
@@ -61,7 +71,7 @@ namespace Production.Presentation.Controllers
         {
             AddToolsToViewBag();
 
-            var production = await _productionService.GetById(productionId);
+            var production = await _productionService.GetById(productionId);  
 
             return View(production);
         }

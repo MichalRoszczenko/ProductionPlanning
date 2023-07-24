@@ -12,7 +12,7 @@ builder.Services.AddApplication();
 var app = builder.Build();
 var scope = app.Services.CreateScope();
 ProductionSeeder seeder = scope.ServiceProvider.GetRequiredService<ProductionSeeder>();
-//await seeder.Seed();
+await seeder.Seed();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -15,7 +15,7 @@ namespace Production.Application.Productions.Validators
                 .NotEmpty()
                 .NotNull()
                 .GreaterThan(v => v.Start.AddHours(1))
-                .WithMessage("The End of the production must be selected after start and last for at least an hour");
+                .WithMessage("The End of the production must be selected after start. The minimum production time is one hour");
 
             RuleFor(e => e.InjectionMoldId)
                 .NotEmpty()

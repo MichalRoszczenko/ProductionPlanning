@@ -59,7 +59,17 @@ namespace Production.Presentation.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Remove(Guid moldId)
+        [Route("InjectionMold/{moldId}/Remove")]
+        public IActionResult Remove(Guid moldId)
+        {
+            var mold = _moldService.GetById(moldId).Result;
+
+            return View(mold);
+        }
+
+        [HttpPost]
+        [Route("InjectionMold/{moldId}/Remove")]
+        public async Task<IActionResult> RemoveConfirmed(Guid moldId)
         {
             await _moldService.Remove(moldId);
 

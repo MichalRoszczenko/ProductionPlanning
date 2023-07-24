@@ -33,9 +33,7 @@ namespace Production.Application.Services
         }
         public async Task<ProductionDtoInput> GetById(int id)
         {
-            var productions = await _productionRepository.GetAll();
-
-            var production = productions.FirstOrDefault(p => p.Id == id);
+            var production = await _productionRepository.GetById(id);
 
             var productionDto = _mapper.Map<ProductionDtoInput>(production);
 
@@ -53,8 +51,7 @@ namespace Production.Application.Services
 
         public async Task Remove(int productionId)
         {
-            var productions = await _productionRepository.GetAll();
-            var production = productions.FirstOrDefault(p => p.Id == productionId);
+            var production = await _productionRepository.GetById(productionId);
 
             await _productionRepository.Remove(production!);
         }

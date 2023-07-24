@@ -22,6 +22,16 @@ namespace Production.Infrastructure.Repositories
             .Include(s => s.InjectionMoldingMachine)
             .ToListAsync();
 
+        public async Task<Domain.Entities.Production> GetById(int productionId)
+        {
+            var production = await _dbContext.Productions
+                .Include(s => s.InjectionMold)
+                .Include(s => s.InjectionMoldingMachine)
+                .FirstOrDefaultAsync(s => s.Id == productionId);
+
+            return production;
+        }
+
         public async Task Create(Domain.Entities.Production production)
         {
             var assignedProduction = await _assignProduction.AssignProductionById(production);
@@ -37,5 +47,6 @@ namespace Production.Infrastructure.Repositories
         }
 
         public async Task Commit() => await _dbContext.SaveChangesAsync();
+
     }
 }
