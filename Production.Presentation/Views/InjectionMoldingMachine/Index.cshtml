@@ -50,7 +50,7 @@
             </td>
             <td>
                 <a asp-controller="InjectionMoldingMachine" asp-action="Edit" asp-route-machineId="@item.Id">Edit</a> |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                <a asp-controller="InjectionMoldingMachine" asp-action="Details" asp-route-machineId="@item.Id">Details</a> |
                 <a asp-controller="InjectionMoldingMachine" asp-action="Remove" asp-route-machineId="@item.Id">Remove</a>
             </td>
         </tr>

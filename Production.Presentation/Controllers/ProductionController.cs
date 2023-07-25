@@ -47,6 +47,13 @@ namespace Production.Presentation.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Route("Production/{productionId}/Details")]
+        public IActionResult Details(int productionId)
+        {
+            var production = _productionService.GetById(productionId).Result;
+            return View(production);
+        }
+
         [Route("Production/{productionId}/Remove")]
         public IActionResult Remove(int productionId)
         {

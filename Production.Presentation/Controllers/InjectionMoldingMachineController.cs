@@ -19,6 +19,14 @@ namespace Production.Presentation.Controllers
             return View(machines);
         }
 
+        [Route("InjectionMoldingMachine/{machineId}/Details")]
+        public IActionResult Details(int machineId)
+        {
+            var machine = _machineService.GetById(machineId).Result;
+
+            return View(machine);
+        }
+
         [Route("InjectionMoldingMachine/{machineId}/Edit")]
         public IActionResult Edit(int machineId) 
         {
@@ -77,6 +85,5 @@ namespace Production.Presentation.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
     }
 }

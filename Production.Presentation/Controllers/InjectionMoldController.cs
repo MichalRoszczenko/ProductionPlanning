@@ -25,6 +25,13 @@ namespace Production.Presentation.Controllers
             return View();
         }
 
+        public IActionResult Details(Guid moldId)
+        {
+            var mold = _moldService.GetById(moldId).Result;
+
+            return View(mold);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(InjectionMoldDto injectionMold)
         {
