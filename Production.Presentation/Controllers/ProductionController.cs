@@ -51,6 +51,7 @@ namespace Production.Presentation.Controllers
         public IActionResult Details(int productionId)
         {
             var production = _productionService.GetById(productionId).Result;
+
             return View(production);
         }
 

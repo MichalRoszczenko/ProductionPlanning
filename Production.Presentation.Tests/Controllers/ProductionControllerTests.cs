@@ -5,6 +5,7 @@ using Moq;
 using Production.Application.Productions;
 using Production.Application.Services;
 using Production.Presentation.Tests.TestsData;
+using System.Net;
 using Xunit;
 
 namespace Production.Presentation.Controllers.Tests
@@ -32,7 +33,7 @@ namespace Production.Presentation.Controllers.Tests
 
 			//assert
 
-			response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+			response.StatusCode.Should().Be(HttpStatusCode.OK);
 
 			var content = await response.Content.ReadAsStringAsync();
 
@@ -45,13 +46,14 @@ namespace Production.Presentation.Controllers.Tests
 			}
 		}
 
-		[Theory()]
-		[ClassData(typeof(EmptyProductionDtoTestData))]
-		public async Task Index_ReturnsEmptyView_ForNoExistingProductions(List<ProductionDto> productionsDto)
+		[Fact()]
+		public async Task Index_ReturnsEmptyView_ForNoExistingProductions()
 		{
 			//arrange
 
-			var client = CreateClientWithProductionServiceMock(productionsDto);
+			var productionsDto = new List<ProductionDto>();
+
+            var client = CreateClientWithProductionServiceMock(productionsDto);
 
             //act 
 
@@ -59,19 +61,55 @@ namespace Production.Presentation.Controllers.Tests
 
 			//assert
 
-			response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+			response.StatusCode.Should().Be(HttpStatusCode.OK);
 
 			var content = await response.Content.ReadAsStringAsync();
 
-			foreach (var production in productionsDto)
-			{
-				content.Should().NotContain("Edit\">Edit</a> |")
-					.And.NotContain("Details\">Details</a> |")
-					.And.NotContain(">Remove</a>");
-			}
+
+			content.Should().NotContain("Edit\">Edit</a> |")
+				.And.NotContain("Details\">Details</a> |")
+				.And.NotContain(">Remove</a>");
 		}
 
-		private HttpClient CreateClientWithProductionServiceMock(List<ProductionDto> productionsDto)
+		[Fact()]
+		public async Task Details_ReturnProductionDetailsView_ForExistingProduction()
+		{
+			//arrange
+
+			var productionDto = new ProductionDto()
+			{
+				Start = new DateTime(2023, 08, 15, 15, 20, 00),
+				End = new DateTime(2023, 08, 15, 15, 20, 00),
+				InjectionMoldingMachineName = "TestMachine1",
+				InjectionMoldName = "TestMold1"
+			};
+
+            var productionServiceMock = new Mock<IProductionService>();
+
+			productionServiceMock.Setup(s => s.GetById(It.IsAny<int>()))
+				.ReturnsAsync(productionDto);
+
+			var client = _factory.WithWebHostBuilder(builder 
+				=> builder.ConfigureServices(cfg => cfg.AddScoped(_ => productionServiceMock.Object)))
+				.CreateClient();
+
+			//act
+
+			var response = await client.GetAsync("/Production/1/Details");
+
+			//assert
+
+			response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+			var content = await response.Content.ReadAsStringAsync();
+
+			content.Should().Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.Start}\r\n        </dd>")
+				.And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.Start}\r\n        </dd>")
+				.And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.InjectionMoldingMachineName}\r\n        </dd>")
+				.And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.InjectionMoldName}\r\n        </dd>");
+        }
+
+        private HttpClient CreateClientWithProductionServiceMock(List<ProductionDto> productionsDto)
 		{
             var productionServiceMock = new Mock<IProductionService>();
 

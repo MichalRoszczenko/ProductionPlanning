@@ -37,34 +37,31 @@
 
     @foreach (var item in Model)
     {
-        if(item.InjectionMoldName != null)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Start)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.End)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductionTimeInHours)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InjectionMoldName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InjectionMoldingMachineName)
-                </td>
-                <td>
-                    <a asp-controller="Production" asp-action="Edit" asp-route-productionId="@item.Id">Edit</a> |
-                    <a asp-controller="Production" asp-action="Details" asp-route-productionId="@item.Id">Details</a> |
-                    <a asp-controller="Production" asp-action="Remove" asp-route-productionId="@item.Id">Remove</a>
-                </td>
-            </tr>
-        }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.End)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductionTimeInHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InjectionMoldName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InjectionMoldingMachineName)
+            </td>
+            <td>
+                <a asp-controller="Production" asp-action="Edit" asp-route-productionId="@item.Id">Edit</a> |
+                <a asp-controller="Production" asp-action="Details" asp-route-productionId="@item.Id">Details</a> |
+                <a asp-controller="Production" asp-action="Remove" asp-route-productionId="@item.Id">Remove</a>
+            </td>
+        </tr>
     }
     </tbody>
 </table>
