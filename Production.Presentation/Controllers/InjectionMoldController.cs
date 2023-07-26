@@ -28,7 +28,7 @@ namespace Production.Presentation.Controllers
         [Route("InjectionMold/{moldId}/Details")]
         public IActionResult Details(Guid moldId)
         {
-            var mold = _moldService.GetById(moldId).Result;
+            var mold = _moldService.GetById(moldId,true).Result;
 
             return View(mold);
         }

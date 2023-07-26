@@ -32,11 +32,18 @@ namespace Production.Infrastructure.Repositories
             return molds;
         }
 
-        public async Task<InjectionMold?> GetById(Guid moldId)
+        public async Task<InjectionMold?> GetById(Guid moldId, bool withProductionInfo = false)
         {
-            var injecitonMold = await _dbContext.InjectionMolds.FirstOrDefaultAsync(x => x.Id == moldId);
+            if(withProductionInfo == true)
+            {
+                var extendedInjecitonMold = await _dbContext.InjectionMolds
+                 .Include(n => n.Productions!
+                 .Where(p => p.InjectionMoldId == moldId))
+                 .FirstOrDefaultAsync(x => x.Id == moldId);
 
-            return injecitonMold;
+                return extendedInjecitonMold;
+            }
+            else return  await _dbContext.InjectionMolds.FirstOrDefaultAsync(x => x.Id == moldId);
         }
 
         public async Task Remove(Guid moldId)

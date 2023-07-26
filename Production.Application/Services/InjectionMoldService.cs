@@ -9,7 +9,7 @@ namespace Production.Application.Services
     {
         Task<IEnumerable<InjectionMoldDto>> GetAll();
         Task Create(InjectionMoldDto moldDto);
-        Task<InjectionMoldDto> GetById(Guid moldId);
+        Task<InjectionMoldDto> GetById(Guid moldId, bool withProductionInfo = false);
         Task Update(Guid moldId, InjectionMoldDto moldDto);
         Task Remove(Guid moldId);
     }
@@ -32,9 +32,10 @@ namespace Production.Application.Services
 
             return dto;
         }
-        public async Task<InjectionMoldDto> GetById(Guid moldId)
+
+        public async Task<InjectionMoldDto> GetById(Guid moldId, bool withProductionInfo = false)
         {
-            var mold = await _moldRepository.GetById(moldId);
+            var mold = await _moldRepository.GetById(moldId, withProductionInfo);
             var dto = _mapper.Map<InjectionMoldDto>(mold);
 
             return dto;

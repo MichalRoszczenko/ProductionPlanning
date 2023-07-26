@@ -18,12 +18,12 @@ namespace Production.Application.Mappings
                 .ForMember(s => s.InjectionMoldingMachine, opt => opt.MapFrom(src => new InjectionMoldingMachine()
                 {
                     Id = src.InjectionMoldingMachineId,
-                    Name = src.InjectionMoldingMachineName,
+                    Name = src.InjectionMoldingMachineName!,
                 }))
                 .ForMember(s => s.InjectionMold, opt => opt.MapFrom(src => new InjectionMold()
                 {
                     Id = src.InjectionMoldId,
-                    Name = src.InjectionMoldName
+                    Name = src.InjectionMoldName!
                 }));
         }
     }
