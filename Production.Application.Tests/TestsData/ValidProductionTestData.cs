@@ -15,7 +15,14 @@ namespace Production.Application.Tests.TestsData
 					Id = new Guid("2e5a5182-3999-4a4c-ec3f-18db7f8126c4"),
 					Name = "Test",
 					Size = "medium",
-					Producer = "GxTry"
+					Producer = "GxTry",
+					Productions = new List<Domain.Entities.Production>()
+					{
+						new Domain.Entities.Production()
+						{
+							InjectionMoldId = new Guid()
+						}
+                    }
 				},
 				new InjectionMoldingMachine()
 				{
@@ -32,6 +39,7 @@ namespace Production.Application.Tests.TestsData
 					InjectionMoldingMachineId = 1
 				}
 			};
+
 			yield return new object[]
 			{
 				new InjectionMold()
@@ -39,7 +47,14 @@ namespace Production.Application.Tests.TestsData
 					Id = new Guid("2e5a5182-3939-4a4c-ec3f-18db7f8126c4"),
 					Name = "Te",
 					Size = "medium",
-					Producer = "GxTry"
+					Producer = "GxTry",
+					Productions = new List<Domain.Entities.Production>()
+					{
+						new Domain.Entities.Production()
+						{
+							InjectionMoldId = new Guid()
+						}
+					}
 				},
 				new InjectionMoldingMachine()
 				{
@@ -56,8 +71,8 @@ namespace Production.Application.Tests.TestsData
 					InjectionMoldingMachineId = 1
 				}
 			};
-		}
-			IEnumerator IEnumerable.GetEnumerator () => GetEnumerator();
+        }
+		IEnumerator IEnumerable.GetEnumerator () => GetEnumerator();
 	}
 }
 

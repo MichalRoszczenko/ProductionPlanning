@@ -6,10 +6,12 @@ namespace Production.Application.Productions.Validators
     public class ProductionDtoValidator : AbstractValidator<ProductionDto>
     {
         private readonly IInjectionMoldRepository _moldRepository;
+        private readonly IInjectionMoldingMachineRepository _machineRepository;
 
         public ProductionDtoValidator(IInjectionMoldRepository moldRepository, IInjectionMoldingMachineRepository machineRepository)
         {
             _moldRepository = moldRepository;
+            _machineRepository = machineRepository;
 
             RuleFor(e => e.Start)
                 .NotNull()
@@ -27,7 +29,7 @@ namespace Production.Application.Productions.Validators
                 .Must(InjectionMoldIsAvailable).WithMessage("The injection mold is scheduled for another production at this time")
                 .Custom((value, context) =>
                 {
-                    var existingMold = moldRepository.GetById(value).Result;
+                    var existingMold = _moldRepository.GetById(value).Result;
 
                     if (existingMold == null)
                     {
@@ -40,7 +42,7 @@ namespace Production.Application.Productions.Validators
                 .NotNull()
                 .Custom((value, context) =>
                 {
-                    var existingMachine = machineRepository.GetById(value).Result;
+                    var existingMachine = _machineRepository.GetById(value).Result;
 
                     if (existingMachine == null)
                     {
@@ -53,9 +55,27 @@ namespace Production.Application.Productions.Validators
         {
             var mold = _moldRepository.GetById(moldId, true).Result;
 
+            if (mold == null || mold.Id == default) return false;
+
             var moldProductions = mold!.Productions!.Where(p => p.Id != productionDto.Id);
 
             var overlapedProduction =  moldProductions.Any(p =>
+                (productionDto.Start >= p.Start && productionDto.Start <= p.End) ||
+                (productionDto.End >= p.Start && productionDto.End <= p.End) ||
+                (productionDto.Start <= p.Start && productionDto.End >= p.End));
+
+            return !overlapedProduction;
+        }
+
+        private bool InjectionMachineIsAvailable(ProductionDto productionDto, int machineId)
+        {
+            var machine = _machineRepository.GetById(machineId).Result;
+
+            if (machine == null || machine.Id == default) return false;
+
+            var machineProductions = machine!.Productions!.Where(p => p.Id != productionDto.Id);
+
+            var overlapedProduction = machineProductions.Any(p =>
                 (productionDto.Start >= p.Start && productionDto.Start <= p.End) ||
                 (productionDto.End >= p.Start && productionDto.End <= p.End) ||
                 (productionDto.Start <= p.Start && productionDto.End >= p.End));

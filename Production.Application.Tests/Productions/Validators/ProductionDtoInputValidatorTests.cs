@@ -49,11 +49,10 @@ namespace Production.Application.Productions.Validators.Tests
 			InjectionMoldingMachine machine)
 		{
 			var moldRepositoryMock = new Mock<IInjectionMoldRepository>();
-			moldRepositoryMock.Setup(a
-				=> a.GetById(mold.Id))
+			moldRepositoryMock.Setup(a => a.GetById(mold.Id,It.IsAny<bool>()))
 				.ReturnsAsync(mold);
 
-			var machineRepositoryMock = new Mock<IInjectionMoldingMachineRepository>();
+            var machineRepositoryMock = new Mock<IInjectionMoldingMachineRepository>();
 			machineRepositoryMock.Setup(s
 				=> s.GetById(machine.Id))
 				.ReturnsAsync(machine);

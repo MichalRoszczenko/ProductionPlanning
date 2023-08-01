@@ -99,12 +99,16 @@ namespace Production.Presentation.Controllers.Tests
 			{
 				Name = "TestMold",
 				Size = "TestSize",
-				Producer = "TestProducer"
+				Producer = "TestProducer",
+				PlannedProductions = new List<PlannedProduction>()
+				{ 
+					new PlannedProduction()
+				}
 			};
 
             var injectionServiceMock = new Mock<IInjectionMoldService>();
 
-            injectionServiceMock.Setup(s => s.GetById(It.IsAny<Guid>()))
+            injectionServiceMock.Setup(s => s.GetById(It.IsAny<Guid>(),true))
 				.ReturnsAsync(injectionMoldDto);
 
 			var client = _factory.WithWebHostBuilder(builder 
