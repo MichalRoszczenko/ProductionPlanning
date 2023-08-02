@@ -8,7 +8,7 @@ namespace Production.Application.Services
     public interface IInjectionMoldingMachineService
     {
         Task<IEnumerable<InjectionMoldingMachineDto>> GetAll();
-        Task<InjectionMoldingMachineDto> GetById(int machineId);
+        Task<InjectionMoldingMachineDto> GetById(int machineId, bool withProductionInfo = false);
         Task Update(int machineId, InjectionMoldingMachineDto machineDto);
         Task Create(InjectionMoldingMachineDto machineDto);
         Task Remove(int machineId);
@@ -34,9 +34,9 @@ namespace Production.Application.Services
             return machineDto;
         }
 
-        public async Task<InjectionMoldingMachineDto> GetById(int machineId)
+        public async Task<InjectionMoldingMachineDto> GetById(int machineId, bool withProductionInfo = false)
         {
-            var machine = await _machineRepository.GetById(machineId);
+            var machine = await _machineRepository.GetById(machineId, withProductionInfo);
 
             var machineDto = _mapper.Map<InjectionMoldingMachineDto>(machine);
 

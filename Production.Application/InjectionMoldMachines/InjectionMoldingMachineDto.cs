@@ -1,4 +1,6 @@
-﻿namespace Production.Application.InjectionMoldMachines
+﻿using Production.Application.Productions;
+
+namespace Production.Application.InjectionMoldMachines
 {
     public class InjectionMoldingMachineDto
     {
@@ -7,5 +9,6 @@
         public bool Online { get; set; }
         public int Tonnage { get; set; }
         public string Size { get; set; } = default!;
+        public List<PlannedProductionDto>? PlannedProductions { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Moq;
 using Production.Application.InjectionMolds;
+using Production.Application.Productions;
 using Production.Application.Services;
 using System.Net;
 using Xunit;
@@ -100,9 +101,9 @@ namespace Production.Presentation.Controllers.Tests
 				Name = "TestMold",
 				Size = "TestSize",
 				Producer = "TestProducer",
-				PlannedProductions = new List<PlannedProduction>()
+				PlannedProductions = new List<PlannedProductionDto>()
 				{ 
-					new PlannedProduction()
+					new PlannedProductionDto()
 				}
 			};
 

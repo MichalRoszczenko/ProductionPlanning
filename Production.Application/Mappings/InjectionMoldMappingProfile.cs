@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Production.Application.InjectionMolds;
+using Production.Application.Productions;
 
 namespace Production.Application.Mappings
 {
@@ -13,15 +14,15 @@ namespace Production.Application.Mappings
                 .ForMember(x => x.PlannedProductions, opt => opt.MapFrom(src => GetProductionTimes(src.Productions!)));
         }
 
-        private List<PlannedProduction> GetProductionTimes(IEnumerable<Domain.Entities.Production> productions)
+        private List<PlannedProductionDto> GetProductionTimes(IEnumerable<Domain.Entities.Production> productions)
         {
-            var productionTimes = new List<PlannedProduction>();
+            var productionTimes = new List<PlannedProductionDto>();
 
             if (productions.Any())
             {
                 foreach (var production in productions)
                 {
-                    var productionTime = new PlannedProduction()
+                    var productionTime = new PlannedProductionDto()
                     {
                         ProductionId = production.Id,
                         StartProduction = production.Start,

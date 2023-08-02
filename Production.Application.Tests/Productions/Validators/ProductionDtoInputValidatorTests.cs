@@ -54,7 +54,7 @@ namespace Production.Application.Productions.Validators.Tests
 
             var machineRepositoryMock = new Mock<IInjectionMoldingMachineRepository>();
 			machineRepositoryMock.Setup(s
-				=> s.GetById(machine.Id))
+				=> s.GetById(machine.Id, It.IsAny<bool>()))
 				.ReturnsAsync(machine);
 
 			var validator = new ProductionDtoValidator(moldRepositoryMock.Object, machineRepositoryMock.Object);

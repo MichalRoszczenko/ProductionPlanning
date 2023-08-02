@@ -34,7 +34,7 @@ namespace Production.Infrastructure.Repositories
 
         public async Task<InjectionMold?> GetById(Guid moldId, bool withProductionInfo = false)
         {
-            if(withProductionInfo == true)
+            if(withProductionInfo)
             {
                 var extendedInjecitonMold = await _dbContext.InjectionMolds
                  .Include(n => n.Productions!
@@ -43,7 +43,7 @@ namespace Production.Infrastructure.Repositories
 
                 return extendedInjecitonMold;
             }
-            else return  await _dbContext.InjectionMolds.FirstOrDefaultAsync(x => x.Id == moldId);
+            else return await _dbContext.InjectionMolds.FirstOrDefaultAsync(x => x.Id == moldId);
         }
 
         public async Task Remove(Guid moldId)

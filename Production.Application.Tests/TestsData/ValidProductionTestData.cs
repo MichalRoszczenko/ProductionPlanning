@@ -29,8 +29,15 @@ namespace Production.Application.Tests.TestsData
 					Id = 1,
 					Name = "Test",
 					Size = "medium",
-					Tonnage = 2000
-				},
+					Tonnage = 2000,
+                    Productions = new List<Domain.Entities.Production>()
+                    {
+                        new Domain.Entities.Production()
+                        {
+                            InjectionMoldId = new Guid()
+                        }
+                    }
+                },
 				new ProductionDto()
 				{
 					Start = DateTime.Now,
@@ -61,8 +68,15 @@ namespace Production.Application.Tests.TestsData
 					Id = 1,
 					Name = "Te",
 					Size = "medium",
-					Tonnage = 2000
-				},
+					Tonnage = 2000,
+                    Productions = new List<Domain.Entities.Production>()
+                    {
+                        new Domain.Entities.Production()
+                        {
+                            InjectionMoldId = new Guid()
+                        }
+                    }
+                },
 				new ProductionDto()
 				{
 					Start = DateTime.Now,

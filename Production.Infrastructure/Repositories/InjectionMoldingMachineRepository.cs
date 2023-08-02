@@ -32,11 +32,18 @@ namespace Production.Infrastructure.Repositories
             return machines;
         }
 
-        public async Task<InjectionMoldingMachine?> GetById(int machineId)
+        public async Task<InjectionMoldingMachine?> GetById(int machineId, bool withProductionInfo = false)
         {
-            var machine = await _dbContext.InjectionMoldingMachines.FirstOrDefaultAsync(p => p.Id == machineId);
+            if(withProductionInfo)
+            {
+                var extendedMachine = await _dbContext
+                    .InjectionMoldingMachines
+                    .Include(s => s.Productions!.Where(mach => mach.InjectionMoldingMachineId == machineId))
+                    .FirstOrDefaultAsync(p => p.Id == machineId);
 
-            return machine;
+                return extendedMachine;
+            }
+            else return await _dbContext.InjectionMoldingMachines.FirstOrDefaultAsync(p => p.Id == machineId);
         }
 
         public async Task Remove(int machineId)

@@ -22,7 +22,7 @@ namespace Production.Presentation.Controllers
         [Route("InjectionMoldingMachine/{machineId}/Details")]
         public IActionResult Details(int machineId)
         {
-            var machine = _machineService.GetById(machineId).Result;
+            var machine = _machineService.GetById(machineId, true).Result;
 
             return View(machine);
         }

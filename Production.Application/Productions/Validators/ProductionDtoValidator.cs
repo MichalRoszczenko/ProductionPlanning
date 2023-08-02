@@ -40,6 +40,7 @@ namespace Production.Application.Productions.Validators
             RuleFor(e => e.InjectionMoldingMachineId)
                 .NotEmpty()
                 .NotNull()
+                .Must(InjectionMachineIsAvailable).WithMessage("The injection machine is scheduled for another production at this time")
                 .Custom((value, context) =>
                 {
                     var existingMachine = _machineRepository.GetById(value).Result;
@@ -69,7 +70,7 @@ namespace Production.Application.Productions.Validators
 
         private bool InjectionMachineIsAvailable(ProductionDto productionDto, int machineId)
         {
-            var machine = _machineRepository.GetById(machineId).Result;
+            var machine = _machineRepository.GetById(machineId, true).Result;
 
             if (machine == null || machine.Id == default) return false;
 

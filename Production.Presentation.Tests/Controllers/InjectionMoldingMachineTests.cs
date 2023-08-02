@@ -109,7 +109,7 @@ namespace Production.Presentation.Controllers.Tests
 
             var machineServiceMock = new Mock<IInjectionMoldingMachineService>();
 
-			machineServiceMock.Setup(s => s.GetById(It.IsAny<int>()))
+			machineServiceMock.Setup(s => s.GetById(It.IsAny<int>(),It.IsAny<bool>()))
 				.ReturnsAsync(machineDto);
 
 			var client = _factory.WithWebHostBuilder(builder 

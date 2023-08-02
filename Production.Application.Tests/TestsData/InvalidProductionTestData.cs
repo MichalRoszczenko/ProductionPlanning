@@ -29,8 +29,15 @@ namespace Production.Application.Tests.TestsData
 					Id = 1,
 					Name = "Test",
 					Size = "medium",
-					Tonnage = 2000
-				},
+					Tonnage = 2000,
+                    Productions = new List<Domain.Entities.Production>()
+                    {
+                        new Domain.Entities.Production()
+                        {
+                            InjectionMoldId = new Guid()
+                        }
+                    }
+                },
 				new ProductionDto()
 				{
 					Start = DateTime.Now,
@@ -61,8 +68,15 @@ namespace Production.Application.Tests.TestsData
 					Id = 1,
 					Name = "Test",
 					Size = "medium",
-					Tonnage = 2000
-				},
+					Tonnage = 2000,
+                    Productions = new List<Domain.Entities.Production>()
+                    {
+                        new Domain.Entities.Production()
+                        {
+                            InjectionMoldId = new Guid()
+                        }
+                    }
+                },
 				new ProductionDto()
 				{
 					Start = DateTime.Now,
@@ -103,7 +117,14 @@ namespace Production.Application.Tests.TestsData
                     Id = 1,
                     Name = "Test",
                     Size = "medium",
-                    Tonnage = 2000
+                    Tonnage = 2000,
+                    Productions = new List<Domain.Entities.Production>()
+                    {
+                        new Domain.Entities.Production()
+                        {
+                            InjectionMoldId = new Guid()
+                        }
+                    }
                 },
                 new ProductionDto()
                 {
@@ -115,6 +136,44 @@ namespace Production.Application.Tests.TestsData
                 }
             };
 
+            yield return new object[]
+            {
+                new InjectionMold()
+                {
+                    Id = new Guid("2e5a5182-3999-4a4c-ec3f-18db7f8126c4"),
+                    Name = "Test",
+                    Size = "medium",
+                    Producer = "GxTry",
+                    Productions = new List<Domain.Entities.Production>()
+                    {
+                        new Domain.Entities.Production()
+                    }
+                },
+                new InjectionMoldingMachine()
+                {
+                    Id = 1,
+                    Name = "Test",
+                    Size = "medium",
+                    Tonnage = 2000,
+                    Productions = new List<Domain.Entities.Production>()
+                    {
+                        new Domain.Entities.Production()
+                        {
+                            Id=3,
+                            Start = new DateTime(2002,2,2,14,30,00),
+                            End = new DateTime(2002,2,2,22,30,00)
+                        }
+                    }
+                },
+                new ProductionDto()
+                {
+                    Id=1,
+                    Start = new DateTime(2002,2,2,14,30,00), // machine scheduled for another production
+                    End = new DateTime(2002,2,2,22,30,00),
+                    InjectionMoldId = new Guid("2e5a5182-3999-4a4c-ec3f-18db7f8126c4"),
+                    InjectionMoldingMachineId = 1
+                }
+            };
         }
 			IEnumerator IEnumerable.GetEnumerator () => GetEnumerator();
 	}
