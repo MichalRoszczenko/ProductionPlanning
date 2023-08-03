@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Production.Application.InjectionMolds;
 using Production.Application.Productions;
+using Production.Domain.Entities;
 
 namespace Production.Application.Mappings
 {
@@ -8,9 +9,9 @@ namespace Production.Application.Mappings
     {
         public InjectionMoldMappingProfile()
         {
-            CreateMap<InjectionMoldDto, Domain.Entities.InjectionMold>();
+            CreateMap<InjectionMoldDto, InjectionMold>();
 
-            CreateMap<Domain.Entities.InjectionMold, InjectionMoldDto>()
+            CreateMap<InjectionMold, InjectionMoldDto>()
                 .ForMember(x => x.PlannedProductions, opt => opt.MapFrom(src => GetProductionTimes(src.Productions!)));
         }
 
