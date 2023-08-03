@@ -20,7 +20,8 @@ namespace Production.Infrastructure.Extensions
 
             services.AddScoped<IProductionRepository, ProductionRepository>();
             services.AddScoped<IInjectionMoldRepository, InjectionMoldRepository>();
-            services.AddScoped<IInjectionMoldingMachineRepository,InjectionMoldingMachineRepository>();
+            services.AddScoped<IInjectionMoldingMachineRepository, InjectionMoldingMachineRepository>();
+            services.AddScoped<IMaterialRepository, MaterialRepository>();
             services.AddScoped<IAssignProduction, AssignProduction>();
         }
     }

@@ -1,0 +1,9 @@
+﻿using Production.Domain.Entities;
+
+namespace Production.Domain.Interfaces
+{
+    public interface IMaterialRepository
+    {
+        Task<IEnumerable<Material>> GetAll();
+    }
+}

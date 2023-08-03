@@ -29,7 +29,7 @@ namespace Production.Infrastructure.Repositories
                 .Include(s => s.InjectionMoldingMachine)
                 .FirstOrDefaultAsync(s => s.Id == productionId);
 
-            return production;
+            return production!;
         }
 
         public async Task Create(Domain.Entities.Production production)
