@@ -54,6 +54,7 @@ namespace Production.Infrastructure.Persistence
                 etb.Property(m => m.Name).IsRequired().HasColumnType("varchar(50)");
                 etb.Property(m => m.Description).HasMaxLength(200);
                 etb.Property(m => m.Cost).HasColumnType("decimal(5,2)").IsRequired();
+                etb.OwnsOne(m => m.Stock);
             });
 
             modelBuilder.Entity<Domain.Entities.Ingredient>()

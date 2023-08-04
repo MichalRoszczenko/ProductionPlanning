@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
-<table class="table">
+<table class="table" style="text-align:center">
     <thead>
         <tr>
             <th>
@@ -19,13 +19,16 @@
                 Name
             </th>
             <th>
-                Type
+                Material in stock
             </th>
             <th>
-                Description
+                Material scheduled in stock
             </th>
             <th>
-                Cost[$]
+                Material on production
+            </th>
+            <th>
+                Material left
             </th>
             <th></th>
         </tr>
@@ -38,16 +41,20 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
-            </td>
+            </td>            
             <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
+                @Html.DisplayFor(modelItem => item.MaterialInStock)
+            </td>            
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
+                @Html.DisplayFor(modelItem => item.MaterialScheduledInStock)
+            </td>            
             <td>
-                @Html.DisplayFor(modelItem => item.Cost)
+                @Html.DisplayFor(modelItem => item.MaterialOnProduction)
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => item.MaterialLeft)
             </td>
+
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
