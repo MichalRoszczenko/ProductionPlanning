@@ -29,19 +29,16 @@ namespace Production.Presentation.Controllers.Tests
 				new InjectionMoldDto()
 				{
 					Name = "TestMold1",
-					Size = "TestSize1",
 					Producer = "TestProducer1"
 				},
 				new InjectionMoldDto()
 				{
 					Name = "TestMold2",
-					Size = "TestSize2",
 					Producer = "TestProducer2"
 				},
 				new InjectionMoldDto()
 				{
 					Name = "TestMold3",
-					Size = "TestSize3",
 					Producer = "TestProducer3"
 				},
 			};
@@ -61,7 +58,6 @@ namespace Production.Presentation.Controllers.Tests
 			foreach(var mold in moldsDto)
 			{
 				content.Should().Contain(mold.Name)
-					.And.Contain(mold.Size)
 					.And.Contain(mold.Producer);
 			}
 		}

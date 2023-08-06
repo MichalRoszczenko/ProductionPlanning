@@ -11,16 +11,16 @@ namespace Production.Presentation.Controllers
         {
             _materialService = materialService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var materials = _materialService.GetAll().Result;
+            var materials = await _materialService.GetAll();
             return View(materials);
         }
 
         [Route("Material/{materialId}/Details")]
-        public IActionResult Details(int materialId)
+        public async Task<IActionResult> Details(int materialId)
         {
-            var material = _materialService.GetById(materialId).Result;
+            var material = await _materialService.GetById(materialId);
             return View(material);
         }
     }

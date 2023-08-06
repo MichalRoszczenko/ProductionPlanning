@@ -12,25 +12,25 @@ namespace Production.Presentation.Controllers
         {
             _machineService = machineService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var machines = _machineService.GetAll().Result;
+            var machines = await _machineService.GetAll();
 
             return View(machines);
         }
 
         [Route("InjectionMoldingMachine/{machineId}/Details")]
-        public IActionResult Details(int machineId)
+        public async Task<IActionResult> Details(int machineId)
         {
-            var machine = _machineService.GetById(machineId, true).Result;
+            var machine = await _machineService.GetById(machineId, true);
 
             return View(machine);
         }
 
         [Route("InjectionMoldingMachine/{machineId}/Edit")]
-        public IActionResult Edit(int machineId) 
+        public async Task<IActionResult> Edit(int machineId) 
         {
-            var machine = _machineService.GetById(machineId).Result;
+            var machine = await _machineService.GetById(machineId);
 
             return View(machine);
         }
@@ -39,7 +39,7 @@ namespace Production.Presentation.Controllers
         [Route("InjectionMoldingMachine/{machineId}/Edit")]
         public async Task<IActionResult> Edit(int machineId, InjectionMoldingMachineDto machineDto)
         {
-            var machine = _machineService.GetById(machineId).Result;
+            var machine = await _machineService.GetById(machineId);
 
             if(!ModelState.IsValid) 
             {
@@ -70,9 +70,9 @@ namespace Production.Presentation.Controllers
         }
 
         [Route("InjectionMoldingMachine/{machineId}/Remove")]
-        public IActionResult Remove(int machineId)
+        public async Task<IActionResult> Remove(int machineId)
         {
-            var machine = _machineService.GetById(machineId).Result;
+            var machine = await _machineService.GetById(machineId);
 
             return View(machine);
         }

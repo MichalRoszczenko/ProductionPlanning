@@ -13,9 +13,9 @@ namespace Production.Presentation.Controllers
             _moldService = moldService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var molds = _moldService.GetAll().Result;
+            var molds = await _moldService.GetAll();
 
             return View(molds);
         }
@@ -26,9 +26,9 @@ namespace Production.Presentation.Controllers
         }
 
         [Route("InjectionMold/{moldId}/Details")]
-        public IActionResult Details(Guid moldId)
+        public async Task<ActionResult> Details(Guid moldId)
         {
-            var mold = _moldService.GetById(moldId,true).Result;
+            var mold = await _moldService.GetById(moldId,true);
 
             return View(mold);
         }
@@ -46,9 +46,9 @@ namespace Production.Presentation.Controllers
         }
 
         [Route("InjectionMold/{moldId}/Edit")]
-        public IActionResult Edit(Guid moldId)
+        public async Task<IActionResult> Edit(Guid moldId)
         {
-            var mold = _moldService.GetById(moldId).Result;
+            var mold = await _moldService.GetById(moldId);
 
             return View(mold);
         }
@@ -68,9 +68,9 @@ namespace Production.Presentation.Controllers
         }
 
         [Route("InjectionMold/{moldId}/Remove")]
-        public IActionResult Remove(Guid moldId)
+        public async Task<IActionResult> Remove(Guid moldId)
         {
-            var mold = _moldService.GetById(moldId).Result;
+            var mold = await _moldService.GetById(moldId);
 
             return View(mold);
         }

@@ -25,9 +25,9 @@ namespace Production.Presentation.Controllers
             return View(production);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            AddToolsToViewBag();
+            await AddToolsToViewBag();
 
             return View();
         }
@@ -35,7 +35,7 @@ namespace Production.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProductionDto productionDto)
         {
-            AddToolsToViewBag();
+            await AddToolsToViewBag();
 
             if (!ModelState.IsValid)
             {
@@ -48,17 +48,17 @@ namespace Production.Presentation.Controllers
         }
 
         [Route("Production/{productionId}/Details")]
-        public IActionResult Details(int productionId)
+        public async Task<IActionResult> Details(int productionId)
         {
-            var production = _productionService.GetById(productionId).Result;
+            var production = await _productionService.GetById(productionId);
 
             return View(production);
         }
 
         [Route("Production/{productionId}/Remove")]
-        public IActionResult Remove(int productionId)
+        public async Task<IActionResult> Remove(int productionId)
         {
-            var production = _productionService.GetById(productionId).Result;
+            var production = await _productionService.GetById(productionId);
 
             return View(production);
         }
@@ -75,7 +75,7 @@ namespace Production.Presentation.Controllers
         [Route("Production/{productionId}/Edit")]
         public async Task<IActionResult> Edit(int productionId)
         {
-            AddToolsToViewBag();
+            await AddToolsToViewBag();
 
             var production = await _productionService.GetById(productionId);  
 
@@ -86,7 +86,7 @@ namespace Production.Presentation.Controllers
         [Route("Production/{productionId}/Edit")]
         public async Task<IActionResult> Edit(int productionId, ProductionDto productionDto)
         {
-            AddToolsToViewBag();
+            await AddToolsToViewBag();
 
             var production = await _productionService.GetById(productionId);
 
@@ -100,11 +100,11 @@ namespace Production.Presentation.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private void AddToolsToViewBag()
+        private async Task AddToolsToViewBag()
         {
-            var molds = _moldService.GetAll().Result;
+            var molds = await _moldService.GetAll();
 
-            var machines = _machineService.GetAll().Result;
+            var machines = await _machineService.GetAll();
 
             this.CreateViewBagOfTools(machines, molds);
         }
