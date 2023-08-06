@@ -8,6 +8,7 @@ namespace Production.Application.InjectionMolds
         public string Name { get; set; } = default!;
         public string Producer { get; set; } = default!;
         public string Size { get; set; } = default!;
+        public decimal Consumption { get; set; } = default!;
         public List<PlannedProductionDto>? PlannedProductions { get; set; }
     }
 }

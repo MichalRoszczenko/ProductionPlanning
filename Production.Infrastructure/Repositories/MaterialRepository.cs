@@ -19,5 +19,15 @@ namespace Production.Infrastructure.Repositories
 
             return materials;
         }
+
+        public async Task<Material> GetById(int materialId)
+        {
+            var material = await _dbContext
+                .Materials
+                .Include(n =>n.Stock)
+                .FirstOrDefaultAsync(p => p.Id == materialId);
+
+            return material!;
+        }
     }
 }

@@ -16,5 +16,12 @@ namespace Production.Presentation.Controllers
             var materials = _materialService.GetAll().Result;
             return View(materials);
         }
+
+        [Route("Material/{materialId}/Details")]
+        public IActionResult Details(int materialId)
+        {
+            var material = _materialService.GetById(materialId).Result;
+            return View(material);
+        }
     }
 }

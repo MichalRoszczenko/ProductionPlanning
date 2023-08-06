@@ -26,9 +26,6 @@
             <th>
                 Producer
             </th>
-            <th>
-                Size
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -43,9 +40,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Producer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Size)
             </td>
             <td>
                 <a asp-controller="InjectionMold" asp-action="Edit" asp-route-moldId="@item.Id">Edit</a> |

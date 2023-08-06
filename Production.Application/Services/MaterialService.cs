@@ -7,6 +7,7 @@ namespace Production.Application.Services
     public interface IMaterialService
     {
         Task<IEnumerable<MaterialDto>> GetAll();
+        Task<MaterialDto> GetById(int materialId);
     }
 
     public class MaterialService : IMaterialService
@@ -24,6 +25,14 @@ namespace Production.Application.Services
             var materials = await _repository.GetAll();
             var materialsDto = _mapper.Map<IEnumerable<MaterialDto>>(materials);
             return materialsDto;
+        }
+
+        public async Task<MaterialDto> GetById(int materialId)
+        {
+            var material = await _repository.GetById(materialId);
+            var materialDto = _mapper.Map<MaterialDto>(material);
+
+            return materialDto;
         }
     }
 }

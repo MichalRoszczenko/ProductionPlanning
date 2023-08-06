@@ -13,22 +13,13 @@
     <thead>
         <tr>
             <th>
-                Id
+                @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                Name
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                Material in stock
-            </th>
-            <th>
-                Material scheduled in stock
-            </th>
-            <th>
-                Material on production
-            </th>
-            <th>
-                Material left
+                @Html.DisplayNameFor(model => model.MaterialInStock).Replace("MaterialInStock","Material in stock [kg]")
             </th>
             <th></th>
         </tr>
@@ -46,18 +37,8 @@
                 @Html.DisplayFor(modelItem => item.MaterialInStock)
             </td>            
             <td>
-                @Html.DisplayFor(modelItem => item.MaterialScheduledInStock)
-            </td>            
-            <td>
-                @Html.DisplayFor(modelItem => item.MaterialOnProduction)
-            </td>            
-            <td>
-                @Html.DisplayFor(modelItem => item.MaterialLeft)
-            </td>
-
-            <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                <a asp-action="Details" asp-route-materialId="@item.Id">Details</a> |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
