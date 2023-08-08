@@ -1,4 +1,5 @@
-﻿using Production.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Production.Domain.Entities;
 using Production.Infrastructure.Persistence;
 
 namespace Production.Infrastructure.Seeders
@@ -15,11 +16,14 @@ namespace Production.Infrastructure.Seeders
         {
             if(await _dbContext.Database.CanConnectAsync())
             {
-                if(!_dbContext.Productions.Any())
+                if(_dbContext.Database.IsSqlServer())
                 {
-                    var production = CreateProduction();
-                    _dbContext.Productions.Add(production);
-                    await _dbContext.SaveChangesAsync();
+                    if (!_dbContext.Productions.Any())
+                    {
+                        var production = CreateProduction();
+                        _dbContext.Productions.Add(production);
+                        await _dbContext.SaveChangesAsync();
+                    }
                 }
             }
         }
