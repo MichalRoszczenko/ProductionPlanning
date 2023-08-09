@@ -8,6 +8,7 @@ namespace Production.Application.Services
     {
         Task<IEnumerable<MaterialDto>> GetAll();
         Task<MaterialDto> GetById(int materialId);
+        Task Create(MaterialDto materialDto);
     }
 
     public class MaterialService : IMaterialService
@@ -33,6 +34,12 @@ namespace Production.Application.Services
             var materialDto = _mapper.Map<MaterialDto>(material);
 
             return materialDto;
+        }
+
+        public async Task Create(MaterialDto materialDto)
+        {
+            var material = _mapper.Map<Domain.Entities.Material>(materialDto);
+            await _repository.Create(material);
         }
     }
 }

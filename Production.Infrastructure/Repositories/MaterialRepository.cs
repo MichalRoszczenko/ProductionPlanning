@@ -29,5 +29,11 @@ namespace Production.Infrastructure.Repositories
 
             return material!;
         }
+
+        public async Task Create(Material material)
+        {
+            await _dbContext.Materials.AddAsync(material);
+            _dbContext.SaveChanges();
+        }
     }
 }

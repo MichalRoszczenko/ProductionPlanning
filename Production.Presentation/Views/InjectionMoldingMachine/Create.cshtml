@@ -18,12 +18,12 @@
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Online" /> @Html.DisplayNameFor(model => model.Online)
+                    <input class="form-check-input" asp-for="Online" /> <label asp-for="Online" class="control-label"></label>
                 </label>
             </div>
             <div class="form-group">
                 <label asp-for="Tonnage" class="control-label"></label>
-                <input asp-for="Tonnage" class="form-control" />
+                <input asp-for="Tonnage" type="text" class="form-control" />
                 <span asp-validation-for="Tonnage" class="text-danger"></span>
             </div>
             <div class="form-group">

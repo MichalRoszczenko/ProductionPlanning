@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Production.Application.Material;
 using Production.Application.Services;
 
 namespace Production.Presentation.Controllers
@@ -22,6 +23,24 @@ namespace Production.Presentation.Controllers
         {
             var material = await _materialService.GetById(materialId);
             return View(material);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(MaterialDto materialDto)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(materialDto);
+            }
+
+            await _materialService.Create(materialDto);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

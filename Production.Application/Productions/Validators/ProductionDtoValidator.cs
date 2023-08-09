@@ -14,17 +14,17 @@ namespace Production.Application.Productions.Validators
             _machineRepository = machineRepository;
 
             RuleFor(e => e.Start)
-                .NotNull()
+                .NotNull().WithMessage("The field is required")
                 .NotEmpty();
 
             RuleFor(e => e.End)
-                .NotEmpty()
+                .NotEmpty().WithMessage("The field is required")
                 .NotNull()
                 .GreaterThan(v => v.Start.AddHours(1))
                 .WithMessage("The End of the production must be selected after start. The minimum production time is one hour");
 
             RuleFor(e => e.InjectionMoldId)
-                .NotEmpty()
+                .NotEmpty().WithMessage("Select an injection mold")
                 .NotNull()
                 .Must(InjectionMoldIsAvailable).WithMessage("The injection mold is scheduled for another production at this time")
                 .Custom((value, context) =>
@@ -38,7 +38,7 @@ namespace Production.Application.Productions.Validators
                 });
 
             RuleFor(e => e.InjectionMoldingMachineId)
-                .NotEmpty()
+                .NotEmpty().WithMessage("Select an injection molding machine")
                 .NotNull()
                 .Must(InjectionMachineIsAvailable).WithMessage("The injection machine is scheduled for another production at this time")
                 .Custom((value, context) =>
