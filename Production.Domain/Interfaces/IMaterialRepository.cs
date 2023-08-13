@@ -6,6 +6,8 @@ namespace Production.Domain.Interfaces
     {
         Task<IEnumerable<Material>> GetAll();
         Task<Material> GetById(int materialId);
+        Task<Material> GetByMoldId(Guid moldId);
         Task Create(Material material);
+        Task Commit();
     }
 }

@@ -13,6 +13,11 @@ namespace Production.Infrastructure.Repositories
         {
             _dbContext = dbContext;
         }
+        public async Task Commit()
+        {
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<Material>> GetAll()
         {
             var materials = await _dbContext.Materials.ToListAsync();
@@ -26,6 +31,17 @@ namespace Production.Infrastructure.Repositories
                 .Materials
                 .Include(n =>n.Stock)
                 .FirstOrDefaultAsync(p => p.Id == materialId);
+
+            return material!;
+        }
+
+        public async Task<Material> GetByMoldId(Guid moldId)
+        {
+            var material = await _dbContext
+                .Materials
+                .Include(f => f.InjectionMold)
+                .Include(n => n.Stock)
+                .FirstOrDefaultAsync(p => p.InjectionMold.Id == moldId);
 
             return material!;
         }

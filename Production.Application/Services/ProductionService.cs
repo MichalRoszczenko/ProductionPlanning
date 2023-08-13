@@ -16,12 +16,15 @@ namespace Production.Application.Services
     public class ProductionService : IProductionService
     {
         private readonly IProductionRepository _productionRepository;
+        private readonly IProductionInventoryService _productionChecker;
         private readonly IMapper _mapper;
 
-        public ProductionService(IProductionRepository productionRepository, IMapper mapper)
+        public ProductionService(IProductionRepository productionRepository, IMapper mapper,
+            IProductionInventoryService productionChecker)
         {
             _productionRepository = productionRepository;
             _mapper = mapper;
+            _productionChecker = productionChecker;
         }
         public async Task<IEnumerable<ProductionDto>> GetAll()
         {
@@ -45,6 +48,10 @@ namespace Production.Application.Services
             var production = _mapper.Map<Domain.Entities.Production>(productionDto);
 
             production.ProductionTimeCalculation();
+
+            var materialIsScheduled = await _productionChecker.ReserveMaterialForProduction(production.InjectionMoldId, production.ProductionTimeInHours);
+
+            production.MaterialIsRdy = materialIsScheduled;
 
             await _productionRepository.Create(production);
         }

@@ -9,8 +9,8 @@
         public decimal Cost { get; set; }
 
         public int MaterialInStock { get; set; } = 0;
-        public int MaterialScheduledInStock { get; set; } = 0;
+        public int PlannedMaterialDemand { get; set; } = 0;
+        public int MaterialToOrder { get; set; } = 0;
         public int MaterialOnProduction { get; set; } = 0;
-        public int MaterialLeft { get; private set; }
     }
 }

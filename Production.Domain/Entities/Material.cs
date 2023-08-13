@@ -8,6 +8,6 @@
         public string Description { get; set; } = default!;
         public decimal Cost { get; set; } = default!;
         public InjectionMold? InjectionMold { get; set; }
-        public MaterialStock Stock { get; set; }
+        public MaterialStock Stock { get; set; } = new MaterialStock();
     }
 }

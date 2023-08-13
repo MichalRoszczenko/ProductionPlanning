@@ -10,14 +10,14 @@ namespace Production.Application.Mappings
         {
             CreateMap<Domain.Entities.Material, MaterialDto>()
                 .ForMember(dto => dto.MaterialInStock, opt => opt.MapFrom(src => src.Stock.MaterialInStock))
-                .ForMember(dto => dto.MaterialScheduledInStock, opt => opt.MapFrom(src => src.Stock.MaterialScheduledInStock))
+                .ForMember(dto => dto.PlannedMaterialDemand, opt => opt.MapFrom(src => src.Stock.PlannedMaterialDemand))
                 .ForMember(dto => dto.MaterialOnProduction, opt => opt.MapFrom(src => src.Stock.MaterialOnProduction))
-                .ForMember(dto => dto.MaterialLeft, opt => opt.MapFrom(src => src.Stock.MaterialLeft));
+                .ForMember(dto => dto.MaterialToOrder, opt => opt.MapFrom(src => src.Stock.MaterialToOrder));
 
             CreateMap<MaterialDto, Domain.Entities.Material>().ForMember(m => m.Stock, opt => opt.MapFrom(dto => new MaterialStock()
             {
                 MaterialInStock = dto.MaterialInStock,
-                MaterialScheduledInStock = dto.MaterialScheduledInStock,
+                PlannedMaterialDemand = dto.PlannedMaterialDemand,
                 MaterialOnProduction = dto.MaterialOnProduction
             }));
         }
