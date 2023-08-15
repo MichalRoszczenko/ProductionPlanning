@@ -54,6 +54,7 @@ namespace Production.Application.Services
             mold!.Name = moldDto.Name;
             mold.Producer = moldDto.Producer;
             mold.Size = moldDto.Size;
+            mold.Consumption = mold.Consumption;
 
             await _moldRepository.Commit();
         }

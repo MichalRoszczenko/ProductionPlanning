@@ -9,9 +9,13 @@
 
         public void CountMaterialToOrder()
         {
-            if (PlannedMaterialDemand >= MaterialInStock)
+            if (PlannedMaterialDemand > MaterialInStock)
             {
                 MaterialToOrder = PlannedMaterialDemand - MaterialInStock;
+            }
+            else if (PlannedMaterialDemand <= MaterialInStock)
+            {
+                MaterialToOrder = 0;
             }
         }
     }

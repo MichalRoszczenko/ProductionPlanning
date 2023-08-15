@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Production.Application.Tests.Productions.Validators
 {
-    public class ProductionDtoInputValidatorTests
+    public class ProductionDtoValidatorTests
     {
         [Theory()]
         [ClassData(typeof(ValidProductionTestData))]

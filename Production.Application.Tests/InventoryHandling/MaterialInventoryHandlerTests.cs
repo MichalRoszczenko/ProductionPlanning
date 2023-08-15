@@ -58,7 +58,7 @@ namespace Production.Application.InventoryHandling.Tests
 
             var materialInformationDto = new MaterialInformationDto(productionTime, consumption);
 
-            materialhandler.UpdateMaterialInformation(material, materialInformationDto);
+            materialhandler.AddMaterialDemand(material, materialInformationDto);
 
             //assert
 

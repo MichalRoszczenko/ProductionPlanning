@@ -3,7 +3,8 @@
     public interface IMaterialInventoryHandler
     {
         MaterialInformationDto GetMaterialInformation(int productionTime, Domain.Entities.Material material);
-        void UpdateMaterialInformation(Domain.Entities.Material material, MaterialInformationDto informationDto);
+        void AddMaterialDemand(Domain.Entities.Material material, MaterialInformationDto informationDto);
+        void RemoveMaterialDemand(Domain.Entities.Material material, MaterialInformationDto informationDto);
     }
 
     public class MaterialInventoryHandler : IMaterialInventoryHandler
@@ -20,9 +21,16 @@
             return new MaterialInformationDto(productionTime, consumption);
         }
 
-        public void UpdateMaterialInformation(Domain.Entities.Material material, MaterialInformationDto informationDto)
+        public void AddMaterialDemand(Domain.Entities.Material material, MaterialInformationDto informationDto)
         {
             material.Stock.PlannedMaterialDemand += informationDto.Usage;
+
+            material.Stock.CountMaterialToOrder();
+        }
+
+        public void RemoveMaterialDemand(Domain.Entities.Material material, MaterialInformationDto informationDto)
+        {
+            material.Stock.PlannedMaterialDemand -= informationDto.Usage;
 
             material.Stock.CountMaterialToOrder();
         }

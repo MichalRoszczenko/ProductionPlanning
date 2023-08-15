@@ -1,9 +1,9 @@
 ﻿using Production.Application.Productions;
 using System.Collections;
 
-namespace Production.Presentation.Tests.Controllers.ProductionControllerTests.TestsData
+namespace Production.Presentation.Tests.Controllers.TestsData
 {
-    public class ProductionDtoTestData : IEnumerable<object[]>
+    public class ProductionIndexActionTestData : IEnumerable<object[]>
     {
         public IEnumerator<object[]> GetEnumerator()
         {

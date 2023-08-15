@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.TestHost;
 using Moq;
 using Production.Application.Productions;
 using Production.Application.Services;
-using Production.Presentation.Tests.Controllers.ProductionControllerTests.TestsData;
+using Production.Presentation.Tests.Controllers.TestsData;
 using System.Net;
 using Xunit;
 
@@ -20,7 +20,7 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
         }
 
         [Theory()]
-        [ClassData(typeof(ProductionDtoTestData))]
+        [ClassData(typeof(ProductionIndexActionTestData))]
         public async Task Index_ReturnsViewWithExpectedData_ForExistingProductions(List<ProductionDto> productionsDto)
         {
             //arrange

@@ -47,8 +47,6 @@ namespace Production.Application.Services
         {
             var production = _mapper.Map<Domain.Entities.Production>(productionDto);
 
-            production.ProductionTimeCalculation();
-
             var materialIsScheduled = await _productionChecker.IsMaterialInStock(production);
 
             production.MaterialIsRdy = materialIsScheduled;
@@ -59,6 +57,8 @@ namespace Production.Application.Services
         public async Task Remove(int productionId)
         {
             var production = await _productionRepository.GetById(productionId);
+
+            await _productionChecker.HandOverMaterial(production);
 
             await _productionRepository.Remove(production!);
         }
