@@ -25,7 +25,8 @@ namespace Production.Application.Material.Validetors
 
             RuleFor(e => e.MaterialInStock)
                 .NotEmpty().WithMessage("Please enter actual amount of material in the stack")
-                .NotNull().WithMessage("Enter amount of material in stock");
+                .NotNull().WithMessage("Enter amount of material in stock")
+                .GreaterThanOrEqualTo(0).WithMessage("Material cannot be less than 0");
         }
     }
 }

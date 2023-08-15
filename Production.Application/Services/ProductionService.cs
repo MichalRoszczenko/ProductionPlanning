@@ -49,7 +49,7 @@ namespace Production.Application.Services
 
             production.ProductionTimeCalculation();
 
-            var materialIsScheduled = await _productionChecker.ReserveMaterialForProduction(production.InjectionMoldId, production.ProductionTimeInHours);
+            var materialIsScheduled = await _productionChecker.IsMaterialInStock(production);
 
             production.MaterialIsRdy = materialIsScheduled;
 

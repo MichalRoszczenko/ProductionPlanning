@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Production.Application.InjectionMolds;
+using Production.Application.Mappings;
 using Production.Domain.Entities;
 using Xunit;
 
-namespace Production.Application.Mappings.Tests
+namespace Production.Application.Tests.Mappings
 {
     public class InjectionMoldMappingProfileTests
     {
@@ -42,7 +43,7 @@ namespace Production.Application.Mappings.Tests
 
             //assert
 
-            for ( var i = 0 ; i < injectionMold.Productions.Count;i++)
+            for (var i = 0; i < injectionMold.Productions.Count; i++)
             {
                 result.PlannedProductions![i].StartProduction.Should().Be(injectionMold.Productions[i].Start);
                 result.PlannedProductions[i].EndProduction.Should().Be(injectionMold.Productions[i].End);

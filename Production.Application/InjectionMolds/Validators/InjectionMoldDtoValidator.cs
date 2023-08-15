@@ -21,6 +21,9 @@ namespace Production.Application.InjectionMolds.Validators
                 .NotNull()
                 .MinimumLength(2).WithMessage("The Producer should have atleast 2 characters.")
                 .MaximumLength(15).WithMessage("The Producer should have maximum 15 characters.");
+
+            RuleFor(e => e.Consumption)
+                .GreaterThan(0).WithMessage("Consumption should be greater than 0");
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Production.Application.InjectionMoldMachines;
+using Production.Application.Mappings;
 using Production.Domain.Entities;
 using Xunit;
 
-namespace Production.Application.Mappings.Tests
+namespace Production.Application.Tests.Mappings
 {
     public class InjectionMoldMachineMappingProfileTests
     {

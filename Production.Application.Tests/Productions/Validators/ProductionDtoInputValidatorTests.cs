@@ -1,65 +1,67 @@
 ﻿using FluentValidation.TestHelper;
 using Moq;
-using Production.Application.Tests.TestsData;
+using Production.Application.Productions;
+using Production.Application.Productions.Validators;
+using Production.Application.Tests.TestsData.ProductionsValidatorsTestData;
 using Production.Domain.Entities;
 using Production.Domain.Interfaces;
 using Xunit;
 
-namespace Production.Application.Productions.Validators.Tests
+namespace Production.Application.Tests.Productions.Validators
 {
-	public class ProductionDtoInputValidatorTests
-	{
+    public class ProductionDtoInputValidatorTests
+    {
         [Theory()]
-		[ClassData(typeof(ValidProductionTestData))]
-		public void ProductionValidator_ShouldNotHaveValidationError_ForValidData(InjectionMold mold,
-			InjectionMoldingMachine machine, ProductionDto productionDto)
-		{
-			//arrange
+        [ClassData(typeof(ValidProductionTestData))]
+        public void ProductionValidator_ShouldNotHaveValidationError_ForValidData(InjectionMold mold,
+            InjectionMoldingMachine machine, ProductionDto productionDto)
+        {
+            //arrange
 
-			var validator = CreateValidatorWithMockedMoldAndMachine(mold, machine);
+            var validator = CreateValidatorWithMockedMoldAndMachine(mold, machine);
 
-			//act
+            //act
 
-			var result = validator.TestValidate(productionDto);
+            var result = validator.TestValidate(productionDto);
 
-			//assert
+            //assert
 
-			result.ShouldNotHaveAnyValidationErrors();
-		}
+            result.ShouldNotHaveAnyValidationErrors();
+        }
 
-		[Theory()]
-		[ClassData(typeof(InvalidProductionTestData))]
-		public void ProductionValidator_ShouldHaveValidationErrors_ForInvalidtData(InjectionMold mold,
-			InjectionMoldingMachine machine, ProductionDto productionDto)
-		{
-			//arrange
+        [Theory()]
+        [ClassData(typeof(InvalidProductionTestData))]
+        public void ProductionValidator_ShouldHaveValidationErrors_ForInvalidtData(InjectionMold mold,
+            InjectionMoldingMachine machine, ProductionDto productionDto)
+        {
+            //arrange
 
-			var validator = CreateValidatorWithMockedMoldAndMachine(mold, machine);
+            var validator = CreateValidatorWithMockedMoldAndMachine(mold, machine);
 
-			//act
+            //act
 
-			var result = validator.TestValidate(productionDto);
+            var result = validator.TestValidate(productionDto);
 
-			//assert
+            //assert
 
-			result.ShouldHaveAnyValidationError();
-		}
+            result.ShouldHaveAnyValidationError();
+        }
 
-		private ProductionDtoValidator CreateValidatorWithMockedMoldAndMachine(InjectionMold mold,
-			InjectionMoldingMachine machine)
-		{
-			var moldRepositoryMock = new Mock<IInjectionMoldRepository>();
-			moldRepositoryMock.Setup(a => a.GetById(mold.Id,It.IsAny<bool>()))
-				.ReturnsAsync(mold);
+        private ProductionDtoValidator CreateValidatorWithMockedMoldAndMachine(InjectionMold mold,
+            InjectionMoldingMachine machine)
+        {
+            var moldRepositoryMock = new Mock<IInjectionMoldRepository>();
+            moldRepositoryMock.Setup(a => a.GetById(mold.Id, It.IsAny<bool>()))
+                .ReturnsAsync(mold);
 
             var machineRepositoryMock = new Mock<IInjectionMoldingMachineRepository>();
-			machineRepositoryMock.Setup(s
-				=> s.GetById(machine.Id, It.IsAny<bool>()))
-				.ReturnsAsync(machine);
+            machineRepositoryMock.Setup(s
+                => s.GetById(machine.Id, It.IsAny<bool>()))
+                .ReturnsAsync(machine);
 
-			var validator = new ProductionDtoValidator(moldRepositoryMock.Object, machineRepositoryMock.Object);
+            var validator = new ProductionDtoValidator(moldRepositoryMock.Object, machineRepositoryMock.Object);
 
-			return validator;
-		}
-	}
+            return validator;
+        }
+    }
 }

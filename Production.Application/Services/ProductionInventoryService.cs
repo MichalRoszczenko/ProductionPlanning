@@ -1,48 +1,46 @@
-﻿using Production.Domain.Interfaces;
+﻿using Production.Application.InventoryHandling;
+using Production.Domain.Interfaces;
 
 namespace Production.Application.Services
 {
     public interface IProductionInventoryService
     {
-        Task<bool> ReserveMaterialForProduction(Guid moldId, int productionTime);
+        Task<bool> IsMaterialInStock(Domain.Entities.Production production);
     }
 
-    public class 
-        ProductionInventoryService : IProductionInventoryService
+    public class ProductionInventoryService : IProductionInventoryService
     {
         private readonly IMaterialRepository _materialRepository;
+        private readonly IMaterialInventoryHandler _inventoryHandler;
 
-        public ProductionInventoryService(IMaterialRepository materialRepository)
+        public ProductionInventoryService(IMaterialRepository materialRepository, IMaterialInventoryHandler inventoryHandler)
         {
             _materialRepository = materialRepository;
+            _inventoryHandler = inventoryHandler;
         }
 
-        public async Task<bool> ReserveMaterialForProduction(Guid moldId, int productionTime)
+        public async Task<bool> IsMaterialInStock(Domain.Entities.Production production)
         {
-            var material = await _materialRepository.GetByMoldId(moldId);
+            var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
 
-            if(material == null || material.InjectionMold!.Consumption < 0)
-            {
-                throw new NullReferenceException();
-            }
+            var materialInfo = _inventoryHandler.GetMaterialInformation(production.ProductionTimeInHours, material);
 
-            var consumption = material.InjectionMold!.Consumption;
+            _inventoryHandler.UpdateMaterialInformation(material, materialInfo);
 
-            var usage = CalculateMaterialConsumption(productionTime, consumption);
-
-            material.Stock.PlannedMaterialDemand += usage;
-
-            if (material.Stock.PlannedMaterialDemand > material.Stock.MaterialInStock)
-            {
-                material.Stock.MaterialToOrder = material.Stock.PlannedMaterialDemand - material.Stock.MaterialInStock;
-                return false;
-            }
+            var isAvalaiable = IsAvalaible(material);
 
             await _materialRepository.Commit();
 
-            return true;
+            return isAvalaiable;
         }
 
-        private int CalculateMaterialConsumption(int productionTime, decimal consumption) => (int)Math.Ceiling(productionTime * consumption);
+        private bool IsAvalaible(Domain.Entities.Material material)
+        {
+            if (material.Stock.PlannedMaterialDemand > material.Stock.MaterialInStock)
+            {
+                return false;
+            }
+            else return true;
+        }
     }
 }
