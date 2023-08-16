@@ -30,8 +30,8 @@ namespace Production.Application.Tests.Productions.Validators
         }
 
         [Theory()]
-        [ClassData(typeof(InvalidProductionTestData))]
-        public void ProductionValidator_ShouldHaveValidationErrors_ForInvalidtData(InjectionMold mold,
+        [ClassData(typeof(NoValidProductionTestData))]
+        public void ProductionValidator_ShouldHaveValidationErrors_ForNoValidData(InjectionMold mold,
             InjectionMoldingMachine machine, ProductionDto productionDto)
         {
             //arrange

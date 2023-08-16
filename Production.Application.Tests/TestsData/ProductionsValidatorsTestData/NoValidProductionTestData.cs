@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace Production.Application.Tests.TestsData.ProductionsValidatorsTestData
 {
-    public class InvalidProductionTestData : IEnumerable<object[]>
+    public class NoValidProductionTestData : IEnumerable<object[]>
     {
         public IEnumerator<object[]> GetEnumerator()
         {

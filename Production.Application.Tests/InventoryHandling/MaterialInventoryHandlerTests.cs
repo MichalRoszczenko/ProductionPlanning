@@ -26,8 +26,8 @@ namespace Production.Application.InventoryHandling.Tests
         }
 
         [Theory()]
-        [ClassData(typeof(InvalidGetMaterialInformation))]
-        public void GetMaterialInformation_ThrowException_ForInvalidArguments(int productionTime, Domain.Entities.Material material)
+        [ClassData(typeof(NoValidGetMaterialInformation))]
+        public void GetMaterialInformation_ThrowException_ForNoValidArguments(int productionTime, Domain.Entities.Material material)
         {
             //arrange
 
@@ -43,20 +43,21 @@ namespace Production.Application.InventoryHandling.Tests
         }
 
         [Theory()]
-        [ClassData(typeof(ValidUpdateMaterialInformation))]
-        public void UpdateMaterialInformation_ReturnCorrectMaterial_ForValidArguments(int productionTime, decimal consumption , Domain.Entities.Material material)
+        [ClassData(typeof(ValidMaterialDemand))]
+        public void AddMaterialDemand_ReturnCorrectMaterial_ForValidArguments(int productionTime, decimal consumption , Domain.Entities.Material material)
         {
             //arrange
 
+            material.Stock.CountMaterialToOrder();
             var startedMaterialToOrder = material.Stock.MaterialToOrder;
             var startedMaterialInStock= material.Stock.MaterialInStock;
             var startedMaterialDemand = material.Stock.PlannedMaterialDemand;
 
             var materialhandler = new MaterialInventoryHandler();
 
-            //act
-
             var materialInformationDto = new MaterialInformationDto(productionTime, consumption);
+
+            //act
 
             materialhandler.AddMaterialDemand(material, materialInformationDto);
 
@@ -67,7 +68,57 @@ namespace Production.Application.InventoryHandling.Tests
                 .Be(startedMaterialInStock < material.Stock.PlannedMaterialDemand 
                 ? material.Stock.PlannedMaterialDemand - startedMaterialInStock 
                 : startedMaterialToOrder);
-            Console.WriteLine();
+        }
+
+        [Theory()]
+        [ClassData(typeof(ValidMaterialDemand))]
+        public void RemoveMaterialDemand_ReturnCorrectMaterial_ForValidArguments(int productionTime, decimal consumption, Domain.Entities.Material material)
+        {
+            //arrange
+
+            material.Stock.CountMaterialToOrder();
+            var startedMaterialToOrder = material.Stock.MaterialToOrder;
+            var startedMaterialInStock = material.Stock.MaterialInStock;
+            var startedMaterialDemand = material.Stock.PlannedMaterialDemand;
+
+            var materialhandler = new MaterialInventoryHandler();
+
+            var materialInformationDto = new MaterialInformationDto(productionTime, consumption);
+
+            //act
+
+            materialhandler.RemoveMaterialDemand(material, materialInformationDto);
+
+            //assert
+
+            material.Stock.PlannedMaterialDemand.Should().Be(startedMaterialDemand - materialInformationDto.Usage);
+            material.Stock.MaterialToOrder.Should()
+                .Be(startedMaterialInStock <= material.Stock.PlannedMaterialDemand
+                ? material.Stock.PlannedMaterialDemand - startedMaterialInStock
+                : startedMaterialToOrder);
+        }
+
+        [Theory()]
+        [ClassData(typeof(NoValidRemoveMaterialDemand))]
+        public void RemoveMaterialDemand_ThrowException_ForNoValidArguments(int productionTime, decimal consumption, Domain.Entities.Material material)
+        {
+            //arrange
+
+            var startedMaterialToOrder = material.Stock.MaterialToOrder;
+            var startedMaterialInStock = material.Stock.MaterialInStock;
+            var startedMaterialDemand = material.Stock.PlannedMaterialDemand;
+
+            var materialhandler = new MaterialInventoryHandler();
+
+            var materialInformationDto = new MaterialInformationDto(productionTime, consumption);
+
+            //act
+
+            Action action = () => materialhandler.RemoveMaterialDemand(material, materialInformationDto);
+
+            //assert
+
+            action.Should().Throw<ArgumentException>();
         }
     }
 }

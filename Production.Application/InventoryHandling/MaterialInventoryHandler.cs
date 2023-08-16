@@ -30,6 +30,10 @@
 
         public void RemoveMaterialDemand(Domain.Entities.Material material, MaterialInformationDto informationDto)
         {
+            if (material.Stock.PlannedMaterialDemand < informationDto.Usage)
+            {
+                throw new ArgumentException();
+            }
             material.Stock.PlannedMaterialDemand -= informationDto.Usage;
 
             material.Stock.CountMaterialToOrder();

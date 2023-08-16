@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Production.Application.Tests.TestsData.InventoryHandlingTestData
 {
-    public class InvalidGetMaterialInformation : IEnumerable<object[]>
+    public class NoValidGetMaterialInformation : IEnumerable<object[]>
     {
         public IEnumerator<object[]> GetEnumerator()
         {
