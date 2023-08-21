@@ -2,41 +2,45 @@
 {
     public interface IMaterialInventoryHandler
     {
-        MaterialInformationDto GetMaterialInformation(int productionTime, Domain.Entities.Material material);
-        void AddMaterialDemand(Domain.Entities.Material material, MaterialInformationDto informationDto);
-        void RemoveMaterialDemand(Domain.Entities.Material material, MaterialInformationDto informationDto);
+        void UpdateMaterialStock(Domain.Entities.Material material, MaterialRequirements materialRequirements);
     }
 
     public class MaterialInventoryHandler : IMaterialInventoryHandler
     {
-        public MaterialInformationDto GetMaterialInformation(int productionTime, Domain.Entities.Material material)
+        public void UpdateMaterialStock(Domain.Entities.Material material, MaterialRequirements materialRequirements)
         {
-            var consumption = material.InjectionMold!.Consumption;
-
-            if (material == null || consumption <= 0 || productionTime <= 1)
+            if (materialRequirements.MaterialDirection == MaterialDirection.Add)
             {
-                throw new ArgumentException();
+                AddMaterialDemand(material, materialRequirements);
             }
+            else if (materialRequirements.MaterialDirection == MaterialDirection.Remove)
+            {
+                RemoveMaterialDemand(material, materialRequirements);
+            }
+            else if (materialRequirements.MaterialDirection == MaterialDirection.Update)
+            {
+                CheckMaterialDemand(material);
+			}
+            else throw new ArgumentException("Material Direction mismatched");
+		}
 
-            return new MaterialInformationDto(productionTime, consumption);
-        }
-
-        public void AddMaterialDemand(Domain.Entities.Material material, MaterialInformationDto informationDto)
+		private void AddMaterialDemand(Domain.Entities.Material material, MaterialRequirements materialRequirementsInfo)
         {
-            material.Stock.PlannedMaterialDemand += informationDto.Usage;
+            material.Stock.PlannedMaterialDemand += materialRequirementsInfo.Usage;
 
             material.Stock.CountMaterialToOrder();
         }
 
-        public void RemoveMaterialDemand(Domain.Entities.Material material, MaterialInformationDto informationDto)
+        private void RemoveMaterialDemand(Domain.Entities.Material material, MaterialRequirements materialRequirementsInfo)
         {
-            if (material.Stock.PlannedMaterialDemand < informationDto.Usage)
-            {
-                throw new ArgumentException();
-            }
-            material.Stock.PlannedMaterialDemand -= informationDto.Usage;
+            material.Stock.PlannedMaterialDemand -= materialRequirementsInfo.Usage;
 
             material.Stock.CountMaterialToOrder();
         }
-    }
+
+		private void CheckMaterialDemand(Domain.Entities.Material material)
+		{
+			material.Stock.CountMaterialToOrder();
+		}
+	}
 }

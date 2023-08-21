@@ -12,6 +12,9 @@
         public int InjectionMoldingMachineId { get; set; }
         public bool MaterialIsRdy { get; set; }
 
+        //public int MaterialAmount { get; set; } 
+        //public MaterialStatus MaterialStatus { get; set; }
+
         public void ProductionTimeCalculation()
         {
             if(Start > End )

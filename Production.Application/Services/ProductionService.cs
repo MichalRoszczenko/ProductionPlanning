@@ -11,20 +11,21 @@ namespace Production.Application.Services
         Task Create(ProductionDto productionDto);
         Task Remove(int productionId);
         Task Update(int productionId, ProductionDto productionDto);
+        Task UpdateMaterial(int productionId);
     }
 
     public class ProductionService : IProductionService
     {
         private readonly IProductionRepository _productionRepository;
-        private readonly IProductionInventoryService _productionChecker;
+        private readonly IProductionInventoryService _inventoryService;
         private readonly IMapper _mapper;
 
         public ProductionService(IProductionRepository productionRepository, IMapper mapper,
-            IProductionInventoryService productionChecker)
+            IProductionInventoryService inventoryService)
         {
             _productionRepository = productionRepository;
             _mapper = mapper;
-            _productionChecker = productionChecker;
+            _inventoryService = inventoryService;
         }
         public async Task<IEnumerable<ProductionDto>> GetAll()
         {
@@ -47,9 +48,11 @@ namespace Production.Application.Services
         {
             var production = _mapper.Map<Domain.Entities.Production>(productionDto);
 
-            var materialIsScheduled = await _productionChecker.IsMaterialInStock(production);
+            production.ProductionTimeCalculation();
 
-            production.MaterialIsRdy = materialIsScheduled;
+            var materialStatus= await _inventoryService.AddMaterialReservation(production);
+
+            production.MaterialIsRdy = materialStatus.MaterialIsAvailable;
 
             await _productionRepository.Create(production);
         }
@@ -58,9 +61,20 @@ namespace Production.Application.Services
         {
             var production = await _productionRepository.GetById(productionId);
 
-            await _productionChecker.HandOverMaterial(production);
+            await _inventoryService.RemoveMaterialReservation(production);
 
             await _productionRepository.Remove(production!);
+        }
+
+        public async Task UpdateMaterial(int productionId)
+        {
+            var production = await _productionRepository.GetById(productionId);
+
+            var materialStatus = await _inventoryService.CheckMaterialReservation(production);
+
+            production.MaterialIsRdy = materialStatus.MaterialIsAvailable;
+
+            await _productionRepository.Commit();
         }
 
         public async Task Update(int productionId, ProductionDto productionDto)

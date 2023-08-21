@@ -16,21 +16,24 @@ namespace Production.Presentation.Tests.Controllers.TestsData
                         Start = new DateTime(2023,08,15,15,20,00),
                         End = new DateTime(2023,08,15,15,20,00),
                         InjectionMoldingMachineName = "TestMachine1",
-                        InjectionMoldName = "TestMold1"
+                        InjectionMoldName = "TestMold1",
+                        MaterialIsRdy = true,
                     },
                     new ProductionDto()
                     {
                         Start = new DateTime(2023,08,15,15,20,00),
                         End = new DateTime(2023,08,15,15,20,00),
                         InjectionMoldingMachineName = "TestMachine2",
-                        InjectionMoldName = "TestMold2"
+                        InjectionMoldName = "TestMold2",
+                        MaterialIsRdy = false,
                     },
                     new ProductionDto()
                     {
                         Start = new DateTime(2023,08,15,15,20,00),
                         End = new DateTime(2023,08,15,15,20,00),
                         InjectionMoldingMachineName = "TestMachine3",
-                        InjectionMoldName = "TestMold3"
+                        InjectionMoldName = "TestMold3",
+                        MaterialIsRdy = true                       
                     }
                 }
             };

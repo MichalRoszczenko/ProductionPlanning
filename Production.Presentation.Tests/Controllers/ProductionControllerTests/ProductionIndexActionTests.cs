@@ -42,7 +42,10 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
                 content.Should().Contain(production.InjectionMoldName)
                     .And.Contain(production.InjectionMoldingMachineName)
                     .And.Contain(production.Start.ToString())
-                    .And.Contain(production.End.ToString());
+                    .And.Contain(production.End.ToString())
+                    .And.Contain(
+                    production.MaterialIsRdy ? "checked=\"checked\" class=\"check-box\" disabled=\"disabled\""
+                    : "class=\"check-box\" disabled=\"disabled\"");
             }
         }
 

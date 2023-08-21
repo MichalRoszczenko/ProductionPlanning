@@ -33,12 +33,25 @@ namespace Production.Infrastructure.Seeders
             var production = new Domain.Entities.Production()
             {
                 Start = DateTime.Now,
-                End = DateTime.Now.AddDays(5),
+                End = DateTime.Now.AddDays(1),
                 InjectionMold = new InjectionMold()
                 {
                     Name = "Tigre",
                     Producer = "Philips",
                     Size = "small",
+                    Consumption = 5,
+                    Material = new Material
+                    {
+                        Name = "MaterialSeeded",
+                        Type = "PP",
+                        Cost = 15,
+                        Description = "Seeded Material",
+                        Stock = new MaterialStock()
+                        {
+                            MaterialInStock = 300,
+                            PlannedMaterialDemand = 125
+                        }
+                    }
                 },
                 InjectionMoldingMachine = new InjectionMoldingMachine()
                 {
@@ -46,7 +59,8 @@ namespace Production.Infrastructure.Seeders
                     Size = "small",
                     Online = true,
                     Tonnage = 150
-                }
+                },
+                MaterialIsRdy = true
             };
 
             production.ProductionTimeCalculation();

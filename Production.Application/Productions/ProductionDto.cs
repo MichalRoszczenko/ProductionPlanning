@@ -10,5 +10,7 @@
         public string? InjectionMoldName { get; set; }
         public int InjectionMoldingMachineId { get; set; } = default!;
         public string? InjectionMoldingMachineName { get; set; }
+        public bool MaterialIsRdy { get; set; }
+        //public int MaterialAmount { get; set; }
     }
 }

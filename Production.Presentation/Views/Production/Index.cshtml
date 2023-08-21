@@ -30,7 +30,9 @@
             <th>
                 Injection Molding Machine
             </th>
-            <th></th>
+            <th>
+                Material Is Available
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -55,6 +57,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.InjectionMoldingMachineName)
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => item.MaterialIsRdy)
             </td>
             <td>
                 <a asp-controller="Production" asp-action="Edit" asp-route-productionId="@item.Id">Edit</a> |

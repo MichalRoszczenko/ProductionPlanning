@@ -5,58 +5,66 @@ namespace Production.Application.Services
 {
     public interface IProductionInventoryService
     {
-        Task<bool> IsMaterialInStock(Domain.Entities.Production production);
-        Task HandOverMaterial(Domain.Entities.Production production);
+        Task<MaterialStatusDto> AddMaterialReservation(Domain.Entities.Production production);
+        Task RemoveMaterialReservation(Domain.Entities.Production production);
+        Task<MaterialStatusDto> CheckMaterialReservation(Domain.Entities.Production production);
     }
 
     public class ProductionInventoryService : IProductionInventoryService
     {
         private readonly IMaterialRepository _materialRepository;
+        private readonly IInjectionMoldRepository _injectionMoldRepository;
         private readonly IMaterialInventoryHandler _inventoryHandler;
 
-        public ProductionInventoryService(IMaterialRepository materialRepository, IMaterialInventoryHandler inventoryHandler)
+        public ProductionInventoryService(IMaterialRepository materialRepository, IMaterialInventoryHandler inventoryHandler,
+            IInjectionMoldRepository injectionMoldRepository)
         {
             _materialRepository = materialRepository;
+            _injectionMoldRepository = injectionMoldRepository;
             _inventoryHandler = inventoryHandler;
         }
 
-        public async Task<bool> IsMaterialInStock(Domain.Entities.Production production)
+        public async Task<MaterialStatusDto> AddMaterialReservation(Domain.Entities.Production production)
         {
-            production.ProductionTimeCalculation();
+            var materialRequirements = await CreateMaterialRequirementsInfo(production, MaterialDirection.Add);
 
             var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
 
-            var materialInfo = _inventoryHandler.GetMaterialInformation(production.ProductionTimeInHours, material);
+            _inventoryHandler.UpdateMaterialStock(material, materialRequirements);
 
-            _inventoryHandler.AddMaterialDemand(material, materialInfo);
-
-            var isAvalaiable = IsAvalaible(material);
-
-            await _materialRepository.Commit();
-
-            return isAvalaiable;
+            return new MaterialStatusDto(material, materialRequirements.Usage);
         }
 
-        public async Task HandOverMaterial(Domain.Entities.Production production)
+        public async Task RemoveMaterialReservation(Domain.Entities.Production production)
         {
-            production.ProductionTimeCalculation();
+            var materialRequirements = await CreateMaterialRequirementsInfo(production, MaterialDirection.Remove);
 
             var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
 
-            var materialInfo = _inventoryHandler.GetMaterialInformation(production.ProductionTimeInHours, material);
-
-            _inventoryHandler.RemoveMaterialDemand(material, materialInfo);
-
-            await _materialRepository.Commit();
+            _inventoryHandler.UpdateMaterialStock(material, materialRequirements);
         }
 
-        private bool IsAvalaible(Domain.Entities.Material material)
+        public async Task<MaterialStatusDto> CheckMaterialReservation(Domain.Entities.Production production)
         {
-            if (material.Stock.PlannedMaterialDemand > material.Stock.MaterialInStock)
-            {
-                return false;
-            }
-            else return true;
+            var materialRequirements = await CreateMaterialRequirementsInfo(production, MaterialDirection.Update);
+
+            var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
+
+            _inventoryHandler.UpdateMaterialStock(material, materialRequirements);
+
+            return new MaterialStatusDto(material, materialRequirements.Usage);
         }
-    }
+
+        private async Task<MaterialRequirements> CreateMaterialRequirementsInfo(Domain.Entities.Production production,
+            MaterialDirection materialDirection)
+        {
+            var injectionMold = await _injectionMoldRepository.GetById(production.InjectionMoldId);
+
+            var consumption = injectionMold!.Consumption;
+
+            var productionTime = production.ProductionTimeInHours;
+
+            return new MaterialRequirements(productionTime, consumption, materialDirection);
+        }
+	}
 }
