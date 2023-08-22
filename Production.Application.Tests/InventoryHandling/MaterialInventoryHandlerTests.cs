@@ -6,119 +6,74 @@ namespace Production.Application.InventoryHandling.Tests
 {
     public class MaterialInventoryHandlerTests
     {
-        //[Theory()]
-        //[ClassData(typeof(ValidGetMaterialInformation))]
-        //public void GetMaterialInformation_ReturnCorrectMaterialInfoDto_ForValidArguments(int productionTime, Domain.Entities.Material material)
-        //{
-        //    //arrange
+        [Theory()]
+        [ClassData(typeof(AddMaterialDemandTestData))]
+        public void AddMaterialDemand_CalculateMaterialToOrder_ForValidArguments(Domain.Entities.Material material, 
+            MaterialRequirements materialRequirementsInfo, int materialToOrder)
+        {
+            //arrange
+            material.Stock.CountMaterialToOrder();
+			var startedMaterialInStock = material.Stock.MaterialInStock;
+			var startedMaterialDemand = material.Stock.PlannedMaterialDemand;
 
-        //    var materialhandler = new MaterialInventoryHandler();
+			var materialhandler = new MaterialInventoryHandler();
 
-        //    //act
+			//act
 
-        //    var materialInformationDto = materialhandler.GetMaterialInformation(productionTime, material);
+            materialhandler.AddMaterialDemand(material, materialRequirementsInfo);
 
-        //    //assert
+            //assert
 
-        //    materialInformationDto.Usage.Should().Be((int)Math.Ceiling(material.InjectionMold!.Consumption * productionTime));
-        //    materialInformationDto.Consumption.Should().Be(material.InjectionMold.Consumption);
-        //    materialInformationDto.ProductionTime.Should().Be(productionTime);
-        //}
+			material.Stock.MaterialInStock.Should().Be(startedMaterialInStock);
+			material.Stock.PlannedMaterialDemand.Should().Be(startedMaterialDemand+materialRequirementsInfo.Usage);
+            material.Stock.MaterialToOrder.Should().Be(materialToOrder);
+		}
 
-        //[Theory()]
-        //[ClassData(typeof(NoValidGetMaterialInformation))]
-        //public void GetMaterialInformation_ThrowException_ForNoValidArguments(int productionTime, Domain.Entities.Material material)
-        //{
-        //    //arrange
+		[Theory()]
+		[ClassData(typeof(RemoveMaterialDemandTestData))]
+		public void RemoveMaterialDemand_CalculateMaterialToOrder_ForValidArguments(Domain.Entities.Material material,
+			MaterialRequirements materialRequirementsInfo, int materialToOrder)
+		{
+			//arrange
 
-        //    var materialhandler = new MaterialInventoryHandler();
+			material.Stock.CountMaterialToOrder();
+			var startedMaterialInStock = material.Stock.MaterialInStock;
+			var startedMaterialDemand = material.Stock.PlannedMaterialDemand;
 
-        //    //act
+			var materialhandler = new MaterialInventoryHandler();
 
-        //    var action = () => materialhandler.GetMaterialInformation(productionTime, material);
+			//act
 
-        //    //assert
+			materialhandler.RemoveMaterialDemand(material, materialRequirementsInfo);
 
-        //    action.Should().Throw<ArgumentException>();
-        //}
+			//assert
 
-        //[Theory()]
-        //[ClassData(typeof(ValidMaterialDemand))]
-        //public void AddMaterialDemand_ReturnCorrectMaterial_ForValidArguments(int productionTime, decimal consumption , Domain.Entities.Material material)
-        //{
-        //    //arrange
+			material.Stock.MaterialInStock.Should().Be(startedMaterialInStock);
+			material.Stock.PlannedMaterialDemand.Should().Be(startedMaterialDemand - materialRequirementsInfo.Usage);
+			material.Stock.MaterialToOrder.Should().Be(materialToOrder);
+		}
 
-        //    material.Stock.CountMaterialToOrder();
-        //    var startedMaterialToOrder = material.Stock.MaterialToOrder;
-        //    var startedMaterialInStock= material.Stock.MaterialInStock;
-        //    var startedMaterialDemand = material.Stock.PlannedMaterialDemand;
+		[Theory()]
+		[ClassData(typeof(CheckMaterialDemandTestData))]
+		public void CheckMaterialDemand_CalculateMaterialToOrder_ForValidArguments(Domain.Entities.Material material, int materialToOrder)
+		{
+			//arrange
 
-        //    var materialhandler = new MaterialInventoryHandler();
+			material.Stock.CountMaterialToOrder();
+			var startedMaterialInStock = material.Stock.MaterialInStock;
+			var startedMaterialDemand = material.Stock.PlannedMaterialDemand;
 
-        //    var materialInformationDto = new MaterialRequirementsInformation(productionTime, consumption);
+			var materialhandler = new MaterialInventoryHandler();
 
-        //    //act
+			//act
 
-        //    materialhandler.AddMaterialDemand(material, materialInformationDto);
+			materialhandler.CheckMaterialDemand(material);
 
-        //    //assert
+			//assert
 
-        //    material.Stock.PlannedMaterialDemand.Should().Be(startedMaterialDemand + materialInformationDto.Usage);
-        //    material.Stock.MaterialToOrder.Should()
-        //        .Be(startedMaterialInStock < material.Stock.PlannedMaterialDemand 
-        //        ? material.Stock.PlannedMaterialDemand - startedMaterialInStock 
-        //        : startedMaterialToOrder);
-        //}
-
-        //[Theory()]
-        //[ClassData(typeof(ValidMaterialDemand))]
-        //public void RemoveMaterialDemand_ReturnCorrectMaterial_ForValidArguments(int productionTime, decimal consumption, Domain.Entities.Material material)
-        //{
-        //    //arrange
-
-        //    material.Stock.CountMaterialToOrder();
-        //    var startedMaterialToOrder = material.Stock.MaterialToOrder;
-        //    var startedMaterialInStock = material.Stock.MaterialInStock;
-        //    var startedMaterialDemand = material.Stock.PlannedMaterialDemand;
-
-        //    var materialhandler = new MaterialInventoryHandler();
-
-        //    var materialInformationDto = new MaterialRequirementsInformation(productionTime, consumption);
-
-        //    //act
-
-        //    materialhandler.RemoveMaterialDemand(material, materialInformationDto);
-
-        //    //assert
-
-        //    material.Stock.PlannedMaterialDemand.Should().Be(startedMaterialDemand - materialInformationDto.Usage);
-        //    material.Stock.MaterialToOrder.Should()
-        //        .Be(startedMaterialInStock <= material.Stock.PlannedMaterialDemand
-        //        ? material.Stock.PlannedMaterialDemand - startedMaterialInStock
-        //        : startedMaterialToOrder);
-        //}
-
-        //[Theory()]
-        //[ClassData(typeof(NoValidRemoveMaterialDemand))]
-        //public void RemoveMaterialDemand_ThrowException_ForNoValidArguments(int productionTime, decimal consumption, Domain.Entities.Material material)
-        //{
-        //    //arrange
-
-        //    var startedMaterialToOrder = material.Stock.MaterialToOrder;
-        //    var startedMaterialInStock = material.Stock.MaterialInStock;
-        //    var startedMaterialDemand = material.Stock.PlannedMaterialDemand;
-
-        //    var materialhandler = new MaterialInventoryHandler();
-
-        //    var materialInformationDto = new MaterialRequirementsInformation(productionTime, consumption);
-
-        //    //act
-
-        //    Action action = () => materialhandler.RemoveMaterialDemand(material, materialInformationDto);
-
-        //    //assert
-
-        //    action.Should().Throw<ArgumentException>();
-        //}
-    }
+			material.Stock.MaterialInStock.Should().Be(startedMaterialInStock);
+			material.Stock.PlannedMaterialDemand.Should().Be(startedMaterialDemand);
+			material.Stock.MaterialToOrder.Should().Be(materialToOrder);
+		}
+	}
 }

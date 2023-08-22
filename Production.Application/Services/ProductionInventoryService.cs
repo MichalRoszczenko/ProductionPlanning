@@ -26,37 +26,36 @@ namespace Production.Application.Services
 
         public async Task<MaterialStatusDto> AddMaterialReservation(Domain.Entities.Production production)
         {
-            var materialRequirements = await CreateMaterialRequirementsInfo(production, MaterialDirection.Add);
+            var materialRequirements = await CreateMaterialRequirementsInfo(production);
 
             var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
 
-            _inventoryHandler.UpdateMaterialStock(material, materialRequirements);
+            _inventoryHandler.AddMaterialDemand(material, materialRequirements);
 
             return new MaterialStatusDto(material, materialRequirements.Usage);
         }
 
         public async Task RemoveMaterialReservation(Domain.Entities.Production production)
         {
-            var materialRequirements = await CreateMaterialRequirementsInfo(production, MaterialDirection.Remove);
+            var materialRequirements = await CreateMaterialRequirementsInfo(production);
 
             var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
 
-            _inventoryHandler.UpdateMaterialStock(material, materialRequirements);
+            _inventoryHandler.RemoveMaterialDemand(material,materialRequirements);
         }
 
         public async Task<MaterialStatusDto> CheckMaterialReservation(Domain.Entities.Production production)
         {
-            var materialRequirements = await CreateMaterialRequirementsInfo(production, MaterialDirection.Update);
+            var materialRequirements = await CreateMaterialRequirementsInfo(production);
 
             var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
 
-            _inventoryHandler.UpdateMaterialStock(material, materialRequirements);
+            _inventoryHandler.CheckMaterialDemand(material);
 
             return new MaterialStatusDto(material, materialRequirements.Usage);
         }
 
-        private async Task<MaterialRequirements> CreateMaterialRequirementsInfo(Domain.Entities.Production production,
-            MaterialDirection materialDirection)
+        private async Task<MaterialRequirements> CreateMaterialRequirementsInfo(Domain.Entities.Production production)
         {
             var injectionMold = await _injectionMoldRepository.GetById(production.InjectionMoldId);
 
@@ -64,7 +63,7 @@ namespace Production.Application.Services
 
             var productionTime = production.ProductionTimeInHours;
 
-            return new MaterialRequirements(productionTime, consumption, materialDirection);
+            return new MaterialRequirements(productionTime, consumption);
         }
 	}
 }
