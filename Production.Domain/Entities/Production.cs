@@ -10,10 +10,7 @@
         public Guid InjectionMoldId { get; set; }
         public InjectionMoldingMachine InjectionMoldingMachine { get; set; } = default!;
         public int InjectionMoldingMachineId { get; set; }
-        public bool MaterialIsRdy { get; set; }
-
-        //public int MaterialAmount { get; set; } 
-        //public MaterialStatus MaterialStatus { get; set; }
+        public MaterialStatus MaterialStatus { get; set; } = new MaterialStatus();
 
         public void ProductionTimeCalculation()
         {

@@ -17,7 +17,7 @@ namespace Production.Presentation.Tests.Controllers.TestsData
                         End = new DateTime(2023,08,15,15,20,00),
                         InjectionMoldingMachineName = "TestMachine1",
                         InjectionMoldName = "TestMold1",
-                        MaterialIsRdy = true,
+                        MaterialIsAvailable = true,
                     },
                     new ProductionDto()
                     {
@@ -25,7 +25,7 @@ namespace Production.Presentation.Tests.Controllers.TestsData
                         End = new DateTime(2023,08,15,15,20,00),
                         InjectionMoldingMachineName = "TestMachine2",
                         InjectionMoldName = "TestMold2",
-                        MaterialIsRdy = false,
+                        MaterialIsAvailable = false,
                     },
                     new ProductionDto()
                     {
@@ -33,7 +33,7 @@ namespace Production.Presentation.Tests.Controllers.TestsData
                         End = new DateTime(2023,08,15,15,20,00),
                         InjectionMoldingMachineName = "TestMachine3",
                         InjectionMoldName = "TestMold3",
-                        MaterialIsRdy = true                       
+                        MaterialIsAvailable = true                       
                     }
                 }
             };

@@ -1,5 +1,4 @@
-﻿using Production.Application.InventoryHandling;
-using Production.Domain.Entities;
+﻿using Production.Domain.Entities;
 using System.Collections;
 
 namespace Production.Application.Tests.TestsData.InventoryHandlingTestData

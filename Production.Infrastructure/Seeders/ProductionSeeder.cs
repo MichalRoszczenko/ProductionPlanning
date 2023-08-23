@@ -36,8 +36,8 @@ namespace Production.Infrastructure.Seeders
                 End = DateTime.Now.AddDays(1),
                 InjectionMold = new InjectionMold()
                 {
-                    Name = "Tigre",
-                    Producer = "Philips",
+                    Name = "SeededInjectionMold",
+                    Producer = "SeededProducer",
                     Size = "small",
                     Consumption = 5,
                     Material = new Material
@@ -55,12 +55,16 @@ namespace Production.Infrastructure.Seeders
                 },
                 InjectionMoldingMachine = new InjectionMoldingMachine()
                 {
-                    Name = "Engel",
+                    Name = "SeededMachine",
                     Size = "small",
                     Online = true,
                     Tonnage = 150
                 },
-                MaterialIsRdy = true
+                MaterialStatus = new MaterialStatus()
+                {
+                    MaterialIsAvailable = true,
+                    MaterialUsage = 120
+                }
             };
 
             production.ProductionTimeCalculation();

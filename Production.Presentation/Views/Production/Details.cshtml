@@ -43,14 +43,19 @@
             Material is Ready
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaterialIsRdy)
-            
+            @Html.DisplayFor(model => model.MaterialIsAvailable)
+        </dd>        
+        <dt class="col-sm-2">
+            Material usage
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MaterialUsage)
         </dd>
     </dl>
 </div>
 <hr />
 <div>
-    @if(!Model.MaterialIsRdy)
+    @if (!Model.MaterialIsAvailable)
     {
         <a class="btn btn-danger" asp-action="CheckMaterial" asp-route-productionId="@Model.Id">Check material in stock</a>
     }

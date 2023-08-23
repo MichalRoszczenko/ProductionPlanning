@@ -31,6 +31,8 @@ namespace Production.Infrastructure.Persistence
                 etb.HasOne(m => m.InjectionMoldingMachine)
                 .WithMany(p => p.Productions)
                 .HasForeignKey(f => f.InjectionMoldingMachineId);
+
+                etb.OwnsOne(m => m.MaterialStatus);
             });
 
             modelBuilder.Entity<InjectionMold>(etb =>

@@ -27,7 +27,9 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
                 Start = new DateTime(2023, 08, 15, 15, 20, 00),
                 End = new DateTime(2023, 08, 15, 15, 20, 00),
                 InjectionMoldingMachineName = "TestMachine1",
-                InjectionMoldName = "TestMold1"
+                InjectionMoldName = "TestMold1",
+                MaterialIsAvailable = false,
+                MaterialUsage = 55
             };
 
             var client = CreateClientWithProductionServiceMock(productionDto);
@@ -45,7 +47,10 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
             content.Should().Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.Start}\r\n        </dd>")
                 .And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.Start}\r\n        </dd>")
                 .And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.InjectionMoldingMachineName}\r\n        </dd>")
-                .And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.InjectionMoldName}\r\n        </dd>");
+                .And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.InjectionMoldName}\r\n        </dd>")
+                .And.Contain(productionDto.MaterialIsAvailable ? "checked=\"checked\" class=\"check-box\" disabled=\"disabled\""
+                    : "class=\"check-box\" disabled=\"disabled\"")
+                .And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.MaterialUsage}\r\n        </dd>");
         }
 
         private HttpClient CreateClientWithProductionServiceMock(ProductionDto productionDto)

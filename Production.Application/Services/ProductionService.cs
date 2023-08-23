@@ -1,6 +1,7 @@
 ﻿using Production.Domain.Interfaces;
 using AutoMapper;
 using Production.Application.Productions;
+using Production.Domain.Entities;
 
 namespace Production.Application.Services
 {
@@ -50,9 +51,11 @@ namespace Production.Application.Services
 
             production.ProductionTimeCalculation();
 
-            var materialStatus= await _inventoryService.AddMaterialReservation(production);
+            var materialStatusDto = await _inventoryService.AddMaterialReservation(production);
 
-            production.MaterialIsRdy = materialStatus.MaterialIsAvailable;
+            var materialStatus = _mapper.Map<MaterialStatus>(materialStatusDto);
+
+            production.MaterialStatus = materialStatus;
 
             await _productionRepository.Create(production);
         }
@@ -70,9 +73,11 @@ namespace Production.Application.Services
         {
             var production = await _productionRepository.GetById(productionId);
 
-            var materialStatus = await _inventoryService.CheckMaterialReservation(production);
+            var materialStatusDto = await _inventoryService.CheckMaterialReservation(production);
 
-            production.MaterialIsRdy = materialStatus.MaterialIsAvailable;
+			var materialStatus = _mapper.Map<MaterialStatus>(materialStatusDto);
+
+			production.MaterialStatus = materialStatus;
 
             await _productionRepository.Commit();
         }
@@ -83,11 +88,19 @@ namespace Production.Application.Services
 
             var production = productions.FirstOrDefault(p => p.Id == productionId);
 
+            await _inventoryService.RemoveMaterialReservation(production!);
+
             production!.Start = productionDto.Start;
             production.End = productionDto.End;
             production.InjectionMoldingMachineId = productionDto.InjectionMoldingMachineId;
             production.InjectionMoldId = productionDto.InjectionMoldId;
+            production.MaterialStatus.MaterialUsage = productionDto.MaterialUsage;
+            production.MaterialStatus.MaterialIsAvailable = productionDto.MaterialIsAvailable;
             production.ProductionTimeCalculation();
+
+            var materialStatusDto = await _inventoryService.AddMaterialReservation(production);
+            var materialStatus = _mapper.Map<MaterialStatus>(materialStatusDto);
+            production.MaterialStatus = materialStatus;
 
             await _productionRepository.Commit();
         }
