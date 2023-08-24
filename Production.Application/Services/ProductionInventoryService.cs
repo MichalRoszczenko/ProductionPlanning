@@ -14,14 +14,14 @@ namespace Production.Application.Services
     {
         private readonly IMaterialRepository _materialRepository;
         private readonly IInjectionMoldRepository _injectionMoldRepository;
-        private readonly IMaterialInventoryHandler _inventoryHandler;
+        private readonly IMaterialInventoryHandler _materialHandler;
 
-        public ProductionInventoryService(IMaterialRepository materialRepository, IMaterialInventoryHandler inventoryHandler,
+        public ProductionInventoryService(IMaterialRepository materialRepository, IMaterialInventoryHandler materialHandler,
             IInjectionMoldRepository injectionMoldRepository)
         {
             _materialRepository = materialRepository;
             _injectionMoldRepository = injectionMoldRepository;
-            _inventoryHandler = inventoryHandler;
+            _materialHandler = materialHandler;
         }
 
         public async Task<MaterialStatusDto> AddMaterialReservation(Domain.Entities.Production production)
@@ -30,7 +30,7 @@ namespace Production.Application.Services
 
             var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
 
-            _inventoryHandler.AddMaterialDemand(material, materialRequirements);
+            _materialHandler.AddMaterialDemand(material, materialRequirements);
 
             return new MaterialStatusDto(material, materialRequirements.Usage);
         }
@@ -41,7 +41,9 @@ namespace Production.Application.Services
 
             var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
 
-            _inventoryHandler.RemoveMaterialDemand(material,materialRequirements);
+            _materialHandler.RemoveMaterialDemand(material,materialRequirements);
+
+            await _materialHandler.CalculateDemands(material);
         }
 
         public async Task<MaterialStatusDto> CheckMaterialReservation(Domain.Entities.Production production)
@@ -50,7 +52,7 @@ namespace Production.Application.Services
 
             var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
 
-            _inventoryHandler.CheckMaterialDemand(material);
+            _materialHandler.CheckMaterialDemand(material);
 
             return new MaterialStatusDto(material, materialRequirements.Usage);
         }

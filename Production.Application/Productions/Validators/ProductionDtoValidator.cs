@@ -33,7 +33,12 @@ namespace Production.Application.Productions.Validators
 
                     if (existingMold == null)
                     {
-                        context.AddFailure($"Mould ID: \"{value}\" doesn't exist.");
+                        context.AddFailure($"Mold ID: \"{value}\" doesn't exist.");
+                    }
+
+                    if(existingMold!.MaterialId == null)
+                    {
+                        context.AddFailure($"Mold {existingMold.Name} has no material assigned.");
                     }
                 });
 

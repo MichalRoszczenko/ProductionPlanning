@@ -34,6 +34,15 @@
             @Html.DisplayFor(model => model.Consumption)
         </dd>
     </dl>
+    @if(Model.MaterialId!=null)
+    {
+        <a class="btn btn-warning" asp-controller="Material" asp-action="Details" asp-route-materialId="@Model.MaterialId">Check material</a>
+    }
+    else
+    {
+        <h5 style="color:red">Mold has no material assigned</h5>
+    }
+
 </div>
 <hr />
 @if(Model.PlannedProductions != null)

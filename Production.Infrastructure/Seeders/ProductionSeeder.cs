@@ -63,7 +63,7 @@ namespace Production.Infrastructure.Seeders
                 MaterialStatus = new MaterialStatus()
                 {
                     MaterialIsAvailable = true,
-                    MaterialUsage = 120
+                    MaterialUsage = 125
                 }
             };
 

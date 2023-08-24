@@ -85,24 +85,29 @@ namespace Production.Application.Services
         public async Task Update(int productionId, ProductionDto productionDto)
         {
             var productions = await _productionRepository.GetAll();
+            var production = productions.First(p => p.Id == productionId);
 
-            var production = productions.FirstOrDefault(p => p.Id == productionId);
+            await _inventoryService.RemoveMaterialReservation(production);
 
-            await _inventoryService.RemoveMaterialReservation(production!);
+			PutDtoToProduction(production, productionDto);
 
-            production!.Start = productionDto.Start;
-            production.End = productionDto.End;
-            production.InjectionMoldingMachineId = productionDto.InjectionMoldingMachineId;
-            production.InjectionMoldId = productionDto.InjectionMoldId;
-            production.MaterialStatus.MaterialUsage = productionDto.MaterialUsage;
-            production.MaterialStatus.MaterialIsAvailable = productionDto.MaterialIsAvailable;
-            production.ProductionTimeCalculation();
+			var materialStatusDto = await _inventoryService.AddMaterialReservation(production);
 
-            var materialStatusDto = await _inventoryService.AddMaterialReservation(production);
             var materialStatus = _mapper.Map<MaterialStatus>(materialStatusDto);
             production.MaterialStatus = materialStatus;
 
             await _productionRepository.Commit();
         }
+
+        private void PutDtoToProduction(Domain.Entities.Production production, ProductionDto dto)
+        {
+			production!.Start = dto.Start;
+			production.End = dto.End;
+			production.InjectionMoldingMachineId = dto.InjectionMoldingMachineId;
+			production.InjectionMoldId = dto.InjectionMoldId;
+			production.MaterialStatus.MaterialUsage = dto.MaterialUsage;
+			production.MaterialStatus.MaterialIsAvailable = dto.MaterialIsAvailable;
+			production.ProductionTimeCalculation();
+		}
     }
 }
