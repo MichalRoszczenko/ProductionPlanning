@@ -7,7 +7,6 @@ namespace Production.Application.Services
     {
         Task<MaterialStatusDto> AddMaterialReservation(Domain.Entities.Production production);
         Task RemoveMaterialReservation(Domain.Entities.Production production);
-        Task<MaterialStatusDto> CheckMaterialReservation(Domain.Entities.Production production);
     }
 
     public class ProductionInventoryService : IProductionInventoryService
@@ -41,20 +40,9 @@ namespace Production.Application.Services
 
             var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
 
-            _materialHandler.RemoveMaterialDemand(material,materialRequirements);
+            _materialHandler.RemoveMaterialDemand(material, materialRequirements);
 
             await _materialHandler.CalculateDemands(material);
-        }
-
-        public async Task<MaterialStatusDto> CheckMaterialReservation(Domain.Entities.Production production)
-        {
-            var materialRequirements = await CreateMaterialRequirementsInfo(production);
-
-            var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
-
-            _materialHandler.CheckMaterialDemand(material);
-
-            return new MaterialStatusDto(material, materialRequirements.Usage);
         }
 
         private async Task<MaterialRequirements> CreateMaterialRequirementsInfo(Domain.Entities.Production production)

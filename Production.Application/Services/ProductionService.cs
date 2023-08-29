@@ -12,7 +12,6 @@ namespace Production.Application.Services
         Task Create(ProductionDto productionDto);
         Task Remove(int productionId);
         Task Update(int productionId, ProductionDto productionDto);
-        Task UpdateMaterial(int productionId);
     }
 
     public class ProductionService : IProductionService
@@ -64,22 +63,9 @@ namespace Production.Application.Services
         {
             var production = await _productionRepository.GetById(productionId);
 
-            await _inventoryService.RemoveMaterialReservation(production);
-
             await _productionRepository.Remove(production!);
-        }
 
-        public async Task UpdateMaterial(int productionId)
-        {
-            var production = await _productionRepository.GetById(productionId);
-
-            var materialStatusDto = await _inventoryService.CheckMaterialReservation(production);
-
-			var materialStatus = _mapper.Map<MaterialStatus>(materialStatusDto);
-
-			production.MaterialStatus = materialStatus;
-
-            await _productionRepository.Commit();
+            await _inventoryService.RemoveMaterialReservation(production);
         }
 
         public async Task Update(int productionId, ProductionDto productionDto)
@@ -89,7 +75,7 @@ namespace Production.Application.Services
 
             await _inventoryService.RemoveMaterialReservation(production);
 
-			PutDtoToProduction(production, productionDto);
+			PassDtoToProduction(production, productionDto);
 
 			var materialStatusDto = await _inventoryService.AddMaterialReservation(production);
 
@@ -99,7 +85,7 @@ namespace Production.Application.Services
             await _productionRepository.Commit();
         }
 
-        private void PutDtoToProduction(Domain.Entities.Production production, ProductionDto dto)
+        private void PassDtoToProduction(Domain.Entities.Production production, ProductionDto dto)
         {
 			production!.Start = dto.Start;
 			production.End = dto.End;

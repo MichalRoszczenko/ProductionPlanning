@@ -22,7 +22,8 @@ namespace Production.Application.Tests.TestsData.ProductionsValidatorsTestData
                         {
                             InjectionMoldId = new Guid()
                         }
-                    }
+                    },
+                    MaterialId = 3
                 },
                 new InjectionMoldingMachine()
                 {
@@ -61,7 +62,8 @@ namespace Production.Application.Tests.TestsData.ProductionsValidatorsTestData
                         {
                             InjectionMoldId = new Guid()
                         }
-                    }
+                    },
+                    MaterialId = 3
                 },
                 new InjectionMoldingMachine()
                 {

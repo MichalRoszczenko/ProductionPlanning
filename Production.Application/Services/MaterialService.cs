@@ -57,7 +57,6 @@ namespace Production.Application.Services
             material.Description = materialDto.Description;
             material.Stock.MaterialInStock = materialDto.MaterialInStock;
 
-            _materialHandler.CheckMaterialDemand(material);
             await _materialHandler.CalculateDemands(material);
 
             await _repository.Commit();

@@ -100,14 +100,6 @@ namespace Production.Presentation.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Route("Production/{productionId}/CheckMaterial")]
-        public async Task<IActionResult> CheckMaterial(int productionId)
-        {
-            await _productionService.UpdateMaterial(productionId);
-
-            return RedirectToAction(nameof(Details), new { productionId });
-        }
-
         private async Task AddToolsToViewBag()
         {
             var molds = await _moldService.GetAll();

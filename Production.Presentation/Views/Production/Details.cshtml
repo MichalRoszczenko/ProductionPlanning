@@ -55,10 +55,6 @@
 </div>
 <hr />
 <div>
-    @if (!Model.MaterialIsAvailable)
-    {
-        <a class="btn btn-danger" asp-action="CheckMaterial" asp-route-productionId="@Model.Id">Check material in stock</a>
-    }
     <a class="btn btn-primary" asp-action="Edit" asp-route-productionId="@Model.Id">Edit</a>
     <a class="btn btn-secondary" asp-action="Index">Back to List</a>
 </div>
