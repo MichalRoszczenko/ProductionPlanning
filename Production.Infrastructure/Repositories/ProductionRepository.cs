@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Production.Domain.Interfaces;
-using Production.Infrastructure.Assign;
 using Production.Infrastructure.Persistence;
 
 namespace Production.Infrastructure.Repositories
@@ -8,12 +7,10 @@ namespace Production.Infrastructure.Repositories
     public class ProductionRepository : IProductionRepository
     {
         private readonly ProductionDbContext _dbContext;
-        private readonly IAssignProduction _assignProduction;
 
-        public ProductionRepository(ProductionDbContext dbContext, IAssignProduction assignProduction)
+        public ProductionRepository(ProductionDbContext dbContext)
         {
             _dbContext = dbContext;
-            _assignProduction = assignProduction;
         }
 
         public async Task<IEnumerable<Domain.Entities.Production>> GetAll() 
@@ -34,7 +31,7 @@ namespace Production.Infrastructure.Repositories
 
         public async Task Create(Domain.Entities.Production production)
         {
-            var assignedProduction = await _assignProduction.AssignProductionById(production);
+            var assignedProduction = await AssignProductionById(production);
 
             await _dbContext.Productions.AddAsync(assignedProduction);
             await _dbContext.SaveChangesAsync();
@@ -48,5 +45,15 @@ namespace Production.Infrastructure.Repositories
 
         public async Task Commit() => await _dbContext.SaveChangesAsync();
 
+        private async Task<Domain.Entities.Production> AssignProductionById(Domain.Entities.Production production)
+        {
+            production.InjectionMoldingMachine = await _dbContext.InjectionMoldingMachines
+                .FirstAsync(x => x.Id == production.InjectionMoldingMachineId);
+
+            production.InjectionMold = await _dbContext.InjectionMolds
+                .FirstAsync(x => x.Id == production.InjectionMoldId);
+
+            return production;
+        }
     }
 }

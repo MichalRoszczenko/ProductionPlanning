@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Production.Domain.Interfaces;
-using Production.Infrastructure.Assign;
 using Production.Infrastructure.Persistence;
 using Production.Infrastructure.Repositories;
 using Production.Infrastructure.Seeders;
@@ -22,7 +21,6 @@ namespace Production.Infrastructure.Extensions
             services.AddScoped<IInjectionMoldRepository, InjectionMoldRepository>();
             services.AddScoped<IInjectionMoldingMachineRepository, InjectionMoldingMachineRepository>();
             services.AddScoped<IMaterialRepository, MaterialRepository>();
-            services.AddScoped<IAssignProduction, AssignProduction>();
         }
     }
 }

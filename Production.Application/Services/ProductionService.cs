@@ -65,7 +65,10 @@ namespace Production.Application.Services
 
             await _productionRepository.Remove(production!);
 
-            await _inventoryService.RemoveMaterialReservation(production);
+            if(production.InjectionMold.MaterialId != null)
+            {
+                await _inventoryService.RemoveMaterialReservation(production);
+            }
         }
 
         public async Task Update(int productionId, ProductionDto productionDto)

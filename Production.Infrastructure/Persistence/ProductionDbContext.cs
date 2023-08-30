@@ -47,7 +47,8 @@ namespace Production.Infrastructure.Persistence
 
                 etb.HasOne(m => m.Material)
                 .WithOne(i => i.InjectionMold)
-                .HasForeignKey<InjectionMold>(f => f.MaterialId);
+                .HasForeignKey<InjectionMold>(f => f.MaterialId)
+                .OnDelete(DeleteBehavior.SetNull);
 
                 etb.Property(m => m.Consumption).HasColumnType("decimal(4,2)");
             });
