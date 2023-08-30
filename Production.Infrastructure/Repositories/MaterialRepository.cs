@@ -51,5 +51,11 @@ namespace Production.Infrastructure.Repositories
             await _dbContext.Materials.AddAsync(material);
             _dbContext.SaveChanges();
         }
+
+        public async Task Remove(Material material)
+        {
+            _dbContext.Materials.Remove(material);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

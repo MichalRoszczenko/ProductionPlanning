@@ -8,6 +8,7 @@ namespace Production.Domain.Interfaces
         Task<Material> GetById(int materialId);
         Task<Material> GetByMoldId(Guid moldId);
         Task Create(Material material);
+        Task Remove(Material material);
         Task Commit();
     }
 }

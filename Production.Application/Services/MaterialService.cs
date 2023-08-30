@@ -11,6 +11,7 @@ namespace Production.Application.Services
         Task<MaterialDto> GetById(int materialId);
         Task Create(MaterialDto materialDto);
         Task Update(int materialId, MaterialDto materialDto);
+        Task Remove(int materialId);
     }
 
     public class MaterialService : IMaterialService
@@ -60,6 +61,12 @@ namespace Production.Application.Services
             await _materialHandler.CalculateDemands(material);
 
             await _repository.Commit();
+        }
+
+        public async Task Remove(int materialId)
+        {
+            var material = await _repository.GetById(materialId);
+            await _repository.Remove(material);
         }
     }
 }

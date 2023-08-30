@@ -64,5 +64,22 @@ namespace Production.Presentation.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [Route("Material/{materialId}/Remove")]
+        public async Task<IActionResult> Remove(int materialId)
+        {
+            var material = await _materialService.GetById(materialId);
+
+            return View(material);
+        }
+
+        [HttpPost]
+        [Route("Material/{materialId}/Remove")]
+        public async Task<IActionResult> RemoveConfirmed(int materialId)
+        {
+            await _materialService.Remove(materialId);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
