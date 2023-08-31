@@ -30,6 +30,16 @@
                 <label asp-for="Consumption" class="control-label">Material consumption</label>
                 <input asp-for="Consumption" type="number" class="form-control" />
                 <span asp-validation-for="Consumption" class="text-danger"></span>
+            </div>            
+            <div class="form-group">
+                <label asp-for="MaterialId" class="control-label">Material</label>
+                <select asp-for="MaterialId" type="number" class="form-control">
+                    <option value="" disabled selected></option>
+                    @foreach(var material in ViewBag.Materials)
+                    {
+                        <option value="@material.Id">@material.Name</option>
+                    }
+                </select>
             </div>
             <hr />
             <div class="form-group">

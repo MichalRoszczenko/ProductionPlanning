@@ -21,6 +21,8 @@ namespace Production.Infrastructure.Repositories
 
         public async Task Create(InjectionMold injectionMold)
         {
+            injectionMold.Material = await _dbContext.Materials.FirstAsync(x => x.Id == injectionMold.MaterialId);
+
             _dbContext.InjectionMolds.Add(injectionMold);
             await _dbContext.SaveChangesAsync();
         }

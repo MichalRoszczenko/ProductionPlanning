@@ -7,6 +7,7 @@
         public string Type { get; set; } = default!;
         public string Description { get; set; } = default!;
         public decimal Cost { get; set; }
+        public Guid? InjectionMoldId { get; set; }
 
         public int MaterialInStock { get; set; } = 0;
         public int PlannedMaterialDemand { get; set; } = 0;

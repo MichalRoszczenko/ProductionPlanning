@@ -69,6 +69,11 @@ namespace Production.Infrastructure.Persistence
                 etb.Property(m => m.Cost).HasColumnType("decimal(5,2)").IsRequired();
 
                 etb.OwnsOne(m => m.Stock);
+
+                etb.HasOne(i => i.InjectionMold)
+                .WithOne(m => m.Material)
+                .HasForeignKey<Material>(f => f.InjectionMoldId)
+                .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<Ingredient>()

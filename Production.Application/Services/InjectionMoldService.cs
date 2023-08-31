@@ -18,11 +18,14 @@ namespace Production.Application.Services
     {
         private readonly IInjectionMoldRepository _moldRepository;
         private readonly IMapper _mapper;
+        private readonly IMaterialRepository _materialRepository;
 
-        public InjectionMoldService(IInjectionMoldRepository moldRepository, IMapper mapper)
+        public InjectionMoldService(IInjectionMoldRepository moldRepository, IMapper mapper,
+            IMaterialRepository materialRepository)
         {
             _moldRepository = moldRepository;
             _mapper = mapper;
+            _materialRepository = materialRepository;
         }
 
         public async Task<IEnumerable<InjectionMoldDto>> GetAll()
@@ -56,6 +59,12 @@ namespace Production.Application.Services
             mold.Size = moldDto.Size;
             mold.Consumption = mold.Consumption;
 
+            if(moldDto.MaterialId != null)
+            {
+                mold.MaterialId = moldDto.MaterialId;
+                mold.Material = await _materialRepository.GetById((int)moldDto.MaterialId!);
+            }
+            
             await _moldRepository.Commit();
         }
 
