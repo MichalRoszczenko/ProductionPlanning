@@ -7,7 +7,8 @@ namespace Production.Application.InventoryHandling
 		void AddMaterialDemand(Domain.Entities.Material material, MaterialRequirements materialRequirementsInfo);
 		void RemoveMaterialDemand(Domain.Entities.Material material, MaterialRequirements materialRequirementsInfo);
         Task CalculateDemands(Domain.Entities.Material material);
-    }
+        Task RemoveMaterialFromProduction(Domain.Entities.Material material);
+	}
 
 	public class MaterialInventoryHandler : IMaterialInventoryHandler
     {
@@ -34,7 +35,6 @@ namespace Production.Application.InventoryHandling
 
 		public async Task CalculateDemands(Domain.Entities.Material material)
 		{
-            material.Stock.CountMaterialToOrder();
             material.Stock.PlannedMaterialDemand = 0;
             var inStock = material.Stock.MaterialInStock;
 
@@ -52,8 +52,23 @@ namespace Production.Application.InventoryHandling
                 if (inStock >= 0) production.MaterialStatus.MaterialIsAvailable = true;
                 else production.MaterialStatus.MaterialIsAvailable = false;
             }
-            
-            await _productionRepository.Commit();
+
+			material.Stock.CountMaterialToOrder();
+
+			await _productionRepository.Commit();
         }
+
+		public async Task RemoveMaterialFromProduction(Domain.Entities.Material material)
+		{
+			var productions = await _productionRepository.GetAll();
+			var selectedProductions = productions.Where(s => s.InjectionMold.MaterialId == material.Id);
+
+			foreach (var production in selectedProductions)
+			{
+				production.MaterialStatus.MaterialIsAvailable = false;
+			}
+
+			await _productionRepository.Commit();
+		}
 	}
 }

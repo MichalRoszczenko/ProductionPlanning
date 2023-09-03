@@ -99,7 +99,7 @@ namespace Production.Presentation.Controllers
         private async Task<IEnumerable<MaterialDto>> GetNotAssignedMaterials()
         {
             var materials = await _materialService.GetAll();
-            var notAssignedMaterials = materials.Where(x => x.InjectionMoldId == null);
+            var notAssignedMaterials = materials.Where(x => x.IsAssigned == false);
 
             return notAssignedMaterials;
         }

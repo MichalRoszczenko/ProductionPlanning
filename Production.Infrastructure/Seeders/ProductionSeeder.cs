@@ -22,8 +22,8 @@ namespace Production.Infrastructure.Seeders
                     {
                         var production = CreateProduction();
                         _dbContext.Productions.Add(production);
-                        await _dbContext.SaveChangesAsync();
-                    }
+						await _dbContext.SaveChangesAsync();
+					}
                 }
             }
         }
@@ -36,7 +36,7 @@ namespace Production.Infrastructure.Seeders
                 End = DateTime.Now.AddDays(1),
                 InjectionMold = new InjectionMold()
                 {
-                    Name = "SeededInjectionMold",
+                    Name = "SeededInjMold",
                     Producer = "SeededProducer",
                     Size = "small",
                     Consumption = 5,
@@ -46,6 +46,7 @@ namespace Production.Infrastructure.Seeders
                         Type = "PP",
                         Cost = 15,
                         Description = "Seeded Material",
+                        IsAssigned = true,
                         Stock = new MaterialStock()
                         {
                             MaterialInStock = 300,

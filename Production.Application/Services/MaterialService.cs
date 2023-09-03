@@ -66,7 +66,10 @@ namespace Production.Application.Services
         public async Task Remove(int materialId)
         {
             var material = await _repository.GetById(materialId);
-            await _repository.Remove(material);
-        }
+
+            await _materialHandler.RemoveMaterialFromProduction(material);
+
+			await _repository.Remove(material);
+		}
     }
 }

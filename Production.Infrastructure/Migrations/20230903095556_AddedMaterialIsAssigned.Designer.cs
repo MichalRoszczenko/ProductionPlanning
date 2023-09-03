@@ -12,8 +12,8 @@ using Production.Infrastructure.Persistence;
 namespace Production.Infrastructure.Migrations
 {
     [DbContext(typeof(ProductionDbContext))]
-    [Migration("20230831122448_AddedInjectionMoldReferenceInMaterial")]
-    partial class AddedInjectionMoldReferenceInMaterial
+    [Migration("20230903095556_AddedMaterialIsAssigned")]
+    partial class AddedMaterialIsAssigned
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,6 +77,10 @@ namespace Production.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MaterialId")
+                        .IsUnique()
+                        .HasFilter("[MaterialId] IS NOT NULL");
+
                     b.ToTable("InjectionMolds");
                 });
 
@@ -123,8 +127,8 @@ namespace Production.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<Guid?>("InjectionMoldId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<bool>("IsAssigned")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -135,10 +139,6 @@ namespace Production.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("InjectionMoldId")
-                        .IsUnique()
-                        .HasFilter("[InjectionMoldId] IS NOT NULL");
 
                     b.ToTable("Materials");
                 });
@@ -186,13 +186,18 @@ namespace Production.Infrastructure.Migrations
                     b.Navigation("InjectionMold");
                 });
 
-            modelBuilder.Entity("Production.Domain.Entities.Material", b =>
+            modelBuilder.Entity("Production.Domain.Entities.InjectionMold", b =>
                 {
-                    b.HasOne("Production.Domain.Entities.InjectionMold", "InjectionMold")
-                        .WithOne("Material")
-                        .HasForeignKey("Production.Domain.Entities.Material", "InjectionMoldId")
+                    b.HasOne("Production.Domain.Entities.Material", "Material")
+                        .WithOne("InjectionMold")
+                        .HasForeignKey("Production.Domain.Entities.InjectionMold", "MaterialId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.Navigation("Material");
+                });
+
+            modelBuilder.Entity("Production.Domain.Entities.Material", b =>
+                {
                     b.OwnsOne("Production.Domain.Entities.MaterialStock", "Stock", b1 =>
                         {
                             b1.Property<int>("MaterialId")
@@ -217,8 +222,6 @@ namespace Production.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("MaterialId");
                         });
-
-                    b.Navigation("InjectionMold");
 
                     b.Navigation("Stock")
                         .IsRequired();
@@ -269,14 +272,17 @@ namespace Production.Infrastructure.Migrations
                 {
                     b.Navigation("Ingredients");
 
-                    b.Navigation("Material");
-
                     b.Navigation("Productions");
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.InjectionMoldingMachine", b =>
                 {
                     b.Navigation("Productions");
+                });
+
+            modelBuilder.Entity("Production.Domain.Entities.Material", b =>
+                {
+                    b.Navigation("InjectionMold");
                 });
 #pragma warning restore 612, 618
         }
