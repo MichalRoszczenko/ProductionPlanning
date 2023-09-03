@@ -4,6 +4,7 @@ using Moq;
 using Production.Application.InjectionMoldMachines;
 using Production.Application.Productions;
 using Production.Application.Services;
+using Production.Presentation.Tests.Extensions;
 using System.Net;
 using Xunit;
 
@@ -15,7 +16,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
 
         public MachineDetailActionTests(WebApplicationFactory<Program> factory)
         {
-            _factory = factory;
+            _factory = factory.CreateInMemoryDatabase();
         }
 
         [Fact()]

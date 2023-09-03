@@ -1,9 +1,12 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using Production.Application.InjectionMoldMachines;
 using Production.Application.Services;
+using Production.Infrastructure.Persistence;
+using Production.Presentation.Tests.Extensions;
 using System.Net;
 using Xunit;
 
@@ -15,8 +18,8 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
 
         public MachineIndexActionTests(WebApplicationFactory<Program> factory)
         {
-            _factory = factory;
-        }
+            _factory = factory.CreateInMemoryDatabase();
+		}
 
         [Fact()]
         public async Task Index_ReturnsViewWithExpectedData_ForExistingInjectionMachines()

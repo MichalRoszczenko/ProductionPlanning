@@ -4,6 +4,7 @@ using Moq;
 using Production.Application.InjectionMolds;
 using Production.Application.Productions;
 using Production.Application.Services;
+using Production.Presentation.Tests.Extensions;
 using System.Net;
 using Xunit;
 
@@ -15,7 +16,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldControllerTests
 
         public MoldDetailActionTests(WebApplicationFactory<Program> factory)
         {
-            _factory = factory;
+            _factory = factory.CreateInMemoryDatabase();
         }
 
         [Fact()]
@@ -129,13 +130,13 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldControllerTests
 
         private HttpClient CreateClientWithInjectionMoldServiceMock(InjectionMoldDto injectionMoldDto)
         {
-            var injectionServiceMock = new Mock<IInjectionMoldService>();
+            var moldServiceMock = new Mock<IInjectionMoldService>();
 
-            injectionServiceMock.Setup(s => s.GetById(It.IsAny<Guid>(), true))
+            moldServiceMock.Setup(s => s.GetById(It.IsAny<Guid>(), true))
                 .ReturnsAsync(injectionMoldDto);
 
             var client = _factory.WithWebHostBuilder(builder
-                => builder.ConfigureServices(cfg => cfg.AddScoped(_ => injectionServiceMock.Object)))
+                => builder.ConfigureServices(cfg => cfg.AddScoped(_ => moldServiceMock.Object)))
                 .CreateClient();
 
             return client;

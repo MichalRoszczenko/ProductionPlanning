@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Production.Domain.Entities;
 using Production.Infrastructure.Persistence;
+using Production.Presentation.Tests.Extensions;
 using Xunit;
 
 namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
@@ -14,16 +15,7 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
 
         public ProductionEditActionTests(WebApplicationFactory<Program> factory)
         {
-            _factory = factory.WithWebHostBuilder(builder 
-                => builder.ConfigureServices(cfg =>
-                {
-                    var dbContext = cfg.FirstOrDefault(ser 
-                    => ser.ServiceType == typeof(DbContextOptions<ProductionDbContext>));
-
-                    cfg.Remove(dbContext!);
-
-                    cfg.AddDbContext<ProductionDbContext>(opt=>opt.UseInMemoryDatabase("TestProduction"));
-                }));
+            _factory = factory.CreateInMemoryDatabase();
 
             _client = _factory.CreateClient();
         }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.TestHost;
 using Moq;
 using Production.Application.InjectionMolds;
 using Production.Application.Services;
+using Production.Presentation.Tests.Extensions;
 using System.Net;
 using Xunit;
 
@@ -15,7 +16,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldControllerTests
 
         public MoldIndexActionTests(WebApplicationFactory<Program> factory)
         {
-            _factory = factory;
+            _factory = factory.CreateInMemoryDatabase();
         }
         [Fact()]
         public async Task Index_ReturnsViewWithExpectedData_ForExistingInjectionMolds()

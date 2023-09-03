@@ -1,10 +1,13 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using Production.Application.Productions;
 using Production.Application.Services;
+using Production.Infrastructure.Persistence;
 using Production.Presentation.Tests.Controllers.TestsData;
+using Production.Presentation.Tests.Extensions;
 using System.Net;
 using Xunit;
 
@@ -16,8 +19,8 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
 
         public ProductionIndexActionTests(WebApplicationFactory<Program> factory)
         {
-            _factory = factory;
-        }
+            _factory = factory.CreateInMemoryDatabase();
+		}
 
         [Theory()]
         [ClassData(typeof(ProductionIndexActionTestData))]
