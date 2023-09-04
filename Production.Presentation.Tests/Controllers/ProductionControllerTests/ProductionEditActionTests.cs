@@ -1,8 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Production.Domain.Entities;
-using Production.Infrastructure.Persistence;
 using Production.Presentation.Tests.Extensions;
 using Xunit;
 
@@ -75,7 +73,7 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
                 }
             };
 
-            AddToolsToDb(molds, machines);
+            await _factory.AddElementsToDb(machines,molds);
 
             //act
 
@@ -91,18 +89,6 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
                 content.Should().Contain($"<option value=\"{molds[i].Id}\">{molds[i].Name}</option>\r\n")
                     .And.Contain($"<option value=\"{machines[i].Id}\">{machines[i].Name}</option>\r\n");
             }
-        }
-
-        private void AddToolsToDb(List<InjectionMold> molds, List<InjectionMoldingMachine> machines)
-        {
-            var scopeFactory = _factory.Services.GetService<IServiceScopeFactory>();
-            var scope = scopeFactory!.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<ProductionDbContext>();
-
-            dbContext.AddRange(molds);
-            dbContext.AddRange(machines);
-
-            dbContext.SaveChanges();
         }
     }
 }

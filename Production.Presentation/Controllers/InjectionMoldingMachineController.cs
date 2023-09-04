@@ -19,38 +19,6 @@ namespace Production.Presentation.Controllers
             return View(machines);
         }
 
-        [Route("InjectionMoldingMachine/{machineId}/Details")]
-        public async Task<IActionResult> Details(int machineId)
-        {
-            var machine = await _machineService.GetById(machineId, true);
-
-            return View(machine);
-        }
-
-        [Route("InjectionMoldingMachine/{machineId}/Edit")]
-        public async Task<IActionResult> Edit(int machineId) 
-        {
-            var machine = await _machineService.GetById(machineId);
-
-            return View(machine);
-        }
-
-        [HttpPost]
-        [Route("InjectionMoldingMachine/{machineId}/Edit")]
-        public async Task<IActionResult> Edit(int machineId, InjectionMoldingMachineDto machineDto)
-        {
-            var machine = await _machineService.GetById(machineId);
-
-            if(!ModelState.IsValid) 
-            {
-                return View(machine);
-            }
-
-            await _machineService.Update(machineId, machineDto);
-
-            return RedirectToAction(nameof(Index));
-        }
-
         public IActionResult Create()
         {
             return View();
@@ -69,7 +37,15 @@ namespace Production.Presentation.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Route("InjectionMoldingMachine/{machineId}/Remove")]
+		[Route("InjectionMoldingMachine/{machineId}/Details")]
+		public async Task<IActionResult> Details(int machineId)
+		{
+			var machine = await _machineService.GetById(machineId, true);
+
+			return View(machine);
+		}
+
+		[Route("InjectionMoldingMachine/{machineId}/Remove")]
         public async Task<IActionResult> Remove(int machineId)
         {
             var machine = await _machineService.GetById(machineId);
@@ -85,5 +61,29 @@ namespace Production.Presentation.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-    }
+
+		[Route("InjectionMoldingMachine/{machineId}/Edit")]
+		public async Task<IActionResult> Edit(int machineId)
+		{
+			var machine = await _machineService.GetById(machineId);
+
+			return View(machine);
+		}
+
+		[HttpPost]
+		[Route("InjectionMoldingMachine/{machineId}/Edit")]
+		public async Task<IActionResult> Edit(int machineId, InjectionMoldingMachineDto machineDto)
+		{
+			var machine = await _machineService.GetById(machineId);
+
+			if (!ModelState.IsValid)
+			{
+				return View(machine);
+			}
+
+			await _machineService.Update(machineId, machineDto);
+
+			return RedirectToAction(nameof(Index));
+		}
+	}
 }

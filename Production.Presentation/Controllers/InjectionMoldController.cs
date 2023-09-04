@@ -45,32 +45,6 @@ namespace Production.Presentation.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Route("InjectionMold/{moldId}/Edit")]
-        public async Task<IActionResult> Edit(Guid moldId)
-        {
-            this.ViewBag.Materials = await GetNotAssignedMaterials();
-
-            var mold = await _moldService.GetById(moldId);
-
-            return View(mold);
-        }
-
-        [HttpPost]
-        [Route("InjectionMold/{moldId}/Edit")]
-        public async Task<IActionResult> Edit(Guid moldId, InjectionMoldDto moldDto)
-        {
-            this.ViewBag.Materials = await GetNotAssignedMaterials();
-
-            if (!ModelState.IsValid)
-            {
-                return View(moldDto);
-            }
-
-            await _moldService.Update(moldId, moldDto);
-
-            return RedirectToAction(nameof(Index));
-        }
-
         [Route("InjectionMold/{moldId}/Details")]
         public async Task<ActionResult> Details(Guid moldId)
         {
@@ -96,7 +70,33 @@ namespace Production.Presentation.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task<IEnumerable<MaterialDto>> GetNotAssignedMaterials()
+		[Route("InjectionMold/{moldId}/Edit")]
+		public async Task<IActionResult> Edit(Guid moldId)
+		{
+			this.ViewBag.Materials = await GetNotAssignedMaterials();
+
+			var mold = await _moldService.GetById(moldId);
+
+			return View(mold);
+		}
+
+		[HttpPost]
+		[Route("InjectionMold/{moldId}/Edit")]
+		public async Task<IActionResult> Edit(Guid moldId, InjectionMoldDto moldDto)
+		{
+			this.ViewBag.Materials = await GetNotAssignedMaterials();
+
+			if (!ModelState.IsValid)
+			{
+				return View(moldDto);
+			}
+
+			await _moldService.Update(moldId, moldDto);
+
+			return RedirectToAction(nameof(Index));
+		}
+
+		private async Task<IEnumerable<MaterialDto>> GetNotAssignedMaterials()
         {
             var materials = await _materialService.GetAll();
             var notAssignedMaterials = materials.Where(x => x.IsAssigned == false);
