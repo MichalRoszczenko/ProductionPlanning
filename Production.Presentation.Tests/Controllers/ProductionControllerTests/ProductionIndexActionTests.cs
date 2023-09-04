@@ -16,7 +16,7 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
 
         public ProductionIndexActionTests(WebApplicationFactory<Program> factory)
         {
-            _factory = factory.CreateInMemoryDatabase();
+			_factory = factory.CreateInMemoryDatabase();
 		}
 
         [Fact()]
@@ -33,7 +33,8 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
                     End = new DateTime(2023,08,15,15,20,00),
                     InjectionMoldingMachine = new Domain.Entities.InjectionMoldingMachine()
                     {
-                        Name ="TestMachine1",
+                        Id = 1,
+                        Name = "TestMachine1",
 						Size = "TestSize1"
 					},
                     InjectionMold = new Domain.Entities.InjectionMold()
@@ -54,7 +55,8 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
                     End = new DateTime(2023,08,15,15,20,00),
 					InjectionMoldingMachine = new Domain.Entities.InjectionMoldingMachine()
 					{
-						Name ="TestMachine2",
+                        Id = 2,
+						Name = "TestMachine2",
 						Size = "TestSize2"
 					},
 					InjectionMold = new Domain.Entities.InjectionMold()
@@ -75,6 +77,7 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
                     End = new DateTime(2023,08,15,15,20,00),
 					InjectionMoldingMachine = new Domain.Entities.InjectionMoldingMachine()
 					{
+                        Id =3,
 						Name = "TestMachine3",
 						Size = "TestSize3"
 					},
@@ -141,7 +144,7 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
                     .And.Contain(production.Start.ToString())
                     .And.Contain(production.End.ToString());
             }
-        }
+		}
 
         [Fact()]
         public async Task Index_ReturnsEmptyView_ForNoExistingProductions()
@@ -162,11 +165,10 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
 
             var content = await response.Content.ReadAsStringAsync();
 
-
             content.Should().NotContain("Edit\">Edit</a> |")
                 .And.NotContain("Details\">Details</a> |")
                 .And.NotContain(">Remove</a>");
-        }
+		}
 
         private HttpClient CreateClientWithProductionServiceMock(List<ProductionDto> productionsDto)
         {

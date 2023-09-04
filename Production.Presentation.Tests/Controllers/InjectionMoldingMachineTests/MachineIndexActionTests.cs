@@ -1,11 +1,10 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using Production.Application.InjectionMoldMachines;
 using Production.Application.Services;
-using Production.Infrastructure.Persistence;
+using Production.Domain.Entities;
 using Production.Presentation.Tests.Extensions;
 using System.Net;
 using Xunit;
@@ -18,7 +17,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
 
         public MachineIndexActionTests(WebApplicationFactory<Program> factory)
         {
-            _factory = factory.CreateInMemoryDatabase();
+			_factory = factory.CreateInMemoryDatabase();
 		}
 
         [Fact()]
@@ -26,7 +25,35 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
         {
             //arrange
 
-            var machinesDto = new List<InjectionMoldingMachineDto>()
+            var machines = new List<InjectionMoldingMachine>()
+            {
+                new InjectionMoldingMachine()
+                {
+					Id = 11,
+					Name = "TestMachine1",
+                    Online = false,
+                    Size = "TestSize1",
+                    Tonnage = 3001
+                },
+                new InjectionMoldingMachine()
+                {
+					Id = 12,
+					Name = "TestMachine2",
+                    Online = true,
+                    Size = "TestSize2",
+                    Tonnage = 3002
+                },
+                new InjectionMoldingMachine()
+                {
+                    Id = 13,
+					Name = "TestMachine3",
+					Online = true,
+					Size = "TestSize3",
+					Tonnage = 3003
+				},
+			};
+
+			var machinesDto = new List<InjectionMoldingMachineDto>()
             {
                 new InjectionMoldingMachineDto()
                 {
@@ -51,11 +78,13 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
                 },
             };
 
-            var client = CreateClientWithInjectionMachineServiceMock(machinesDto);
+            await _factory.AddElementsToDb(machines);
 
-            //act 
+			var client = _factory.CreateClient();
 
-            var response = await client.GetAsync("/InjectionMoldingMachine");
+			//act 
+
+			var response = await client.GetAsync("/InjectionMoldingMachine");
 
             //assert
 
@@ -70,7 +99,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
                     .And.Contain(machine.Tonnage.ToString())
                     .And.Contain(machine.Online ? "<input checked=\"checked\" class=\"check-box\"" : "<input class=\"check-box\"");
             }
-        }
+		}
 
         [Fact()]
         public async Task Index_ReturnsEmptyView_ForNoExistingInjectionMachines()
@@ -95,7 +124,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
             content.Should().NotContain("Edit\">Edit</a> |")
                 .And.NotContain("Details\">Details</a> |")
                 .And.NotContain(">Remove</a>");
-        }
+		}
 
         private HttpClient CreateClientWithInjectionMachineServiceMock(List<InjectionMoldingMachineDto> machinesDto)
         {

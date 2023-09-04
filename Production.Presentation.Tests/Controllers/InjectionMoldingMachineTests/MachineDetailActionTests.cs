@@ -4,6 +4,7 @@ using Moq;
 using Production.Application.InjectionMoldMachines;
 using Production.Application.Productions;
 using Production.Application.Services;
+using Production.Domain.Entities;
 using Production.Presentation.Tests.Extensions;
 using System.Net;
 using Xunit;
@@ -22,9 +23,18 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
         [Fact()]
         public async Task Details_ReturnInjectionMachineDetailsView_ForExistingInjectionMachine()
         {
-            //arrange
+			//arrange
 
-            var machineDto = new InjectionMoldingMachineDto()
+			var machine = new InjectionMoldingMachine()
+			{
+                Id = 14,
+				Name = "TestMachine1",
+				Online = true,
+				Size = "TestSize1",
+				Tonnage = 3001
+			};
+
+			var machineDto = new InjectionMoldingMachineDto()
             {
                 Name = "TestMachine1",
                 Online = true,
@@ -32,11 +42,13 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
                 Tonnage = 3001
             };
 
-            var client = CreateClientWithInjectionMachineServiceMock(machineDto);
+            await _factory.AddElementToDb(machine);
+
+            var client = _factory.CreateClient();
 
             //act
 
-            var response = await client.GetAsync("/InjectionMoldingMachine/1/Details");
+            var response = await client.GetAsync("/InjectionMoldingMachine/14/Details");
 
             //assert
 
@@ -48,7 +60,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
                 .And.Contain($"<dd class = \"col-sm-10\">\r\n            {machineDto.Size}\r\n        </dd>")
                 .And.Contain($"<dd class = \"col-sm-10\">\r\n            {machineDto.Tonnage}\r\n        </dd>")
                 .And.Contain(machineDto.Online ? "<input checked=\"checked\" class=\"check-box\"" : "<input class=\"check-box\"");
-        }
+		}
 
         [Fact()]
         public async Task Details_ReturnPlannedProductionsView_ForExistingPlannedProductions()
@@ -93,7 +105,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
                     .And.Contain($"<td>{plannedProduction.StartProduction}</td>")
                     .And.Contain($"<td>{plannedProduction.EndProduction}</td>");
             }
-        }
+		}
 
         [Fact()]
         public async Task Details_ReturnEmptyPlannedProductionsView_ForNoExistingPlannedProductions()
@@ -102,7 +114,6 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
 
             var machineDto = new InjectionMoldingMachineDto()
             {
-
                 PlannedProductions = new List<PlannedProductionDto>()
             };
 
@@ -119,7 +130,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
             var content = await response.Content.ReadAsStringAsync();
 
             content.Should().NotContain($"<th scope=\"row\">");
-        }
+		}
 
         private HttpClient CreateClientWithInjectionMachineServiceMock(InjectionMoldingMachineDto machinesDto)
         {

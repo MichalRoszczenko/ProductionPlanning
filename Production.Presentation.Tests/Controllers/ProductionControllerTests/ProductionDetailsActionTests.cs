@@ -28,6 +28,7 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
 				End = new DateTime(2023, 08, 15, 15, 20, 00),
 				InjectionMoldingMachine = new Domain.Entities.InjectionMoldingMachine()
 				{
+					Id = 7,
 					Name = "TestMachine1",
 					Size = "TestSize1"
 				},

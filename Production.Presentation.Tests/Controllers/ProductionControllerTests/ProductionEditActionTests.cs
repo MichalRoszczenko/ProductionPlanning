@@ -13,13 +13,13 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
 
         public ProductionEditActionTests(WebApplicationFactory<Program> factory)
         {
-            _factory = factory.CreateInMemoryDatabase();
+			_factory = factory.CreateInMemoryDatabase();
 
-            _client = _factory.CreateClient();
+			_client = _factory.CreateClient();
         }
 
         [Fact]
-        public async Task Edit_ReturnEditedProductionView_ForExistingProduction2()
+        public async Task Edit_ReturnEditedProductionView_ForExistingProduction()
         {
             //arrange
 
@@ -52,6 +52,7 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
             {
                 new InjectionMoldingMachine()
                 {
+                    Id = 4,
                     Name = "TestMachine1",
                     Size = "TestSize1",
                     Online = true,
@@ -59,14 +60,16 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
                 },
                 new InjectionMoldingMachine()
                 {
-                    Name = "TestMachine2",
+					Id = 5,
+					Name = "TestMachine2",
                     Size = "TestSize2",
                     Online = true,
                     Tonnage = 2000
                 },
                 new InjectionMoldingMachine()
                 {
-                    Name = "TestMachine3",
+					Id = 6,
+					Name = "TestMachine3",
                     Size = "TestSize3",
                     Online = true,
                     Tonnage = 3000
@@ -89,6 +92,6 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
                 content.Should().Contain($"<option value=\"{molds[i].Id}\">{molds[i].Name}</option>\r\n")
                     .And.Contain($"<option value=\"{machines[i].Id}\">{machines[i].Name}</option>\r\n");
             }
-        }
+		}
     }
 }

@@ -1,16 +1,20 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
+using Moq;
+using Production.Application.Material;
+using Production.Application.Services;
 using Production.Presentation.Tests.Extensions;
 using System.Net;
 using Xunit;
 
 namespace Production.Presentation.Tests.Controllers.MaterialControllerTests
 {
-    public class MaterialControllerTests : IClassFixture<WebApplicationFactory<Program>>
+    public class MaterialIndexControllerTests : IClassFixture<WebApplicationFactory<Program>>
     {
 		private readonly WebApplicationFactory<Program> _factory;
 
-		public MaterialControllerTests(WebApplicationFactory<Program> factory)
+		public MaterialIndexControllerTests(WebApplicationFactory<Program> factory)
         {
             _factory = factory.CreateInMemoryDatabase();
         }
@@ -59,7 +63,7 @@ namespace Production.Presentation.Tests.Controllers.MaterialControllerTests
 
             await _factory.AddElementsToDb(materials);
 
-			var client = _factory.CreateClient();
+            var client = _factory.CreateClient();
 
             //act
 
@@ -79,5 +83,43 @@ namespace Production.Presentation.Tests.Controllers.MaterialControllerTests
                     .And.Contain(material.Stock.MaterialInStock.ToString());
             }
         }
-    }
+
+		[Fact()]
+		public async Task Index_ReturnsEmptyView_ForNoExistingMaterials()
+		{
+            //arrange
+
+            var materialsDto = new List<MaterialDto>();
+
+            var client = CreateMaterialServiceMockClient(materialsDto);
+
+			//act
+
+			var response = await client.GetAsync("/Material/Index");
+
+			var content = await response.Content.ReadAsStringAsync();
+
+			//assert
+
+			response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+			content.Should().NotContain("Edit\">Edit</a> |")
+				.And.NotContain("Details\">Details</a> |")
+				.And.NotContain(">Remove</a>");
+		}
+
+        private HttpClient CreateMaterialServiceMockClient(List<MaterialDto> materialsDto)
+        {
+			var materialServiceMock = new Mock<IMaterialService>();
+
+			materialServiceMock.Setup(e => e.GetAll()).ReturnsAsync(materialsDto);
+
+			var client = _factory.WithWebHostBuilder(builder
+				=> builder.ConfigureTestServices(services
+				=> services.AddScoped(_ => materialServiceMock.Object)))
+				.CreateClient();
+
+            return client;
+		}
+	}
 }
