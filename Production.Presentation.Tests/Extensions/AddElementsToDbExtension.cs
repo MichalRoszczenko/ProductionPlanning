@@ -3,7 +3,7 @@ using Production.Infrastructure.Persistence;
 
 namespace Production.Presentation.Tests.Extensions
 {
-	public static class AddElementsToDbExtension
+	public static class DatabaseElementsSupplierExtension
 	{
 		public static async Task AddElementToDb<T>(this WebApplicationFactory<Program> factory, T item)
 		where T : class

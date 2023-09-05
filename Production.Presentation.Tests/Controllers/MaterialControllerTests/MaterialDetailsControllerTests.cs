@@ -22,7 +22,6 @@ namespace Production.Presentation.Tests.Controllers.MaterialControllerTests
 
 			var material = new Domain.Entities.Material()
 			{
-				Id = 5,
 				Name = "TestMat1",
 				Description = "TestDescription1",
 				Type = "TestType1",
@@ -40,7 +39,7 @@ namespace Production.Presentation.Tests.Controllers.MaterialControllerTests
 
 			//act
 
-			var response = await client.GetAsync("/Material/5/Details");
+			var response = await client.GetAsync($"/Material/{material.Id}/Details");
 
 			var content = await response.Content.ReadAsStringAsync();
 

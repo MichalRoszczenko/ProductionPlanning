@@ -28,12 +28,10 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
             {
                 new Domain.Entities.Production()
                 {
-                    Id=1,
                     Start = new DateTime(2023,08,15,15,20,00),
                     End = new DateTime(2023,08,15,15,20,00),
                     InjectionMoldingMachine = new Domain.Entities.InjectionMoldingMachine()
                     {
-                        Id = 1,
                         Name = "TestMachine1",
 						Size = "TestSize1"
 					},
@@ -50,12 +48,10 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
                 },
                 new Domain.Entities.Production()
                 {
-                    Id = 2,
                     Start = new DateTime(2023,08,15,15,20,00),
                     End = new DateTime(2023,08,15,15,20,00),
 					InjectionMoldingMachine = new Domain.Entities.InjectionMoldingMachine()
 					{
-                        Id = 2,
 						Name = "TestMachine2",
 						Size = "TestSize2"
 					},
@@ -72,12 +68,10 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
 				},
                 new Domain.Entities.Production()
                 {
-					Id = 3,
 					Start = new DateTime(2023,08,15,15,20,00),
                     End = new DateTime(2023,08,15,15,20,00),
 					InjectionMoldingMachine = new Domain.Entities.InjectionMoldingMachine()
 					{
-                        Id =3,
 						Name = "TestMachine3",
 						Size = "TestSize3"
 					},

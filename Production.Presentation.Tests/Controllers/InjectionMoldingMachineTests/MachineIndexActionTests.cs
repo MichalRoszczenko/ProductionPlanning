@@ -29,7 +29,6 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
             {
                 new InjectionMoldingMachine()
                 {
-					Id = 11,
 					Name = "TestMachine1",
                     Online = false,
                     Size = "TestSize1",
@@ -37,7 +36,6 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
                 },
                 new InjectionMoldingMachine()
                 {
-					Id = 12,
 					Name = "TestMachine2",
                     Online = true,
                     Size = "TestSize2",
@@ -45,7 +43,6 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
                 },
                 new InjectionMoldingMachine()
                 {
-                    Id = 13,
 					Name = "TestMachine3",
 					Online = true,
 					Size = "TestSize3",
@@ -84,7 +81,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
 
 			//act 
 
-			var response = await client.GetAsync("/InjectionMoldingMachine");
+			var response = await client.GetAsync("/InjectionMoldingMachine/Index");
 
             //assert
 

@@ -23,12 +23,10 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
 
 			var production = new Domain.Entities.Production()
 			{
-				Id = 4,
 				Start = new DateTime(2023, 08, 15, 15, 20, 00),
 				End = new DateTime(2023, 08, 15, 15, 20, 00),
 				InjectionMoldingMachine = new Domain.Entities.InjectionMoldingMachine()
 				{
-					Id = 7,
 					Name = "TestMachine1",
 					Size = "TestSize1"
 				},
@@ -61,7 +59,7 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
 
 			//act
 
-			var response = await client.GetAsync("/Production/4/Details");
+			var response = await client.GetAsync($"/Production/{production.Id}/Details");
 
 			//assert
 
@@ -73,7 +71,7 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
 				.And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.Start}\r\n        </dd>")
 				.And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.InjectionMoldingMachineName}\r\n        </dd>")
 				.And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.InjectionMoldName}\r\n        </dd>")
-				.And.Contain(productionDto.MaterialIsAvailable ? "checked=\"checked\" class=\"check-box\" disabled=\"disabled\""
+				.And.Contain(productionDto.MaterialIsAvailable ? "checked=\"checked\""
 					: "class=\"check-box\" disabled=\"disabled\"")
 				.And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.MaterialUsage}\r\n        </dd>");
 		}

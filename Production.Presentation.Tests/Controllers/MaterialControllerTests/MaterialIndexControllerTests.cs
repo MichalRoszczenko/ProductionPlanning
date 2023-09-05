@@ -28,7 +28,6 @@ namespace Production.Presentation.Tests.Controllers.MaterialControllerTests
             {
                 new Domain.Entities.Material()
                 {
-                    Id = 1,
                     Name = "TestMat1",
                     Description = "TestDescription1",
                     Type = "TestType1",
@@ -39,7 +38,6 @@ namespace Production.Presentation.Tests.Controllers.MaterialControllerTests
                 },
                 new Domain.Entities.Material()
                 {
-                    Id = 2,
                     Name = "TestMat2",
 					Description = "TestDescription1",
 					Type = "TestType1",
@@ -50,7 +48,6 @@ namespace Production.Presentation.Tests.Controllers.MaterialControllerTests
                 },
                 new Domain.Entities.Material()
                 {
-                    Id = 3,
                     Name = "TestMat1",
 					Description = "TestDescription1",
 					Type = "TestType1",

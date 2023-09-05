@@ -4,6 +4,7 @@ using Moq;
 using Production.Application.InjectionMolds;
 using Production.Application.Productions;
 using Production.Application.Services;
+using Production.Domain.Entities;
 using Production.Presentation.Tests.Extensions;
 using System.Net;
 using Xunit;
@@ -24,6 +25,23 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldControllerTests
         {
             //arrange
 
+            var injectionMold = new InjectionMold()
+            {
+                Name = "TestMold",
+                Size = "TestSize",
+                Producer = "TestProducer",
+				Productions = new List<Domain.Entities.Production>()
+				{
+					new Domain.Entities.Production()
+					{
+                        Id = 7,
+						Start = new DateTime(5,2,5,13,34,44),
+						End = new DateTime(5,2,5,19,34,44),
+						
+					}
+				}
+			};
+
             var injectionMoldDto = new InjectionMoldDto()
             {
                 Name = "TestMold",
@@ -40,11 +58,13 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldControllerTests
                 }
             };
 
-            var client = CreateClientWithInjectionMoldServiceMock(injectionMoldDto);
+            await _factory.AddElementToDb(injectionMold);
+
+            var client = _factory.CreateClient();
 
             //act
 
-            var response = await client.GetAsync("/InjectionMold/1/Details");
+            var response = await client.GetAsync($"/InjectionMold/{injectionMold.Id}/Details");
 
             //assert
 
@@ -54,7 +74,10 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldControllerTests
 
             content.Should().Contain($"<dd class = \"col-sm-10\">\r\n            {injectionMoldDto.Name}\r\n        </dd>")
                 .And.Contain($"<dd class = \"col-sm-10\">\r\n            {injectionMoldDto.Size}\r\n        </dd>")
-                .And.Contain($"<dd class = \"col-sm-10\">\r\n            {injectionMoldDto.Producer}\r\n        </dd>");
+                .And.Contain($"<dd class = \"col-sm-10\">\r\n            {injectionMoldDto.Producer}\r\n        </dd>")
+                .And.Contain(injectionMoldDto.PlannedProductions[0].ProductionId.ToString())
+                .And.Contain(injectionMoldDto.PlannedProductions[0].StartProduction.ToString())
+                .And.Contain(injectionMoldDto.PlannedProductions[0].EndProduction.ToString());
         }
 
         [Fact()]
@@ -86,7 +109,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldControllerTests
 
             //act
 
-            var response = await client.GetAsync("/InjectionMold/1/Details");
+            var response = await client.GetAsync("/InjectionMold/99/Details");
 
             //assert
 
@@ -117,7 +140,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldControllerTests
 
             //act
 
-            var response = await client.GetAsync("/InjectionMold/1/Details");
+            var response = await client.GetAsync("/InjectionMold/99/Details");
 
             //assert
 

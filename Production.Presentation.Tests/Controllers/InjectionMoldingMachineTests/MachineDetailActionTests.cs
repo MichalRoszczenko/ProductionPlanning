@@ -27,7 +27,6 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
 
 			var machine = new InjectionMoldingMachine()
 			{
-                Id = 14,
 				Name = "TestMachine1",
 				Online = true,
 				Size = "TestSize1",
@@ -48,7 +47,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
 
             //act
 
-            var response = await client.GetAsync("/InjectionMoldingMachine/14/Details");
+            var response = await client.GetAsync($"/InjectionMoldingMachine/{machine.Id}/Details");
 
             //assert
 
@@ -91,7 +90,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
 
             //act
 
-            var response = await client.GetAsync("/InjectionMoldingMachine/1/Details");
+            var response = await client.GetAsync("/InjectionMoldingMachine/99/Details");
 
             //assert
 
@@ -121,7 +120,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
 
             //act
 
-            var response = await client.GetAsync("/InjectionMoldingMachine/1/Details");
+            var response = await client.GetAsync("/InjectionMoldingMachine/99/Details");
 
             //assert
             

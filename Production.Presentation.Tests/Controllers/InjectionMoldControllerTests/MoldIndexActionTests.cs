@@ -18,6 +18,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldControllerTests
         {
             _factory = factory.CreateInMemoryDatabase();
         }
+
         [Fact()]
         public async Task Index_ReturnsViewWithExpectedData_ForExistingInjectionMolds()
         {
