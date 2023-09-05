@@ -1,13 +1,14 @@
 ﻿using FluentAssertions;
 using Moq;
+using Production.Application.InventoryHandling;
 using Production.Application.Tests.TestsData.InventoryHandlingTestData;
 using Production.Domain.Interfaces;
 using Xunit;
 
-namespace Production.Application.InventoryHandling.Tests
+namespace Production.Application.Tests.InventoryHandling
 {
-    public class MaterialInventoryHandlerTests
-    {
+	public class MaterialInventoryHandlerTests
+	{
 		[Theory()]
 		[ClassData(typeof(AddMaterialDemandTestData))]
 		public void AddMaterialDemand_CalculateMaterialToOrder_ForValidArguments(Domain.Entities.Material material,
@@ -19,7 +20,7 @@ namespace Production.Application.InventoryHandling.Tests
 			var startedMaterialDemand = material.Stock.PlannedMaterialDemand;
 
 			var mockIProductionRepository = new Mock<IProductionRepository>();
-            var materialhandler = new MaterialInventoryHandler(mockIProductionRepository.Object);
+			var materialhandler = new MaterialInventoryHandler(mockIProductionRepository.Object);
 
 			//act
 
@@ -43,8 +44,8 @@ namespace Production.Application.InventoryHandling.Tests
 			var startedMaterialInStock = material.Stock.MaterialInStock;
 			var startedMaterialDemand = material.Stock.PlannedMaterialDemand;
 
-            var mockIProductionRepository = new Mock<IProductionRepository>();
-            var materialhandler = new MaterialInventoryHandler(mockIProductionRepository.Object);
+			var mockIProductionRepository = new Mock<IProductionRepository>();
+			var materialhandler = new MaterialInventoryHandler(mockIProductionRepository.Object);
 
 			//act
 
@@ -76,10 +77,10 @@ namespace Production.Application.InventoryHandling.Tests
 
 			//assert
 
-			for(int  i = 0; i < productions.Count; i++)
+			for (int i = 0; i < productions.Count; i++)
 			{
 				productions[i].MaterialStatus.MaterialIsAvailable.Should().Be(expectedResults[i]);
-            }
+			}
 		}
 	}
 }

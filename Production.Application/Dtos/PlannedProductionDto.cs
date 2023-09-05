@@ -1,4 +1,4 @@
-﻿namespace Production.Application.Productions
+﻿namespace Production.Application.Dtos
 {
     public class PlannedProductionDto
     {

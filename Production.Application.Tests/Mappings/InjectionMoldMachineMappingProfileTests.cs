@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentAssertions;
-using Production.Application.InjectionMoldMachines;
+using Production.Application.Dtos;
 using Production.Application.Mappings;
 using Production.Domain.Entities;
 using Xunit;

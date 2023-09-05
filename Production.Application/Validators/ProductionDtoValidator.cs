@@ -1,7 +1,8 @@
 ﻿using FluentValidation;
+using Production.Application.Dtos;
 using Production.Domain.Interfaces;
 
-namespace Production.Application.Productions.Validators
+namespace Production.Application.Validators
 {
     public class ProductionDtoValidator : AbstractValidator<ProductionDto>
     {
@@ -66,7 +67,7 @@ namespace Production.Application.Productions.Validators
 
             var moldProductions = mold!.Productions!.Where(p => p.Id != productionDto.Id);
 
-            return !IsProductionOverlapping(productionDto,moldProductions);
+            return !IsProductionOverlapping(productionDto, moldProductions);
         }
 
         private bool InjectionMachineIsAvailable(ProductionDto productionDto, int machineId)
@@ -77,15 +78,15 @@ namespace Production.Application.Productions.Validators
 
             var machineProductions = machine!.Productions!.Where(p => p.Id != productionDto.Id);
 
-            return !IsProductionOverlapping(productionDto,machineProductions);
+            return !IsProductionOverlapping(productionDto, machineProductions);
         }
 
         private bool IsProductionOverlapping(ProductionDto productionDto, IEnumerable<Domain.Entities.Production> ScheduledToolProductions)
         {
             var overlapedProduction = ScheduledToolProductions.Any(p =>
-                (productionDto.Start >= p.Start && productionDto.Start <= p.End) ||
-                (productionDto.End >= p.Start && productionDto.End <= p.End) ||
-                (productionDto.Start <= p.Start && productionDto.End >= p.End));
+                productionDto.Start >= p.Start && productionDto.Start <= p.End ||
+                productionDto.End >= p.Start && productionDto.End <= p.End ||
+                productionDto.Start <= p.Start && productionDto.End >= p.End);
 
             return overlapedProduction;
         }

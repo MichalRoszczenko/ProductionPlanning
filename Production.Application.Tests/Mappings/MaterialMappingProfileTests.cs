@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using FluentAssertions;
-using Production.Application.Material;
+using Production.Application.Dtos;
+using Production.Application.Mappings;
 using Xunit;
-namespace Production.Application.Mappings.Tests
+namespace Production.Application.Tests.Mappings
 {
 	public class MaterialMappingProfileTests
 	{

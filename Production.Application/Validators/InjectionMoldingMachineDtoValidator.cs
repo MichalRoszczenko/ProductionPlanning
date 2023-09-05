@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
+using Production.Application.Dtos;
 
-namespace Production.Application.InjectionMoldMachines.Validators
+namespace Production.Application.Validators
 {
     public class InjectionMoldingMachineDtoValidator : AbstractValidator<InjectionMoldingMachineDto>
     {

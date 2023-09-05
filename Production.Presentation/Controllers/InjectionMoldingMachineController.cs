@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Production.Application.InjectionMoldMachines;
-using Production.Application.Services;
+using Production.Application.Dtos;
+using Production.Application.Interfaces;
 
 namespace Production.Presentation.Controllers
 {

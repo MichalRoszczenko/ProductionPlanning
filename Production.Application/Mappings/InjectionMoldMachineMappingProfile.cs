@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using Production.Application.InjectionMoldMachines;
-using Production.Application.Productions;
+using Production.Application.Dtos;
 using Production.Domain.Entities;
 
 namespace Production.Application.Mappings

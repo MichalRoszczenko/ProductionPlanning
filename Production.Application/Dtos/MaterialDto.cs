@@ -1,4 +1,4 @@
-﻿namespace Production.Application.Material
+﻿namespace Production.Application.Dtos
 {
     public class MaterialDto
     {
@@ -7,9 +7,9 @@
         public string Type { get; set; } = default!;
         public string Description { get; set; } = default!;
         public decimal Cost { get; set; }
-		public bool IsAssigned { get; set; }
+        public bool IsAssigned { get; set; }
 
-		public int MaterialInStock { get; set; } = 0;
+        public int MaterialInStock { get; set; } = 0;
         public int PlannedMaterialDemand { get; set; } = 0;
         public int MaterialToOrder { get; set; } = 0;
         public int MaterialOnProduction { get; set; } = 0;

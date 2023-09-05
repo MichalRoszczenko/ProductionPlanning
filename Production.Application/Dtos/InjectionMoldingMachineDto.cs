@@ -1,6 +1,4 @@
-﻿using Production.Application.Productions;
-
-namespace Production.Application.InjectionMoldMachines
+﻿namespace Production.Application.Dtos
 {
     public class InjectionMoldingMachineDto
     {

@@ -1,9 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Moq;
-using Production.Application.InjectionMoldMachines;
-using Production.Application.Productions;
-using Production.Application.Services;
+using Production.Application.Dtos;
+using Production.Application.Interfaces;
 using Production.Domain.Entities;
 using Production.Presentation.Tests.Extensions;
 using System.Net;

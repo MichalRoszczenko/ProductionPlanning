@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Moq;
-using Production.Application.Productions;
-using Production.Application.Services;
+using Production.Application.Dtos;
+using Production.Application.Interfaces;
 using Production.Presentation.Tests.Extensions;
 using System.Net;
 using Xunit;
 
 namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
 {
-	public class ProductionIndexActionTests : IClassFixture<WebApplicationFactory<Program>>
+    public class ProductionIndexActionTests : IClassFixture<WebApplicationFactory<Program>>
     { 
 		private readonly WebApplicationFactory<Program> _factory;
 

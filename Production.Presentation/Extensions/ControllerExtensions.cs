@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Production.Application.InjectionMoldMachines;
-using Production.Application.InjectionMolds;
+using Production.Application.Dtos;
 
 namespace Production.Presentation.Extensions
 {

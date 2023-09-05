@@ -1,6 +1,4 @@
-﻿using Production.Application.Productions;
-
-namespace Production.Application.InjectionMolds
+﻿namespace Production.Application.Dtos
 {
     public class InjectionMoldDto
     {
@@ -10,6 +8,6 @@ namespace Production.Application.InjectionMolds
         public string Size { get; set; } = default!;
         public decimal Consumption { get; set; } = default!;
         public List<PlannedProductionDto>? PlannedProductions { get; set; }
-		public int? MaterialId { get; set; }
-	}
+        public int? MaterialId { get; set; }
+    }
 }

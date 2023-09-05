@@ -1,9 +1,9 @@
 ﻿using Xunit;
 using AutoMapper;
 using Production.Domain.Entities;
-using Production.Application.Productions;
 using FluentAssertions;
 using Production.Application.Mappings;
+using Production.Application.Dtos;
 
 namespace Production.Application.Tests.Mappings
 {

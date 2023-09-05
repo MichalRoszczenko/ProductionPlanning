@@ -1,8 +1,8 @@
 ﻿using FluentValidation.TestHelper;
 using Moq;
-using Production.Application.Productions;
-using Production.Application.Productions.Validators;
+using Production.Application.Dtos;
 using Production.Application.Tests.TestsData.ProductionsValidatorsTestData;
+using Production.Application.Validators;
 using Production.Domain.Entities;
 using Production.Domain.Interfaces;
 using Xunit;

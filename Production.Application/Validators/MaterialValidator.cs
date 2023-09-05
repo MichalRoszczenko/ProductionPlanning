@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
+using Production.Application.Dtos;
 
-namespace Production.Application.Material.Validetors
+namespace Production.Application.Validators
 {
     public class MaterialValidator : AbstractValidator<MaterialDto>
     {

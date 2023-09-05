@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Production.Application.Productions;
-using Production.Application.Services;
+using Production.Application.Dtos;
+using Production.Application.Interfaces;
 using Production.Presentation.Extensions;
 
 namespace Production.Presentation.Controllers

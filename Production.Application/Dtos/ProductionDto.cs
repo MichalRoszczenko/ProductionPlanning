@@ -1,4 +1,4 @@
-﻿namespace Production.Application.Productions
+﻿namespace Production.Application.Dtos
 {
     public class ProductionDto
     {
@@ -10,7 +10,7 @@
         public string? InjectionMoldName { get; set; }
         public int InjectionMoldingMachineId { get; set; } = default!;
         public string? InjectionMoldingMachineName { get; set; }
-		public bool MaterialIsAvailable { get; set; }
-		public int MaterialUsage { get; set; }
-	}
+        public bool MaterialIsAvailable { get; set; }
+        public int MaterialUsage { get; set; }
+    }
 }

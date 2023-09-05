@@ -1,22 +1,23 @@
 ﻿using FluentAssertions;
+using Production.Domain.Entities;
 using Production.Domain.Tests.TestsData;
 using Xunit;
 
-namespace Production.Domain.Entities.Tests
+namespace Production.Domain.Tests.Entities
 {
-    public class MaterialStockTests
-    {
-        [Theory()]
-        [ClassData(typeof(ValidCountMaterialToOrderTestData))]
-        public void CountMaterialToOrder_ReturnMaterialToOrder_ForValidProperties(MaterialStock materialStock, int materialToOrder)
-        {
-            //act
+	public class MaterialStockTests
+	{
+		[Theory()]
+		[ClassData(typeof(ValidCountMaterialToOrderTestData))]
+		public void CountMaterialToOrder_ReturnMaterialToOrder_ForValidProperties(MaterialStock materialStock, int materialToOrder)
+		{
+			//act
 
-            materialStock.CountMaterialToOrder();
+			materialStock.CountMaterialToOrder();
 
-            //assert
+			//assert
 
-            materialStock.MaterialToOrder.Should().Be(materialToOrder);
-        }
-    }
+			materialStock.MaterialToOrder.Should().Be(materialToOrder);
+		}
+	}
 }

@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
+using Production.Application.Dtos;
 
-namespace Production.Application.InjectionMolds.Validators
+namespace Production.Application.Validators
 {
     public class InjectionMoldDtoValidator : AbstractValidator<InjectionMoldDto>
     {
@@ -23,7 +24,7 @@ namespace Production.Application.InjectionMolds.Validators
                 .MaximumLength(15).WithMessage("The Producer should have maximum 15 characters.");
 
             RuleFor(e => e.Consumption)
-                .PrecisionScale(4,2,true).WithMessage("The value of the 'Consumption' field cannot have more than 4 digits with a maximum accuracy of 2 digits after the decimal point. ")
+                .PrecisionScale(4, 2, true).WithMessage("The value of the 'Consumption' field cannot have more than 4 digits with a maximum accuracy of 2 digits after the decimal point. ")
                 .GreaterThan(0).WithMessage("Consumption should be greater than 0");
         }
     }
