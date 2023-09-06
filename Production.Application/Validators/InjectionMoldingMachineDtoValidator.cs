@@ -8,16 +8,16 @@ namespace Production.Application.Validators
         public InjectionMoldingMachineDtoValidator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty().WithMessage("Please enter machine Name")
-                .NotNull()
                 .MinimumLength(2).WithMessage("The Name should have atleast 2 characters")
-                .MaximumLength(15).WithMessage("The Name should have maximum 15 characters");
+                .MaximumLength(15).WithMessage("The Name should have maximum 15 characters")
+                .NotEmpty().WithMessage("Please enter machine Name")
+                .NotNull();
 
             RuleFor(x => x.Tonnage)
-                .NotEmpty().WithMessage("Please enter machine Tonnage")
-                .NotNull()
                 .GreaterThan(0).WithMessage("Machine tonnage should be greater than 0")
-                .LessThan(4000).WithMessage("Machine tonnage should be less than 4000");
+                .LessThan(4000).WithMessage("Machine tonnage should be less than 4000")
+                .NotEmpty().WithMessage("Please enter machine Tonnage")
+                .NotNull();
 
             RuleFor(x => x.Size)
                 .NotEmpty().WithMessage("Please enter machine Size.")

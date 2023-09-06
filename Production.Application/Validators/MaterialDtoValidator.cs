@@ -3,9 +3,9 @@ using Production.Application.Dtos;
 
 namespace Production.Application.Validators
 {
-    public class MaterialValidator : AbstractValidator<MaterialDto>
+    public class MaterialDtoValidator : AbstractValidator<MaterialDto>
     {
-        public MaterialValidator()
+        public MaterialDtoValidator()
         {
             RuleFor(e => e.Name)
                 .NotEmpty().WithMessage("Please enter material Name")
@@ -25,7 +25,6 @@ namespace Production.Application.Validators
                 .MaximumLength(32).WithMessage("The maximum number of characters for the description is 32.");
 
             RuleFor(e => e.MaterialInStock)
-                .NotEmpty().WithMessage("Please enter actual amount of material in the stack")
                 .NotNull().WithMessage("Enter amount of material in stock")
                 .GreaterThanOrEqualTo(0).WithMessage("Material cannot be less than 0");
         }

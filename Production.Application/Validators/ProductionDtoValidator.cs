@@ -21,7 +21,7 @@ namespace Production.Application.Validators
             RuleFor(e => e.End)
                 .NotEmpty().WithMessage("The field is required")
                 .NotNull()
-                .GreaterThan(v => v.Start.AddHours(1))
+                .GreaterThanOrEqualTo(v => v.Start.AddHours(1))
                 .WithMessage("The End of the production must be selected after start. The minimum production time is one hour");
 
             RuleFor(e => e.InjectionMoldId)
@@ -64,6 +64,7 @@ namespace Production.Application.Validators
             var mold = _moldRepository.GetById(moldId, true).Result;
 
             if (mold == null || mold.Id == default) return false;
+            if (mold.Productions?.Count < 1 || mold.Productions == null) return true;
 
             var moldProductions = mold!.Productions!.Where(p => p.Id != productionDto.Id);
 
@@ -75,6 +76,7 @@ namespace Production.Application.Validators
             var machine = _machineRepository.GetById(machineId, true).Result;
 
             if (machine == null || machine.Id == default) return false;
+            if (machine.Productions?.Count < 1 || machine.Productions == null) return true;
 
             var machineProductions = machine!.Productions!.Where(p => p.Id != productionDto.Id);
 
@@ -84,8 +86,8 @@ namespace Production.Application.Validators
         private bool IsProductionOverlapping(ProductionDto productionDto, IEnumerable<Domain.Entities.Production> ScheduledToolProductions)
         {
             var overlapedProduction = ScheduledToolProductions.Any(p =>
-                productionDto.Start >= p.Start && productionDto.Start <= p.End ||
-                productionDto.End >= p.Start && productionDto.End <= p.End ||
+                productionDto.Start >= p.Start && productionDto.Start < p.End ||
+                productionDto.End > p.Start && productionDto.End <= p.End ||
                 productionDto.Start <= p.Start && productionDto.End >= p.End);
 
             return overlapedProduction;
