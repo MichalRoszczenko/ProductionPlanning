@@ -1,30 +1,32 @@
 ﻿using FluentAssertions;
 using Moq;
+using Production.Application.Dtos;
 using Production.Application.InventoryHandling;
 using Production.Application.Tests.TestsData.InventoryHandlingTestData;
 using Production.Domain.Interfaces;
+using Production.Domain.Entities;
 using Xunit;
 
 namespace Production.Application.Tests.InventoryHandling
 {
-	public class MaterialInventoryHandlerTests
+    public class MaterialInventoryHandlerTests
 	{
-		[Theory()]
+        [Theory()]
 		[ClassData(typeof(AddMaterialDemandTestData))]
-		public void AddMaterialDemand_CalculateMaterialToOrder_ForValidArguments(Domain.Entities.Material material,
+		public void AddMaterialDemand_CalculateMaterialToOrder_ForCorrectArguments(Material material,
 			MaterialRequirements materialRequirementsInfo, int materialToOrder)
 		{
 			//arrange
+
 			material.Stock.CountMaterialToOrder();
 			var startedMaterialInStock = material.Stock.MaterialInStock;
 			var startedMaterialDemand = material.Stock.PlannedMaterialDemand;
 
-			var mockIProductionRepository = new Mock<IProductionRepository>();
-			var materialhandler = new MaterialInventoryHandler(mockIProductionRepository.Object);
+			var materialhandler = GetMaterialHandler();
 
-			//act
+            //act
 
-			materialhandler.AddMaterialDemand(material, materialRequirementsInfo);
+            materialhandler.AddMaterialDemand(material, materialRequirementsInfo);
 
 			//assert
 
@@ -35,7 +37,7 @@ namespace Production.Application.Tests.InventoryHandling
 
 		[Theory()]
 		[ClassData(typeof(RemoveMaterialDemandTestData))]
-		public void RemoveMaterialDemand_CalculateMaterialToOrder_ForValidArguments(Domain.Entities.Material material,
+		public void RemoveMaterialDemand_CalculateMaterialToOrder_ForCorrectArguments(Material material,
 			MaterialRequirements materialRequirementsInfo, int materialToOrder)
 		{
 			//arrange
@@ -44,12 +46,11 @@ namespace Production.Application.Tests.InventoryHandling
 			var startedMaterialInStock = material.Stock.MaterialInStock;
 			var startedMaterialDemand = material.Stock.PlannedMaterialDemand;
 
-			var mockIProductionRepository = new Mock<IProductionRepository>();
-			var materialhandler = new MaterialInventoryHandler(mockIProductionRepository.Object);
+            var materialhandler = GetMaterialHandler();
 
-			//act
+            //act
 
-			materialhandler.RemoveMaterialDemand(material, materialRequirementsInfo);
+            materialhandler.RemoveMaterialDemand(material, materialRequirementsInfo);
 
 			//assert
 
@@ -60,27 +61,61 @@ namespace Production.Application.Tests.InventoryHandling
 
 		[Theory()]
 		[ClassData(typeof(CalculateDemandsTestData))]
-		public async Task CalculateDemands_ReturnCorrectMaterialIsAvailableStatus_ForValidArguments(
-			Domain.Entities.Material material, List<Domain.Entities.Production> productions, bool[] expectedResults)
+		public async Task CalculateDemands_ReturnCorrectMaterialIsAvailableStatus_ForCorrectArguments(
+			Material material, List<Domain.Entities.Production> productions, bool[] expectedResults)
+        {
+            //arrange
+
+            MaterialInventoryHandler materialHandler = GetMaterialHandlerWithMockedProductions(productions);
+
+            //act
+
+            await materialHandler.CalculateDemands(material);
+
+            //assert
+
+            for (int i = 0; i < productions.Count; i++)
+            {
+                productions[i].MaterialStatus.MaterialIsAvailable.Should().Be(expectedResults[i]);
+            }
+        }
+
+        [Theory()]
+		[ClassData(typeof(RemoveMaterialFromProductionTestData))]
+		public async Task RemoveMaterialFromProduction_ReturnCorrectMaterialIsAvailable_ForCorrectArguments(
+			Material material, List<Domain.Entities.Production> productions, bool[] expectedResults)
 		{
-			//arrange
+            //assert
 
-			var mockIProductionRepository = new Mock<IProductionRepository>();
+            MaterialInventoryHandler materialHandler = GetMaterialHandlerWithMockedProductions(productions);
 
-			mockIProductionRepository.Setup(x => x.GetAll()).ReturnsAsync(productions);
+            //act
 
-			var materialhandler = new MaterialInventoryHandler(mockIProductionRepository.Object);
-
-			//act
-
-			await materialhandler.CalculateDemands(material);
+            await materialHandler.RemoveMaterialFromProductions(material);
 
 			//assert
 
-			for (int i = 0; i < productions.Count; i++)
+			for(int i = 0;i < productions.Count; i++)
 			{
 				productions[i].MaterialStatus.MaterialIsAvailable.Should().Be(expectedResults[i]);
 			}
 		}
-	}
+
+        private static MaterialInventoryHandler GetMaterialHandlerWithMockedProductions(List<Domain.Entities.Production> productions)
+        {
+            var mockIProductionRepository = new Mock<IProductionRepository>();
+            mockIProductionRepository.Setup(x => x.GetAll()).ReturnsAsync(productions);
+            var materialhandler = new MaterialInventoryHandler(mockIProductionRepository.Object);
+
+            return materialhandler;
+        }
+
+		private static MaterialInventoryHandler GetMaterialHandler()
+		{
+            var mockIProductionRepository = new Mock<IProductionRepository>();
+            var materialhandler = new MaterialInventoryHandler(mockIProductionRepository.Object);
+
+			return materialhandler;
+        }
+    }
 }

@@ -3,6 +3,7 @@ using FluentAssertions;
 using Production.Application.Dtos;
 using Production.Application.Mappings;
 using Xunit;
+
 namespace Production.Application.Tests.Mappings
 {
 	public class MaterialMappingProfileTests
@@ -66,8 +67,6 @@ namespace Production.Application.Tests.Mappings
 				}
 			};
 
-			material.Stock.CountMaterialToOrder();
-
 			var materialDto = new MaterialDto()
 			{
 				MaterialInStock = 500,
@@ -78,7 +77,6 @@ namespace Production.Application.Tests.Mappings
 			//act
 
 			var result = _mapper.Map<Domain.Entities.Material>(materialDto);
-			result.Stock.CountMaterialToOrder();
 
 			//assert
 

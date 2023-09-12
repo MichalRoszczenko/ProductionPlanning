@@ -8,13 +8,13 @@ namespace Production.Application.Mappings
     {
         public MaterialMappingProfile()
         {
-            CreateMap<Domain.Entities.Material, MaterialDto>()
+            CreateMap<Material, MaterialDto>()
                 .ForMember(dto => dto.MaterialInStock, opt => opt.MapFrom(src => src.Stock.MaterialInStock))
                 .ForMember(dto => dto.PlannedMaterialDemand, opt => opt.MapFrom(src => src.Stock.PlannedMaterialDemand))
                 .ForMember(dto => dto.MaterialOnProduction, opt => opt.MapFrom(src => src.Stock.MaterialOnProduction))
                 .ForMember(dto => dto.MaterialToOrder, opt => opt.MapFrom(src => src.Stock.MaterialToOrder));
 
-            CreateMap<MaterialDto, Domain.Entities.Material>().ForMember(m => m.Stock, opt => opt.MapFrom(dto => new MaterialStock()
+            CreateMap<MaterialDto, Material>().ForMember(m => m.Stock, opt => opt.MapFrom(dto => new MaterialStock()
             {
                 MaterialInStock = dto.MaterialInStock,
                 PlannedMaterialDemand = dto.PlannedMaterialDemand,

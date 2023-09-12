@@ -22,9 +22,9 @@ namespace Production.Application.Tests.TestsData.ValidatorsTestData
 			{
 				new MaterialDto()
 				{
-					Name = null,
-					Type = null,
-					Description = null,
+					Name = null!,
+					Type = null!,
+					Description = null!,
 					MaterialInStock = -1
 				}
 			};			

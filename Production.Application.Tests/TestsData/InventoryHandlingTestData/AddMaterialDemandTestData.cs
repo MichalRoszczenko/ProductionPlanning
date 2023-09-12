@@ -1,4 +1,4 @@
-﻿using Production.Application.InventoryHandling;
+﻿using Production.Application.Dtos;
 using Production.Domain.Entities;
 using System.Collections;
 
@@ -10,7 +10,7 @@ namespace Production.Application.Tests.TestsData.InventoryHandlingTestData
         {
             yield return new object[]
             {
-                new Domain.Entities.Material()
+                new Material()
                 {
                     Stock = new MaterialStock()
                     {
@@ -26,7 +26,7 @@ namespace Production.Application.Tests.TestsData.InventoryHandlingTestData
 
             yield return new object[]
             {
-				new Domain.Entities.Material()
+				new Material()
 				{
 					Stock = new MaterialStock()
 					{
@@ -42,7 +42,7 @@ namespace Production.Application.Tests.TestsData.InventoryHandlingTestData
 
 			yield return new object[]
 			{
-				new Domain.Entities.Material()
+				new Material()
 				{
 					Stock = new MaterialStock()
 					{
@@ -58,7 +58,7 @@ namespace Production.Application.Tests.TestsData.InventoryHandlingTestData
 
 			yield return new object[]
 			{
-				new Domain.Entities.Material()
+				new Material()
 				{
 					Stock = new MaterialStock()
 					{

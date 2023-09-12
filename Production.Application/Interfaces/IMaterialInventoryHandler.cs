@@ -1,4 +1,4 @@
-﻿using Production.Application.InventoryHandling;
+﻿using Production.Application.Dtos;
 using Production.Domain.Entities;
 
 namespace Production.Application.Interfaces
@@ -8,6 +8,6 @@ namespace Production.Application.Interfaces
         void AddMaterialDemand(Material material, MaterialRequirements materialRequirementsInfo);
         Task CalculateDemands(Material material);
         void RemoveMaterialDemand(Material material, MaterialRequirements materialRequirementsInfo);
-        Task RemoveMaterialFromProduction(Material material);
+        Task RemoveMaterialFromProductions(Material material);
     }
 }

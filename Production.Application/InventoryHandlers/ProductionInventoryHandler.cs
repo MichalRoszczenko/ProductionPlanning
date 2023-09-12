@@ -1,6 +1,5 @@
 ﻿using Production.Application.Dtos;
 using Production.Application.Interfaces;
-using Production.Application.InventoryHandling;
 using Production.Domain.Interfaces;
 
 namespace Production.Application.InventoryHandlers

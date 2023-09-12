@@ -27,14 +27,29 @@ namespace Production.Application.Tests.Mappings
             {
                 InjectionMold = new InjectionMold()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = new Guid("2e5a5182-3999-4a4c-ec3f-18db7f8126c4"),
                     Name = "TestMoldName",
                 },
                 InjectionMoldingMachine = new InjectionMoldingMachine()
                 {
                     Id = 5,
                     Name = "TestMachineName",
+                },
+                MaterialStatus = new MaterialStatus()
+                {
+                    MaterialIsAvailable = true,
+                    MaterialUsage = 400
                 }
+            };            
+            
+            var productionDto = new ProductionDto()
+            {
+                InjectionMoldId = new Guid("2e5a5182-3999-4a4c-ec3f-18db7f8126c4"),
+                InjectionMoldName = "TestMoldName",
+                InjectionMoldingMachineId = 5,
+                InjectionMoldingMachineName = "TestMachineName",
+                MaterialIsAvailable = true,
+                MaterialUsage = 400
             };
 
             //act
@@ -43,24 +58,43 @@ namespace Production.Application.Tests.Mappings
 
             //assert
 
-            result.Should().NotBeNull();
-            result.InjectionMoldId.Should().Be(production.InjectionMold.Id);
-            result.InjectionMoldName.Should().Be(production.InjectionMold.Name);
-            result.InjectionMoldingMachineId.Should().Be(production.InjectionMoldingMachine.Id);
-            result.InjectionMoldingMachineName.Should().Be(production.InjectionMoldingMachine.Name);
+            result.Should().BeEquivalentTo(productionDto);
         }
 
         [Fact()]
-        public void MappingProfile_ShouldMapProductionDtoInputToProduction()
+        public void MappingProfile_ShouldMapProductionDtoToProduction()
         {
             //arrange
 
             var productionDto = new ProductionDto()
             {
-                InjectionMoldId = Guid.NewGuid(),
+                InjectionMoldId = new Guid("2e5a5182-3999-4a4c-ec3f-18db7f8126c4"),
                 InjectionMoldName = "TestInjectionMoldName",
                 InjectionMoldingMachineId = 7,
-                InjectionMoldingMachineName = "TestInjectionMachineName"
+                InjectionMoldingMachineName = "TestInjectionMachineName",
+                MaterialIsAvailable = false,
+                MaterialUsage = 1111
+            }; 
+            
+            var production = new Domain.Entities.Production()
+            {
+                InjectionMoldId = new Guid("2e5a5182-3999-4a4c-ec3f-18db7f8126c4"),
+                InjectionMold = new InjectionMold()
+                {
+                    Id = new Guid("2e5a5182-3999-4a4c-ec3f-18db7f8126c4"),
+                    Name = "TestInjectionMoldName",
+                },
+                InjectionMoldingMachineId = 7,
+                InjectionMoldingMachine = new InjectionMoldingMachine()
+                {
+                    Id = 7,
+                    Name = "TestInjectionMachineName",
+                },
+                MaterialStatus = new MaterialStatus()
+                {
+                    MaterialIsAvailable = false,
+                    MaterialUsage = 1111
+                }
             };
 
             //act
@@ -69,11 +103,7 @@ namespace Production.Application.Tests.Mappings
 
             //assert
 
-            result.Should().NotBeNull();
-            result.InjectionMold.Id.Should().Be(productionDto.InjectionMoldId);
-            result.InjectionMold.Name.Should().Be(productionDto.InjectionMoldName);
-            result.InjectionMoldingMachine.Id.Should().Be(productionDto.InjectionMoldingMachineId);
-            result.InjectionMoldingMachine.Name.Should().Be(productionDto.InjectionMoldingMachineName);
+            result.Should().BeEquivalentTo(production);
         }
     }
 }

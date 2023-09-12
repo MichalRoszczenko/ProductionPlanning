@@ -58,7 +58,7 @@ namespace Production.Application.Services
 		{
 			var material = await _repository.GetById(materialId);
 
-			await _materialHandler.RemoveMaterialFromProduction(material);
+			await _materialHandler.RemoveMaterialFromProductions(material);
 
 			await _repository.Remove(material);
 		}

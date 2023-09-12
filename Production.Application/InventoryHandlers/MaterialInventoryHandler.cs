@@ -1,4 +1,5 @@
-﻿using Production.Application.Interfaces;
+﻿using Production.Application.Dtos;
+using Production.Application.Interfaces;
 using Production.Domain.Interfaces;
 
 namespace Production.Application.InventoryHandling
@@ -52,7 +53,7 @@ namespace Production.Application.InventoryHandling
 			await _productionRepository.Commit();
 		}
 
-		public async Task RemoveMaterialFromProduction(Domain.Entities.Material material)
+		public async Task RemoveMaterialFromProductions(Domain.Entities.Material material)
 		{
 			var productions = await _productionRepository.GetAll();
 			var selectedProductions = productions.Where(s => s.InjectionMold.MaterialId == material.Id);
