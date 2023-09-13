@@ -34,6 +34,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Production}/{action=Index}");
 
-app.Run();
+//app.Run();
 
 public partial class Program { }
