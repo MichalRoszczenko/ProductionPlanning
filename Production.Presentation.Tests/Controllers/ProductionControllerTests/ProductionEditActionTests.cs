@@ -15,7 +15,7 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
         {
 			_factory = factory.CreateInMemoryDatabase();
 
-			_client = _factory.CreateClient();//test Commit
+			_client = _factory.CreateClient();//test Commit2
         }
 
         [Fact]
