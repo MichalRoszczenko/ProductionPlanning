@@ -54,9 +54,9 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
 
             var content = await response.Content.ReadAsStringAsync();
 
-            content.Should().Contain($"<dd class = \"col-sm-10\">\r\n            {machineDto.Name}\r\n        </dd>")
-                .And.Contain($"<dd class = \"col-sm-10\">\r\n            {machineDto.Size}\r\n        </dd>")
-                .And.Contain($"<dd class = \"col-sm-10\">\r\n            {machineDto.Tonnage}\r\n        </dd>")
+            content.Should().Contain($"<dd class = \"col-sm-10\">{machineDto.Name}</dd>")
+                .And.Contain($"<dd class = \"col-sm-10\">{machineDto.Size}</dd>")
+                .And.Contain($"<dd class = \"col-sm-10\">{machineDto.Tonnage}</dd>")
                 .And.Contain(machineDto.Online ? "<input checked=\"checked\" class=\"check-box\"" : "<input class=\"check-box\"");
 		}
 

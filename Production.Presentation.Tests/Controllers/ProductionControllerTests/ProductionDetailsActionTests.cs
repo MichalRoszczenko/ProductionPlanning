@@ -67,13 +67,13 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
 
 			var content = await response.Content.ReadAsStringAsync();
 
-			content.Should().Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.Start}\r\n        </dd>")
-				.And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.Start}\r\n        </dd>")
-				.And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.InjectionMoldingMachineName}\r\n        </dd>")
-				.And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.InjectionMoldName}\r\n        </dd>")
+			content.Should().Contain($"<dd class = \"col-sm-10\">{productionDto.Start}</dd>")
+				.And.Contain($"<dd class = \"col-sm-10\">{productionDto.Start}</dd>")
+				.And.Contain($"<dd class = \"col-sm-10\">{productionDto.InjectionMoldingMachineName}</dd>")
+				.And.Contain($"<dd class = \"col-sm-10\">{productionDto.InjectionMoldName}</dd>")
 				.And.Contain(productionDto.MaterialIsAvailable ? "checked=\"checked\""
 					: "class=\"check-box\" disabled=\"disabled\"")
-				.And.Contain($"<dd class = \"col-sm-10\">\r\n            {productionDto.MaterialUsage}\r\n        </dd>");
+				.And.Contain($"<dd class = \"col-sm-10\">{productionDto.MaterialUsage}</dd>");
 		}
 	}
 }

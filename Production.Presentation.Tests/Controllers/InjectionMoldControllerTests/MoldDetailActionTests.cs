@@ -71,9 +71,9 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldControllerTests
 
             var content = await response.Content.ReadAsStringAsync();
 
-            content.Should().Contain($"<dd class = \"col-sm-10\">\r\n            {injectionMoldDto.Name}\r\n        </dd>")
-                .And.Contain($"<dd class = \"col-sm-10\">\r\n            {injectionMoldDto.Size}\r\n        </dd>")
-                .And.Contain($"<dd class = \"col-sm-10\">\r\n            {injectionMoldDto.Producer}\r\n        </dd>")
+            content.Should().Contain($"<dd class = \"col-sm-10\">{injectionMoldDto.Name}</dd>")
+                .And.Contain($"<dd class = \"col-sm-10\">{injectionMoldDto.Size}</dd>")
+                .And.Contain($"<dd class = \"col-sm-10\">{injectionMoldDto.Producer}</dd>")
                 .And.Contain(injectionMoldDto.PlannedProductions[0].ProductionId.ToString())
                 .And.Contain(injectionMoldDto.PlannedProductions[0].StartProduction.ToString())
                 .And.Contain(injectionMoldDto.PlannedProductions[0].EndProduction.ToString());

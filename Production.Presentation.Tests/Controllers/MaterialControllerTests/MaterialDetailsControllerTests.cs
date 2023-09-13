@@ -49,12 +49,12 @@ namespace Production.Presentation.Tests.Controllers.MaterialControllerTests
 
 			content.Should()
 				.Contain(material.Id.ToString())
-				.And.Contain(material.Name)
-				.And.Contain(material.Type)
-				.And.Contain(material.Description)
-				.And.Contain(material.Cost.ToString())
-				.And.Contain(material.Stock.MaterialInStock.ToString())
-				.And.Contain(material.Stock.PlannedMaterialDemand.ToString());
+				.And.Contain($"<dd class = \"col-sm-10\">{material.Name}")
+				.And.Contain($"<dd class = \"col-sm-10\">{material.Type}")
+				.And.Contain($"<dd class = \"col-sm-10\">{material.Description}")
+				.And.Contain($"<dd class = \"col-sm-10\">{material.Cost}")
+				.And.Contain($"<dd class = \"col-sm-10\">{material.Stock.MaterialInStock}")
+				.And.Contain($"<dd class = \"col-sm-10\">{material.Stock.PlannedMaterialDemand}");
 		}
 	}
 }

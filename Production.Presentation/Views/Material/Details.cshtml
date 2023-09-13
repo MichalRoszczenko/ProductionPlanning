@@ -11,60 +11,32 @@
 <div>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cost).Replace("Cost","Cost [per kg]")
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cost) $
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaterialInStock).Replace("MaterialInStock","Material in stock")
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaterialInStock) kg
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PlannedMaterialDemand).Replace("PlannedMaterialDemand","Planned material demand")
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PlannedMaterialDemand) kg
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.MaterialToOrder).Replace("MaterialToOrder","Material to order")
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MaterialToOrder) kg
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaterialOnProduction).Replace("MaterialOnProduction","Material on production")
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaterialOnProduction) kg
-        </dd>
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.Id)</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.Id)</dd>
+
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.Name)</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.Name)</dd>
+
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.Type)</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.Type)</dd>
+
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.Description)</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.Description)</dd>
+
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.Cost).Replace("Cost","Cost [per kg]")</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.Cost) $</dd>
+
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.MaterialInStock).Replace("MaterialInStock","Material in stock")</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.MaterialInStock) kg</dd>
+
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.PlannedMaterialDemand).Replace("PlannedMaterialDemand","Planned material demand")</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.PlannedMaterialDemand) kg</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.MaterialToOrder).Replace("MaterialToOrder","Material to order")</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.MaterialToOrder) kg</dd>
+
+        <dt class = "col-sm-2">@Html.DisplayNameFor(model => model.MaterialOnProduction).Replace("MaterialOnProduction","Material on production")</dt>
+        <dd class = "col-sm-10">@Html.DisplayFor(model => model.MaterialOnProduction) kg</dd>
     </dl>
 </div>
 <hr />

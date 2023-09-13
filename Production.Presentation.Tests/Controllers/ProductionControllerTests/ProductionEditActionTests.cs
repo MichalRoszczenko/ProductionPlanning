@@ -86,8 +86,8 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
 
             for (int i = 0; i < molds.Count; i++)
             {
-                content.Should().Contain($"<option value=\"{molds[i].Id}\">{molds[i].Name}</option>\r\n")
-                    .And.Contain($"<option value=\"{machines[i].Id}\">{machines[i].Name}</option>\r\n");
+                content.Should().Contain($"<option value=\"{molds[i].Id}\">{molds[i].Name}</option>")
+                    .And.Contain($"<option value=\"{machines[i].Id}\">{machines[i].Name}</option>");
             }
 		}
     }
