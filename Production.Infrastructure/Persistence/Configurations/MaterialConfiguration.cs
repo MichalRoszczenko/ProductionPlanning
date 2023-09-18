@@ -8,11 +8,24 @@ namespace Production.Infrastructure.Persistence.Configurations
 	{
 		public void Configure(EntityTypeBuilder<Material> builder)
 		{
-			builder.Property(m => m.Name).IsRequired().HasColumnType("varchar(50)");
+			builder.Property(m => m.Name)
+				.IsRequired()
+				.HasColumnType("varchar(15)")
+				.HasMaxLength(15);
+			
+			builder.Property(m => m.Type)
+				.IsRequired()
+				.HasColumnType("varchar(15)")
+				.HasMaxLength(15);
 
-			builder.Property(m => m.Description).HasMaxLength(200);
+			builder.Property(m => m.Description)
+				.IsRequired()
+				.HasColumnType("varchar(32)")
+				.HasMaxLength(32);
 
-			builder.Property(m => m.Cost).HasColumnType("decimal(5,2)").IsRequired();
+			builder.Property(m => m.Cost)
+				.IsRequired()
+				.HasColumnType("decimal(5,2)");
 
 			builder.OwnsOne(m => m.Stock);
 		}
