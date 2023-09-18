@@ -8,8 +8,19 @@ namespace Production.Infrastructure.Persistence.Configurations
 	{
 		public void Configure(EntityTypeBuilder<InjectionMoldingMachine> builder)
 		{
-			builder.Property(m => m.Name).IsRequired()
-						.HasColumnType("varchar(50)");
+			builder.Property(m => m.Name)
+				.IsRequired()
+				.HasColumnType("varchar(15)")
+				.HasMaxLength(15);
+
+			builder.Property(m => m.Tonnage)
+				.IsRequired()
+				.HasColumnType("int");
+
+			builder.Property(m => m.Size)
+				.IsRequired()
+				.HasColumnType("varchar(15)")
+				.HasMaxLength(15);
 		}
 	}
 }
