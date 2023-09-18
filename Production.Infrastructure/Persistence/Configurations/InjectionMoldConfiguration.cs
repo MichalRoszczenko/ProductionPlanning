@@ -9,8 +9,16 @@ namespace Production.Infrastructure.Persistence.Configurations
 		public void Configure(EntityTypeBuilder<InjectionMold> builder)
 		{
 			builder.Property(m => m.Name).IsRequired()
-				.HasColumnType("varchar(50)")
-				.HasMaxLength(30);
+				.HasColumnType("varchar(15)")
+				.HasMaxLength(15);
+
+			builder.Property(m => m.Producer).IsRequired()
+				.HasColumnType("varchar(15)")
+				.HasMaxLength(15);
+
+			builder.Property(m => m.Size)
+				.HasColumnType("varchar(15)")
+				.HasMaxLength(15); ;
 
 			builder.HasMany(i => i.Ingredients)
 			.WithOne(m => m.InjectionMold)
@@ -21,7 +29,9 @@ namespace Production.Infrastructure.Persistence.Configurations
 			.HasForeignKey<InjectionMold>(f => f.MaterialId)
 			.OnDelete(DeleteBehavior.SetNull);
 
-			builder.Property(m => m.Consumption).HasColumnType("decimal(4,2)");
+			builder.Property(m => m.Consumption)
+				.IsRequired()
+				.HasColumnType("decimal(4,2)");
 		}
 	}
 }
