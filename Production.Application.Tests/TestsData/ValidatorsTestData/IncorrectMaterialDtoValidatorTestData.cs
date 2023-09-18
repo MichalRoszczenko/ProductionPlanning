@@ -14,6 +14,7 @@ namespace Production.Application.Tests.TestsData.ValidatorsTestData
 					Name = "N",
 					Type = "t",
 					Description = "",
+					Cost = 11.111M,
 					MaterialInStock = -1
 				}
 			};
@@ -25,6 +26,7 @@ namespace Production.Application.Tests.TestsData.ValidatorsTestData
 					Name = null!,
 					Type = null!,
 					Description = null!,
+					Cost = default,
 					MaterialInStock = -1
 				}
 			};			
@@ -36,6 +38,7 @@ namespace Production.Application.Tests.TestsData.ValidatorsTestData
 					Name = "TestTestTest1234",
 					Type = "TestTestTest1234",
 					Description = "TestTestTest123TestTestTest123222",
+					Cost = 1000,
 					MaterialInStock = -5
 				}
 			};				
@@ -47,6 +50,7 @@ namespace Production.Application.Tests.TestsData.ValidatorsTestData
 					Name = "",
 					Type = "",
 					Description = "",
+					Cost = 9999.11M,
 					MaterialInStock = -1
 				}
 			};			

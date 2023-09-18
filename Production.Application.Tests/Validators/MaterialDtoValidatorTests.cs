@@ -41,6 +41,7 @@ namespace Production.Application.Validators.Tests
 			validationResult.ShouldHaveValidationErrorFor(m => m.Name);
 			validationResult.ShouldHaveValidationErrorFor(m => m.Type);
 			validationResult.ShouldHaveValidationErrorFor(m => m.Description);
+			validationResult.ShouldHaveValidationErrorFor(m => m.Cost);
 			validationResult.ShouldHaveValidationErrorFor(m => m.MaterialInStock);
 		}
 	}
