@@ -15,7 +15,8 @@ namespace Production.Application.Validators
 
             RuleFor(e => e.Size)
                 .NotEmpty().WithMessage("Please enter mold size.")
-                .NotNull();
+                .NotNull()
+				.MaximumLength(15).WithMessage("The Size should have maximum 15 characters.");
 
             RuleFor(e => e.Producer)
                 .NotEmpty().WithMessage("Please enter producer name.")
