@@ -21,7 +21,9 @@ namespace Production.Application.Validators
 
             RuleFor(x => x.Size)
                 .NotEmpty().WithMessage("Please enter machine Size.")
-                .NotNull();
-        }
+                .NotNull()
+                .MaximumLength(15).WithMessage("The Size should have maximum 15 characters");
+
+		}
     }
 }
