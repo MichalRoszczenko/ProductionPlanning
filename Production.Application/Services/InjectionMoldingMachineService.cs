@@ -6,7 +6,7 @@ using Production.Domain.Interfaces;
 
 namespace Production.Application.Services
 {
-    public class InjectionMoldingMachineService : IInjectionMoldingMachineService
+    internal sealed class InjectionMoldingMachineService : IDatabaseService<InjectionMoldingMachineDto,int>
 	{
 		private readonly IInjectionMoldingMachineRepository _machineRepository;
 		private readonly IMapper _mapper;
