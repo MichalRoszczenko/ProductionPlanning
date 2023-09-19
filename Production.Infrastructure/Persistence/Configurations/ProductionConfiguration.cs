@@ -7,9 +7,17 @@ namespace Production.Infrastructure.Persistence.Configurations
 	{
 		public void Configure(EntityTypeBuilder<Domain.Entities.Production> builder)
 		{
-			builder.Property(p => p.Start).IsRequired();
+			builder.Property(p => p.Start)
+				.IsRequired();
 
-			builder.Property(p => p.End).IsRequired();
+			builder.Property(p => p.End)
+				.IsRequired();
+
+			builder.Property(e => e.InjectionMoldId)
+				.IsRequired();
+
+			builder.Property(e => e.InjectionMoldingMachineId)
+				.IsRequired();
 
 			builder.HasOne(m => m.InjectionMold)
 			.WithMany(p => p.Productions)

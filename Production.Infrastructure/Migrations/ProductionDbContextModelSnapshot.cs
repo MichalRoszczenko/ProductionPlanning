@@ -44,7 +44,7 @@ namespace Production.Infrastructure.Migrations
 
                     b.HasIndex("InjectionMoldId");
 
-                    b.ToTable("Ingredients");
+                    b.ToTable("Ingredients", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.InjectionMold", b =>
@@ -80,7 +80,7 @@ namespace Production.Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[MaterialId] IS NOT NULL");
 
-                    b.ToTable("InjectionMolds");
+                    b.ToTable("InjectionMolds", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.InjectionMoldingMachine", b =>
@@ -109,7 +109,7 @@ namespace Production.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InjectionMoldingMachines");
+                    b.ToTable("InjectionMoldingMachines", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Material", b =>
@@ -143,7 +143,7 @@ namespace Production.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Materials");
+                    b.ToTable("Materials", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Production", b =>
@@ -175,7 +175,7 @@ namespace Production.Infrastructure.Migrations
 
                     b.HasIndex("InjectionMoldingMachineId");
 
-                    b.ToTable("Productions");
+                    b.ToTable("Productions", (string)null);
                 });
 
             modelBuilder.Entity("Production.Domain.Entities.Ingredient", b =>
@@ -201,7 +201,7 @@ namespace Production.Infrastructure.Migrations
 
             modelBuilder.Entity("Production.Domain.Entities.Material", b =>
                 {
-                    b.OwnsOne("Production.Domain.Entities.MaterialStock", "Stock", b1 =>
+                    b.OwnsOne("Production.Domain.Entities.Material.Stock#Production.Domain.Entities.MaterialStock", "Stock", b1 =>
                         {
                             b1.Property<int>("MaterialId")
                                 .HasColumnType("int");
@@ -220,7 +220,7 @@ namespace Production.Infrastructure.Migrations
 
                             b1.HasKey("MaterialId");
 
-                            b1.ToTable("Materials");
+                            b1.ToTable("Materials", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("MaterialId");
@@ -244,7 +244,7 @@ namespace Production.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Production.Domain.Entities.MaterialStatus", "MaterialStatus", b1 =>
+                    b.OwnsOne("Production.Domain.Entities.Production.MaterialStatus#Production.Domain.Entities.MaterialStatus", "MaterialStatus", b1 =>
                         {
                             b1.Property<int>("ProductionId")
                                 .HasColumnType("int");
@@ -257,7 +257,7 @@ namespace Production.Infrastructure.Migrations
 
                             b1.HasKey("ProductionId");
 
-                            b1.ToTable("Productions");
+                            b1.ToTable("Productions", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("ProductionId");
