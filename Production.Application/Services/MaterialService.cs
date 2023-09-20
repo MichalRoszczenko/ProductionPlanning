@@ -5,7 +5,7 @@ using Production.Domain.Interfaces;
 
 namespace Production.Application.Services
 {
-    public class MaterialService : IDatabaseService<MaterialDto, int>
+    internal sealed class MaterialService : IDatabaseService<MaterialDto, int>
 	{
 		private readonly IMaterialRepository _repository;
 		private readonly IMapper _mapper;
