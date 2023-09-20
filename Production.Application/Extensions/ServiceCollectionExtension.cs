@@ -16,8 +16,8 @@ namespace Production.Application.Extensions
         public static void AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IProductionService, ProductionService>();
-            services.AddScoped<IInjectionMoldService, InjectionMoldService>();
             services.AddScoped<IDatabaseService<InjectionMoldingMachineDto,int>, InjectionMoldingMachineService>();
+            services.AddScoped<IDatabaseService<InjectionMoldDto,Guid>, InjectionMoldService>();
             services.AddScoped<IMaterialService, MaterialService>();
             services.AddScoped<IProductionInventoryHandler, ProductionInventoryHandler>();
             services.AddScoped<IMaterialInventoryHandler, MaterialInventoryHandler>();

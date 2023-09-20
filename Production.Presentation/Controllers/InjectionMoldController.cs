@@ -6,10 +6,10 @@ namespace Production.Presentation.Controllers
 {
     public class InjectionMoldController : Controller
     {
-        private readonly IInjectionMoldService _moldService;
+        private readonly IDatabaseService<InjectionMoldDto, Guid> _moldService;
         private readonly IMaterialService _materialService;
 
-        public InjectionMoldController(IInjectionMoldService moldService, IMaterialService materialService)
+        public InjectionMoldController(IDatabaseService<InjectionMoldDto,Guid> moldService, IMaterialService materialService)
         {
             _moldService = moldService;
             _materialService = materialService;
