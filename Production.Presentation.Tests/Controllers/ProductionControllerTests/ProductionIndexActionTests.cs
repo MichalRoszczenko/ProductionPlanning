@@ -166,7 +166,7 @@ namespace Production.Presentation.Tests.Controllers.ProductionControllerTests
 
         private HttpClient CreateClientWithProductionServiceMock(List<ProductionDto> productionsDto)
         {
-            var productionServiceMock = new Mock<IProductionService>();
+            var productionServiceMock = new Mock<IDatabaseService<ProductionDto,int>>();
 
             productionServiceMock.Setup(e => e.GetAll())
                 .ReturnsAsync(productionsDto);
