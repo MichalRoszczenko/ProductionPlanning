@@ -15,10 +15,10 @@ namespace Production.Application.Extensions
     {
         public static void AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<IDatabaseService<ProductionDto, int>, ProductionService>();
-            services.AddScoped<IDatabaseService<InjectionMoldingMachineDto,int>, InjectionMoldingMachineService>();
-            services.AddScoped<IDatabaseService<InjectionMoldDto,Guid>, InjectionMoldService>();
-            services.AddScoped<IDatabaseService<MaterialDto, int>, MaterialService>();
+            services.AddScoped<IDatabaseCrudService<ProductionDto, int>, ProductionService>();
+            services.AddScoped<IDatabaseCrudService<InjectionMoldingMachineDto,int>, InjectionMoldingMachineService>();
+            services.AddScoped<IDatabaseCrudService<InjectionMoldDto,Guid>, InjectionMoldService>();
+            services.AddScoped<IDatabaseCrudService<MaterialDto, int>, MaterialService>();
             services.AddScoped<IProductionInventoryHandler, ProductionInventoryHandler>();
             services.AddScoped<IMaterialInventoryHandler, MaterialInventoryHandler>();
             services.AddAutoMapper(typeof(ProductionMappingProfile));

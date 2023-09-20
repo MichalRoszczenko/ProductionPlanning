@@ -125,7 +125,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
 
         private HttpClient CreateClientWithInjectionMachineServiceMock(List<InjectionMoldingMachineDto> machinesDto)
         {
-            var machineServiceMock = new Mock<IDatabaseService<InjectionMoldingMachineDto,int>>();
+            var machineServiceMock = new Mock<IDatabaseCrudService<InjectionMoldingMachineDto,int>>();
 
             machineServiceMock.Setup(e => e.GetAll())
                 .ReturnsAsync(machinesDto);

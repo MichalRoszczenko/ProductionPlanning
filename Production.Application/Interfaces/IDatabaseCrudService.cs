@@ -1,6 +1,6 @@
 ﻿namespace Production.Application.Interfaces
 {
-    public interface IDatabaseService<TItemDto, YitemId>
+    public interface IDatabaseCrudService<TItemDto, YitemId>
         where TItemDto : class
         where YitemId : struct
     {

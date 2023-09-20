@@ -6,7 +6,7 @@ using Production.Application.Interfaces;
 
 namespace Production.Application.Services
 {
-    internal sealed class ProductionService : IDatabaseService<ProductionDto, int>
+    internal sealed class ProductionService : IDatabaseCrudService<ProductionDto, int>
 	{
 		private readonly IProductionRepository _productionRepository;
 		private readonly IProductionInventoryHandler _inventoryService;

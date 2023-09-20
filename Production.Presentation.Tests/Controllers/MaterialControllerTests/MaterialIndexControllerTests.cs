@@ -107,7 +107,7 @@ namespace Production.Presentation.Tests.Controllers.MaterialControllerTests
 
         private HttpClient CreateMaterialServiceMockClient(List<MaterialDto> materialsDto)
         {
-			var materialServiceMock = new Mock<IDatabaseService<MaterialDto,int>>();
+			var materialServiceMock = new Mock<IDatabaseCrudService<MaterialDto,int>>();
 
 			materialServiceMock.Setup(e => e.GetAll()).ReturnsAsync(materialsDto);
 

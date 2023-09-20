@@ -6,7 +6,7 @@ using Production.Domain.Interfaces;
 
 namespace Production.Application.Services
 {
-    internal sealed class InjectionMoldService : IDatabaseService<InjectionMoldDto,Guid>
+    internal sealed class InjectionMoldService : IDatabaseCrudService<InjectionMoldDto,Guid>
 	{
 		private readonly IInjectionMoldRepository _moldRepository;
 		private readonly IMapper _mapper;

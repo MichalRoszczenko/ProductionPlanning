@@ -6,9 +6,9 @@ namespace Production.Presentation.Controllers
 {
     public class InjectionMoldingMachineController : Controller
     {
-        private readonly IDatabaseService<InjectionMoldingMachineDto, int> _machineService;
+        private readonly IDatabaseCrudService<InjectionMoldingMachineDto, int> _machineService;
 
-        public InjectionMoldingMachineController(IDatabaseService<InjectionMoldingMachineDto, int> machineService)
+        public InjectionMoldingMachineController(IDatabaseCrudService<InjectionMoldingMachineDto, int> machineService)
         {
             _machineService = machineService;
         }

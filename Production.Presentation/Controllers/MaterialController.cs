@@ -6,9 +6,9 @@ namespace Production.Presentation.Controllers
 {
     public class MaterialController : Controller
     {
-        private readonly IDatabaseService<MaterialDto, int> _materialService;
+        private readonly IDatabaseCrudService<MaterialDto, int> _materialService;
 
-        public MaterialController(IDatabaseService<MaterialDto, int> materialService)
+        public MaterialController(IDatabaseCrudService<MaterialDto, int> materialService)
         {
             _materialService = materialService;
         }
