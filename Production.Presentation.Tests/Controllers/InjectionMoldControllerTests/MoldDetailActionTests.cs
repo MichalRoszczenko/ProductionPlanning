@@ -154,7 +154,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldControllerTests
         {
             var moldServiceMock = new Mock<IDatabaseService<InjectionMoldDto, Guid>>();
 
-            moldServiceMock.Setup(s => s.GetById(It.IsAny<Guid>(), true))
+            moldServiceMock.Setup(s => s.GetById(It.IsAny<Guid>()))
                 .ReturnsAsync(injectionMoldDto);
 
             var client = _factory.WithWebHostBuilder(builder

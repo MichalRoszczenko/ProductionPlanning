@@ -134,7 +134,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldingMachineTests
         {
             var machineServiceMock = new Mock<IDatabaseService<InjectionMoldingMachineDto,int>>();
 
-            machineServiceMock.Setup(e=>e.GetById(It.IsAny<int>(),true))
+            machineServiceMock.Setup(e=>e.GetById(It.IsAny<int>()))
                 .ReturnsAsync(machinesDto);
 
             var client = _factory.WithWebHostBuilder(builder =>
