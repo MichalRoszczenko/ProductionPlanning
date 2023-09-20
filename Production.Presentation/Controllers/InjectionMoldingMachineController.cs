@@ -40,7 +40,7 @@ namespace Production.Presentation.Controllers
 		[Route("InjectionMoldingMachine/{machineId}/Details")]
 		public async Task<IActionResult> Details(int machineId)
 		{
-			var machine = await _machineService.GetById(machineId, true);
+			var machine = await _machineService.GetById(machineId);
 
 			return View(machine);
 		}

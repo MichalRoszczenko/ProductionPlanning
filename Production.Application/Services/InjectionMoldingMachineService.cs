@@ -26,9 +26,9 @@ namespace Production.Application.Services
 			return itemDto;
 		}
 
-		public async Task<InjectionMoldingMachineDto> GetById(int itemId, bool withProductionInfo = false)
+		public async Task<InjectionMoldingMachineDto> GetById(int itemId)
 		{
-			var machine = await _machineRepository.GetById(itemId, withProductionInfo);
+			var machine = await _machineRepository.GetById(itemId, true);
 
 			var itemDto = _mapper.Map<InjectionMoldingMachineDto>(machine);
 

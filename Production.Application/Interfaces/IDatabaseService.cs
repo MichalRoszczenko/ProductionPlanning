@@ -6,7 +6,7 @@
     {
         Task Create(T itemDto);
         Task<IEnumerable<T>> GetAll();
-        Task<T> GetById(Y itemId, bool withProductionInfo = false);
+        Task<T> GetById(Y itemId);
         Task Remove(Y itemId);
         Task Update(Y itemId, T itemDto);
     }

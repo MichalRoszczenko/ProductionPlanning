@@ -30,9 +30,9 @@ namespace Production.Application.Services
 			return dto;
 		}
 
-		public async Task<InjectionMoldDto> GetById(Guid itemId, bool withProductionInfo = false)
+		public async Task<InjectionMoldDto> GetById(Guid itemId)
 		{
-			var mold = await _moldRepository.GetById(itemId, withProductionInfo);
+			var mold = await _moldRepository.GetById(itemId, true);
 			var dto = _mapper.Map<InjectionMoldDto>(mold);
 
 			return dto;

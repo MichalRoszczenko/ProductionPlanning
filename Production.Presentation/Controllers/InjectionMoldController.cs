@@ -47,7 +47,7 @@ namespace Production.Presentation.Controllers
         [Route("InjectionMold/{moldId}/Details")]
         public async Task<ActionResult> Details(Guid moldId)
         {
-            var mold = await _moldService.GetById(moldId, true);
+            var mold = await _moldService.GetById(moldId);
 
             return View(mold);
         }
