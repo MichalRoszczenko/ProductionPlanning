@@ -21,41 +21,41 @@ namespace Production.Application.Services
 		{
 			var machines = await _machineRepository.GetAll();
 
-			var machineDto = _mapper.Map<IEnumerable<InjectionMoldingMachineDto>>(machines);
+			var itemDto = _mapper.Map<IEnumerable<InjectionMoldingMachineDto>>(machines);
 
-			return machineDto;
+			return itemDto;
 		}
 
-		public async Task<InjectionMoldingMachineDto> GetById(int machineId, bool withProductionInfo = false)
+		public async Task<InjectionMoldingMachineDto> GetById(int itemId, bool withProductionInfo = false)
 		{
-			var machine = await _machineRepository.GetById(machineId, withProductionInfo);
+			var machine = await _machineRepository.GetById(itemId, withProductionInfo);
 
-			var machineDto = _mapper.Map<InjectionMoldingMachineDto>(machine);
+			var itemDto = _mapper.Map<InjectionMoldingMachineDto>(machine);
 
-			return machineDto;
+			return itemDto;
 		}
 
-		public async Task Update(int machineId, InjectionMoldingMachineDto machineDto)
+		public async Task Update(int itemId, InjectionMoldingMachineDto itemDto)
 		{
-			var machine = await _machineRepository.GetById(machineId);
+			var machine = await _machineRepository.GetById(itemId);
 
-			machine!.Name = machineDto.Name;
-			machine.Size = machineDto.Size;
-			machine.Tonnage = machineDto.Tonnage;
-			machine.Online = machineDto.Online;
+			machine!.Name = itemDto.Name;
+			machine.Size = itemDto.Size;
+			machine.Tonnage = itemDto.Tonnage;
+			machine.Online = itemDto.Online;
 
 			await _machineRepository.Commit();
 		}
 
-		public async Task Create(InjectionMoldingMachineDto machineDto)
+		public async Task Create(InjectionMoldingMachineDto itemDto)
 		{
-			var machine = _mapper.Map<InjectionMoldingMachine>(machineDto);
+			var machine = _mapper.Map<InjectionMoldingMachine>(itemDto);
 			await _machineRepository.Create(machine);
 		}
 
-		public async Task Remove(int machineId)
+		public async Task Remove(int itemId)
 		{
-			await _machineRepository.Remove(machineId);
+			await _machineRepository.Remove(itemId);
 		}
 	}
 }
