@@ -18,7 +18,7 @@ namespace Production.Application.Extensions
             services.AddScoped<IProductionService, ProductionService>();
             services.AddScoped<IDatabaseService<InjectionMoldingMachineDto,int>, InjectionMoldingMachineService>();
             services.AddScoped<IDatabaseService<InjectionMoldDto,Guid>, InjectionMoldService>();
-            services.AddScoped<IMaterialService, MaterialService>();
+            services.AddScoped<IDatabaseService<MaterialDto, int>, MaterialService>();
             services.AddScoped<IProductionInventoryHandler, ProductionInventoryHandler>();
             services.AddScoped<IMaterialInventoryHandler, MaterialInventoryHandler>();
             services.AddAutoMapper(typeof(ProductionMappingProfile));

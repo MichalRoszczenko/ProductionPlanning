@@ -7,9 +7,10 @@ namespace Production.Presentation.Controllers
     public class InjectionMoldController : Controller
     {
         private readonly IDatabaseService<InjectionMoldDto, Guid> _moldService;
-        private readonly IMaterialService _materialService;
+        private readonly IDatabaseService<MaterialDto, int> _materialService;
 
-        public InjectionMoldController(IDatabaseService<InjectionMoldDto,Guid> moldService, IMaterialService materialService)
+        public InjectionMoldController(IDatabaseService<InjectionMoldDto,Guid> moldService,
+            IDatabaseService<MaterialDto, int> materialService)
         {
             _moldService = moldService;
             _materialService = materialService;
