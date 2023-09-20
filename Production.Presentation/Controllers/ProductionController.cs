@@ -7,11 +7,11 @@ namespace Production.Presentation.Controllers
 {
     public class ProductionController : Controller
     {
-        private readonly IProductionService _productionService;
+        private readonly IDatabaseService<ProductionDto, int> _productionService;
         private readonly IDatabaseService<InjectionMoldDto, Guid> _moldService;
         private readonly IDatabaseService<InjectionMoldingMachineDto,int> _machineService;
 
-        public ProductionController(IProductionService productionService,
+        public ProductionController(IDatabaseService<ProductionDto, int> productionService,
             IDatabaseService<InjectionMoldDto, Guid> moldService,
 			IDatabaseService<InjectionMoldingMachineDto, int> machineService)
         {
