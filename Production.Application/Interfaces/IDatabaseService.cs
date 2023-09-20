@@ -1,13 +1,13 @@
 ﻿namespace Production.Application.Interfaces
 {
-    public interface IDatabaseService<T, Y>
-        where T : class
-        where Y : struct
+    public interface IDatabaseService<TItemDto, YitemId>
+        where TItemDto : class
+        where YitemId : struct
     {
-        Task Create(T itemDto);
-        Task<IEnumerable<T>> GetAll();
-        Task<T> GetById(Y itemId);
-        Task Remove(Y itemId);
-        Task Update(Y itemId, T itemDto);
+        Task Create(TItemDto itemDto);
+        Task<IEnumerable<TItemDto>> GetAll();
+        Task<TItemDto> GetById(YitemId itemId);
+        Task Remove(YitemId itemId);
+        Task Update(YitemId itemId, TItemDto itemDto);
     }
 }
