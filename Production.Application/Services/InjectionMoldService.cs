@@ -30,59 +30,59 @@ namespace Production.Application.Services
 			return dto;
 		}
 
-		public async Task<InjectionMoldDto> GetById(Guid moldId, bool withProductionInfo = false)
+		public async Task<InjectionMoldDto> GetById(Guid itemId, bool withProductionInfo = false)
 		{
-			var mold = await _moldRepository.GetById(moldId, withProductionInfo);
+			var mold = await _moldRepository.GetById(itemId, withProductionInfo);
 			var dto = _mapper.Map<InjectionMoldDto>(mold);
 
 			return dto;
 		}
 
-		public async Task Create(InjectionMoldDto moldDto)
+		public async Task Create(InjectionMoldDto itemDto)
 		{
-			var mold = _mapper.Map<InjectionMold>(moldDto);
+			var mold = _mapper.Map<InjectionMold>(itemDto);
 			await _moldRepository.Create(mold);
 		}
 
-		public async Task Update(Guid moldId, InjectionMoldDto moldDto)
+		public async Task Update(Guid itemId, InjectionMoldDto itemDto)
 		{
-			var mold = await _moldRepository.GetById(moldId);
+			var mold = await _moldRepository.GetById(itemId);
 
-			mold!.Name = moldDto.Name;
-			mold.Producer = moldDto.Producer;
-			mold.Size = moldDto.Size;
+			mold!.Name = itemDto.Name;
+			mold.Producer = itemDto.Producer;
+			mold.Size = itemDto.Size;
 			mold.Consumption = mold.Consumption;
 
-			if (moldDto.MaterialId != null)
+			if (itemDto.MaterialId != null)
 			{
 				if (mold.MaterialId != null)
 				{
 					await VipeStockInfo((int)mold.MaterialId);
 				}
 
-				mold.MaterialId = moldDto.MaterialId;
-				mold.Material = await _materialRepository.GetById((int)moldDto.MaterialId!);
+				mold.MaterialId = itemDto.MaterialId;
+				mold.Material = await _materialRepository.GetById((int)itemDto.MaterialId!);
 				mold.Material.IsAssigned = true;
 			}
 
 			await _moldRepository.Commit();
 
-			if (moldDto.MaterialId != null)
+			if (itemDto.MaterialId != null)
 			{
 				await _materialHandler.CalculateDemands(mold.Material!);
 			}
 		}
 
-		public async Task Remove(Guid moldId)
+		public async Task Remove(Guid itemId)
 		{
-			var mold = await _moldRepository.GetById(moldId);
+			var mold = await _moldRepository.GetById(itemId);
 
 			if (mold!.MaterialId != null)
 			{
 				await VipeStockInfo((int)mold.MaterialId);
 			}
 
-			await _moldRepository.Remove(moldId);
+			await _moldRepository.Remove(itemId);
 		}
 
 		private async Task VipeStockInfo(int materialId)
