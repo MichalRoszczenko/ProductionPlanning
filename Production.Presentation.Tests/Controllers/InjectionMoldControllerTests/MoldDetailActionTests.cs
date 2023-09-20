@@ -152,7 +152,7 @@ namespace Production.Presentation.Tests.Controllers.InjectionMoldControllerTests
 
         private HttpClient CreateClientWithInjectionMoldServiceMock(InjectionMoldDto injectionMoldDto)
         {
-            var moldServiceMock = new Mock<IInjectionMoldService>();
+            var moldServiceMock = new Mock<IDatabaseService<InjectionMoldDto, Guid>>();
 
             moldServiceMock.Setup(s => s.GetById(It.IsAny<Guid>(), true))
                 .ReturnsAsync(injectionMoldDto);
