@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using Production.Application.Builders;
 using Production.Application.Dtos;
 using Production.Application.Interfaces;
 using Production.Application.InventoryHandlers;
@@ -19,6 +20,7 @@ namespace Production.Application.Extensions
             services.AddScoped<IDatabaseCrudService<InjectionMoldingMachineDto,int>, InjectionMoldingMachineService>();
             services.AddScoped<IDatabaseCrudService<InjectionMoldDto,Guid>, InjectionMoldService>();
             services.AddScoped<IDatabaseCrudService<MaterialDto, int>, MaterialService>();
+            services.AddScoped<IProductionBuilder, ProductionBuilder>();
             services.AddScoped<IProductionInventoryHandler, ProductionInventoryHandler>();
             services.AddScoped<IMaterialInventoryHandler, MaterialInventoryHandler>();
             services.AddAutoMapper(typeof(ProductionMappingProfile));

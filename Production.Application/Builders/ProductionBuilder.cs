@@ -1,9 +1,10 @@
 ﻿using Production.Application.Dtos;
+using Production.Application.Interfaces;
 using Production.Domain.Entities;
 
 namespace Production.Application.Builders
 {
-	internal sealed class ProductionBuilder
+    internal sealed class ProductionBuilder : IProductionBuilder
 	{
 		private Domain.Entities.Production _production { get; set; }
 
