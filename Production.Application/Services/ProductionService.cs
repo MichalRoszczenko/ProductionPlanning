@@ -9,13 +9,20 @@ namespace Production.Application.Services
     internal sealed class ProductionService : IDatabaseCrudService<ProductionDto, int>
 	{
 		private readonly IProductionRepository _productionRepository;
+		private readonly IProductionBuilder _productionBuilder;
+		private readonly IInjectionMoldRepository _injectionMoldRepository;
+		private readonly IMaterialRepository _materialRepository;
 		private readonly IProductionInventoryHandler _inventoryService;
 		private readonly IMapper _mapper;
 
 		public ProductionService(IProductionRepository productionRepository, IMapper mapper,
-			IProductionInventoryHandler inventoryService)
+			IProductionInventoryHandler inventoryService, IProductionBuilder productionBuilder,
+			IInjectionMoldRepository injectionMoldRepository, IMaterialRepository materialRepository)
 		{
 			_productionRepository = productionRepository;
+			_productionBuilder = productionBuilder;
+			_injectionMoldRepository = injectionMoldRepository;
+			_materialRepository = materialRepository;
 			_mapper = mapper;
 			_inventoryService = inventoryService;
 		}
@@ -39,16 +46,15 @@ namespace Production.Application.Services
 		public async Task Create(ProductionDto productionDto)
 		{
 			var production = _mapper.Map<Domain.Entities.Production>(productionDto);
+			var mold = await _injectionMoldRepository.GetById(production.InjectionMoldId);
+			var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
 
-			production.ProductionTimeCalculation();
+			var productionToCreate = _productionBuilder.Init(production)
+				.CalculateProductionTime()
+				.AddMaterialStatus(mold!, material)
+				.Build();
 
-			var materialStatusDto = await _inventoryService.AddMaterialReservation(production);
-
-			var materialStatus = _mapper.Map<MaterialStatus>(materialStatusDto);
-
-			production.MaterialStatus = materialStatus;
-
-			await _productionRepository.Create(production);
+			await _productionRepository.Create(productionToCreate);
 		}
 
 		public async Task Remove(int productionId)
