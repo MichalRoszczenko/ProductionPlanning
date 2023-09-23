@@ -82,17 +82,26 @@ namespace Production.Application.Services
 
 		public async Task Update(int productionId, ProductionDto productionDto)
 		{
-			var productions = await _productionRepository.GetAll();
-			var production = productions.First(p => p.Id == productionId);
+			var production = await _productionRepository.GetById(productionId);
+			var mold = await _injectionMoldRepository.GetById(production.InjectionMoldId);
+			var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
 
-			await _inventoryService.RemoveMaterialReservation(production);
+			//await _inventoryService.RemoveMaterialReservation(production);
 
-			PassDtoToProduction(production, productionDto);
+			_productionBuilder
+				.Init(production)
+				.CalculateProductionTime()
+				.RemoveMaterialDemands(mold!, material)
+				.UpdateProduction(productionDto)
+				.AddMaterialStatus(mold!,material)
+				.Build();
 
-			var materialStatusDto = await _inventoryService.AddMaterialReservation(production);
+			//PassDtoToProduction(production, productionDto);
 
-			var materialStatus = _mapper.Map<MaterialStatus>(materialStatusDto);
-			production.MaterialStatus = materialStatus;
+			//var materialStatusDto = await _inventoryService.AddMaterialReservation(production);
+
+			//var materialStatus = _mapper.Map<MaterialStatus>(materialStatusDto);
+			//production.MaterialStatus = materialStatus;
 
 			await _productionRepository.Commit();
 		}
