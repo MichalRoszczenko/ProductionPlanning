@@ -13,11 +13,13 @@ namespace Production.Application.Services
 		private readonly IInjectionMoldRepository _injectionMoldRepository;
 		private readonly IMaterialRepository _materialRepository;
 		private readonly IProductionInventoryHandler _inventoryService;
+		private readonly IMaterialInventoryHandler _materialInventoryHandler;
 		private readonly IMapper _mapper;
 
 		public ProductionService(IProductionRepository productionRepository, IMapper mapper,
 			IProductionInventoryHandler inventoryService, IProductionBuilder productionBuilder,
-			IInjectionMoldRepository injectionMoldRepository, IMaterialRepository materialRepository)
+			IInjectionMoldRepository injectionMoldRepository, IMaterialRepository materialRepository,
+			IMaterialInventoryHandler materialInventoryHandler)
 		{
 			_productionRepository = productionRepository;
 			_productionBuilder = productionBuilder;
@@ -25,6 +27,7 @@ namespace Production.Application.Services
 			_materialRepository = materialRepository;
 			_mapper = mapper;
 			_inventoryService = inventoryService;
+			_materialInventoryHandler = materialInventoryHandler;
 		}
 		public async Task<IEnumerable<ProductionDto>> GetAll()
 		{
@@ -60,12 +63,20 @@ namespace Production.Application.Services
 		public async Task Remove(int productionId)
 		{
 			var production = await _productionRepository.GetById(productionId);
+			var mold = await _injectionMoldRepository.GetById(production.InjectionMoldId);
+			var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
 
-			await _productionRepository.Remove(production!);
+			var productionToRemove = _productionBuilder
+				.Init(production)
+				.CalculateProductionTime()
+				.RemoveMaterialDemands(mold!, material)
+				.Build();
 
-			if (production.InjectionMold.MaterialId != null)
+			await _productionRepository.Remove(productionToRemove);
+
+			if (mold!.MaterialId != null)
 			{
-				await _inventoryService.RemoveMaterialReservation(production);
+				await _materialInventoryHandler.CalculateDemands(material);
 			}
 		}
 
