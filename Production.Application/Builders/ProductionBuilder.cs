@@ -32,6 +32,17 @@ namespace Production.Application.Builders
 			_production.MaterialStatus.MaterialUsage = materialRequirements.Usage;
 
 			return this;
+		}		
+		
+		public ProductionBuilder RemoveMaterialDemands(InjectionMold injectionMold, Material material)
+		{
+			var materialRequirements = CreateMaterialRequirements(injectionMold);
+
+			material.Stock.PlannedMaterialDemand -= materialRequirements.Usage;
+
+			material.Stock.CountMaterialToOrder();
+
+			return this;
 		}
 
 		private MaterialRequirements CreateMaterialRequirements(InjectionMold injectionMold)
