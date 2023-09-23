@@ -1,6 +1,5 @@
 ﻿using Production.Domain.Interfaces;
 using AutoMapper;
-using Production.Domain.Entities;
 using Production.Application.Dtos;
 using Production.Application.Interfaces;
 
@@ -12,22 +11,19 @@ namespace Production.Application.Services
 		private readonly IProductionBuilder _productionBuilder;
 		private readonly IInjectionMoldRepository _injectionMoldRepository;
 		private readonly IMaterialRepository _materialRepository;
-		private readonly IProductionInventoryHandler _inventoryService;
 		private readonly IMaterialInventoryHandler _materialInventoryHandler;
 		private readonly IMapper _mapper;
 
-		public ProductionService(IProductionRepository productionRepository, IMapper mapper,
-			IProductionInventoryHandler inventoryService, IProductionBuilder productionBuilder,
-			IInjectionMoldRepository injectionMoldRepository, IMaterialRepository materialRepository,
-			IMaterialInventoryHandler materialInventoryHandler)
+		public ProductionService(IProductionRepository productionRepository, IMaterialRepository materialRepository, 
+			IInjectionMoldRepository injectionMoldRepository, IProductionBuilder productionBuilder,
+			IMaterialInventoryHandler materialInventoryHandler, IMapper mapper)
 		{
 			_productionRepository = productionRepository;
-			_productionBuilder = productionBuilder;
-			_injectionMoldRepository = injectionMoldRepository;
 			_materialRepository = materialRepository;
-			_mapper = mapper;
-			_inventoryService = inventoryService;
+			_injectionMoldRepository = injectionMoldRepository;
+			_productionBuilder = productionBuilder;
 			_materialInventoryHandler = materialInventoryHandler;
+			_mapper = mapper;
 		}
 		public async Task<IEnumerable<ProductionDto>> GetAll()
 		{
@@ -86,8 +82,6 @@ namespace Production.Application.Services
 			var mold = await _injectionMoldRepository.GetById(production.InjectionMoldId);
 			var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
 
-			//await _inventoryService.RemoveMaterialReservation(production);
-
 			_productionBuilder
 				.Init(production)
 				.CalculateProductionTime()
@@ -96,25 +90,7 @@ namespace Production.Application.Services
 				.AddMaterialStatus(mold!,material)
 				.Build();
 
-			//PassDtoToProduction(production, productionDto);
-
-			//var materialStatusDto = await _inventoryService.AddMaterialReservation(production);
-
-			//var materialStatus = _mapper.Map<MaterialStatus>(materialStatusDto);
-			//production.MaterialStatus = materialStatus;
-
 			await _productionRepository.Commit();
-		}
-
-		private void PassDtoToProduction(Domain.Entities.Production production, ProductionDto dto)
-		{
-			production!.Start = dto.Start;
-			production.End = dto.End;
-			production.InjectionMoldingMachineId = dto.InjectionMoldingMachineId;
-			production.InjectionMoldId = dto.InjectionMoldId;
-			production.MaterialStatus.MaterialUsage = dto.MaterialUsage;
-			production.MaterialStatus.MaterialIsAvailable = dto.MaterialIsAvailable;
-			production.ProductionTimeCalculation();
 		}
 	}
 }
