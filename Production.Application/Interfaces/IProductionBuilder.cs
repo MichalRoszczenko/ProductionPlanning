@@ -9,5 +9,6 @@ namespace Production.Application.Interfaces
         Domain.Entities.Production Build();
         ProductionBuilder CalculateProductionTime();
         ProductionBuilder Init(Domain.Entities.Production production);
-    }
+		ProductionBuilder RemoveMaterialDemands(InjectionMold injectionMold, Material material);
+	}
 }
