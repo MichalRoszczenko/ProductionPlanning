@@ -45,6 +45,19 @@ namespace Production.Application.Builders
 			return this;
 		}
 
+		public ProductionBuilder UpdateProduction(ProductionDto dto)
+		{
+			_production!.Start = dto.Start;
+			_production.End = dto.End;
+			_production.InjectionMoldingMachineId = dto.InjectionMoldingMachineId;
+			_production.InjectionMoldId = dto.InjectionMoldId;
+			_production.MaterialStatus.MaterialUsage = dto.MaterialUsage;
+			_production.MaterialStatus.MaterialIsAvailable = dto.MaterialIsAvailable;
+			_production.ProductionTimeCalculation();
+
+			return this;
+		}
+
 		private MaterialRequirements CreateMaterialRequirements(InjectionMold injectionMold)
 		{
 			var consumption = injectionMold!.Consumption;
