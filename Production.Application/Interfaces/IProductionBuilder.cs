@@ -1,4 +1,5 @@
 ﻿using Production.Application.Builders;
+using Production.Application.Dtos;
 using Production.Domain.Entities;
 
 namespace Production.Application.Interfaces
@@ -10,5 +11,6 @@ namespace Production.Application.Interfaces
         ProductionBuilder CalculateProductionTime();
         ProductionBuilder Init(Domain.Entities.Production production);
 		ProductionBuilder RemoveMaterialDemands(InjectionMold injectionMold, Material material);
+        ProductionBuilder UpdateProduction(ProductionDto dto);
 	}
 }
