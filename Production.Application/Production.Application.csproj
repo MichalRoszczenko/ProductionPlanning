@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -11,6 +11,10 @@
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0-preview.5.23280.8" />
   </ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="Production.Application.Tests"/>
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Production.Domain\Production.Domain.csproj" />
