@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
 using Production.Application.Builders;
+using Production.Application.Tests.TestsData.ProductionBuilderTestData;
+using Production.Domain.Entities;
 using Xunit;
 
 namespace Production.Application.Tests.Builders
@@ -26,11 +28,34 @@ namespace Production.Application.Tests.Builders
 			};
 
 			//act
-			_productionBuilder.Init(production);
-            var result = _productionBuilder.Build();
+            var result = _productionBuilder
+				.Init(production)
+				.Build();
 
 			//assert
             result.Should().Be(production);
         }
+
+		[Theory()]
+		[ClassData(typeof(AddMaterialStatusTestData))]
+		public void AddMaterialStatus_ReturnCorrectProductionMaterialStatus_ForCorrectArguments(
+			Domain.Entities.Production production, InjectionMold mold,
+			Material material,bool isAvailable,int usage)
+		{
+			//act
+			var result = _productionBuilder
+				.Init(production)
+				.CalculateProductionTime()
+				.AddMaterialStatus(mold,material)
+				.Build();
+
+			//assert
+			result.MaterialStatus.MaterialIsAvailable
+				.Should()
+				.Be(isAvailable);
+			result.MaterialStatus.MaterialUsage
+				.Should()
+				.Be(usage);
+		}
 	}
 }
