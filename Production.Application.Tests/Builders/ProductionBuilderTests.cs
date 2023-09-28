@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Production.Application.Builders;
 using Production.Application.Tests.TestsData.ProductionBuilderTestData;
 using Production.Domain.Entities;
