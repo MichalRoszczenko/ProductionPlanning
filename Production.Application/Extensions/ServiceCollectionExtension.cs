@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Production.Application.Builders;
 using Production.Application.Dtos;
 using Production.Application.Interfaces;
-using Production.Application.InventoryHandlers;
 using Production.Application.InventoryHandling;
 using Production.Application.Mappings;
 using Production.Application.Services;
@@ -21,7 +20,6 @@ namespace Production.Application.Extensions
             services.AddScoped<IDatabaseCrudService<InjectionMoldDto,Guid>, InjectionMoldService>();
             services.AddScoped<IDatabaseCrudService<MaterialDto, int>, MaterialService>();
             services.AddScoped<IProductionBuilder, ProductionBuilder>();
-            services.AddScoped<IProductionInventoryHandler, ProductionInventoryHandler>();
             services.AddScoped<IMaterialInventoryHandler, MaterialInventoryHandler>();
             services.AddAutoMapper(typeof(ProductionMappingProfile));
 
