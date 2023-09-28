@@ -51,8 +51,6 @@ namespace Production.Application.Builders
 			_production.End = dto.End;
 			_production.InjectionMoldingMachineId = dto.InjectionMoldingMachineId;
 			_production.InjectionMoldId = dto.InjectionMoldId;
-			_production.MaterialStatus.MaterialUsage = dto.MaterialUsage;
-			_production.MaterialStatus.MaterialIsAvailable = dto.MaterialIsAvailable;
 			_production.ProductionTimeCalculation();
 
 			return this;
