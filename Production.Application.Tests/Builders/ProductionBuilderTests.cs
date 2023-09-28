@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Production.Application.Builders;
 using Production.Application.Tests.TestsData.ProductionBuilderTestData;
 using Production.Domain.Entities;
@@ -56,6 +57,22 @@ namespace Production.Application.Tests.Builders
 			result.MaterialStatus.MaterialUsage
 				.Should()
 				.Be(usage);
+		}
+
+		[Theory()]
+		[ClassData(typeof(RemoveMaterialDemandsTestData))]
+		public void RemoveMaterialDemands_ReturnUpdatedMaterial_ForCorrectArguments(
+			Domain.Entities.Production production, InjectionMold mold,
+			Material material, int demands)
+		{
+			//act
+			_productionBuilder
+				.Init(production)
+				.CalculateProductionTime()
+				.RemoveMaterialDemands(mold, material);
+
+			//assert
+			material.Stock.PlannedMaterialDemand.Should().Be(demands);
 		}
 	}
 }
