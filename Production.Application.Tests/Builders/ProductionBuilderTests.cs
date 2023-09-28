@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Production.Application.Builders;
+using Production.Application.Dtos;
 using Production.Application.Tests.TestsData.ProductionBuilderTestData;
 using Production.Domain.Entities;
 using Xunit;
@@ -72,6 +73,24 @@ namespace Production.Application.Tests.Builders
 
 			//assert
 			material.Stock.PlannedMaterialDemand.Should().Be(demands);
+		}
+
+		[Theory()]
+		[ClassData(typeof(UpdateProductionTestData))]
+		public void UpdateProduction_ReturnUpdatedProduction_ForCorrectDto
+			(ProductionDto productionDto, Domain.Entities.Production production)
+		{
+			//act
+			var result = _productionBuilder
+				.Init(production)
+				.UpdateProduction(productionDto)
+				.Build();
+
+			//assert
+			result.Start.Should().Be(productionDto.Start);
+			result.End.Should().Be(productionDto.End);
+			result.InjectionMoldId.Should().Be(productionDto.InjectionMoldId);
+			result.InjectionMoldingMachineId.Should().Be(productionDto.InjectionMoldingMachineId);
 		}
 	}
 }
