@@ -51,7 +51,7 @@ namespace Production.Application.Services
 			mold!.Name = itemDto.Name;
 			mold.Producer = itemDto.Producer;
 			mold.Size = itemDto.Size;
-			mold.Consumption = mold.Consumption;
+			mold.Consumption = itemDto.Consumption;
 
 			if (itemDto.MaterialId != null)
 			{
