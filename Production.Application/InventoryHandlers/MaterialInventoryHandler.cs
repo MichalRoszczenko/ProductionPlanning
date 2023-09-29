@@ -38,12 +38,13 @@ namespace Production.Application.InventoryHandling
 
 			foreach (var production in selectedProductions)
 			{
-				var usage = production.MaterialStatus.MaterialUsage;
+				var usage = (int)Math.Ceiling(production.ProductionTimeInHours * production.InjectionMold.Consumption);
 
 				material.Stock.PlannedMaterialDemand += usage;
 
 				inStock -= usage;
 
+				production.MaterialStatus.MaterialUsage = usage;
 				if (inStock >= 0) production.MaterialStatus.MaterialIsAvailable = true;
 				else production.MaterialStatus.MaterialIsAvailable = false;
 			}

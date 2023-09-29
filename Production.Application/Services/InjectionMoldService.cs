@@ -67,7 +67,7 @@ namespace Production.Application.Services
 
 			await _moldRepository.Commit();
 
-			if (itemDto.MaterialId != null)
+			if (itemDto.MaterialId != null || mold.Consumption == itemDto.Consumption)
 			{
 				await _materialHandler.CalculateDemands(mold.Material!);
 			}
