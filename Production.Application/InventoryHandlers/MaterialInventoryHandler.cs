@@ -1,5 +1,6 @@
 ﻿using Production.Application.Dtos;
 using Production.Application.Interfaces;
+using Production.Domain.Entities;
 using Production.Domain.Interfaces;
 
 namespace Production.Application.InventoryHandling
@@ -14,21 +15,30 @@ namespace Production.Application.InventoryHandling
 			_productionRepository = productionRepository;
 		}
 
-		public void AddMaterialDemand(Domain.Entities.Material material, MaterialRequirements materialRequirementsInfo)
+		public void AddMaterialDemand(Material material, MaterialRequirements materialRequirementsInfo)
 		{
 			material.Stock.PlannedMaterialDemand += materialRequirementsInfo.Usage;
 
 			material.Stock.CountMaterialToOrder();
 		}
 
-		public void RemoveMaterialDemand(Domain.Entities.Material material, MaterialRequirements materialRequirementsInfo)
+		public void RemoveMaterialDemand(Material material, MaterialRequirements materialRequirementsInfo)
 		{
 			material.Stock.PlannedMaterialDemand -= materialRequirementsInfo.Usage;
 
 			material.Stock.CountMaterialToOrder();
 		}
 
-		public async Task CalculateDemands(Domain.Entities.Material material)
+		public async Task CalculateDemands(Material material)
+		{
+			await RecalculateProductionMaterial(material);
+
+			material.Stock.CountMaterialToOrder();
+
+			await _productionRepository.Commit();
+		}
+
+		private async Task RecalculateProductionMaterial(Material material)
 		{
 			material.Stock.PlannedMaterialDemand = 0;
 			var inStock = material.Stock.MaterialInStock;
@@ -48,13 +58,9 @@ namespace Production.Application.InventoryHandling
 				if (inStock >= 0) production.MaterialStatus.MaterialIsAvailable = true;
 				else production.MaterialStatus.MaterialIsAvailable = false;
 			}
-
-			material.Stock.CountMaterialToOrder();
-
-			await _productionRepository.Commit();
 		}
 
-		public async Task RemoveMaterialFromProductions(Domain.Entities.Material material)
+		public async Task RemoveMaterialFromProductions(Material material)
 		{
 			var productions = await _productionRepository.GetAll();
 			var selectedProductions = productions.Where(s => s.InjectionMold.MaterialId == material.Id);
