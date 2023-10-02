@@ -6,7 +6,7 @@ using Production.Domain.Interfaces;
 namespace Production.Application.InventoryHandling
 {
 
-    public class MaterialInventoryHandler : IMaterialInventoryHandler
+    internal sealed class MaterialInventoryHandler : IMaterialInventoryHandler
 	{
 		private readonly IProductionRepository _productionRepository;
 
