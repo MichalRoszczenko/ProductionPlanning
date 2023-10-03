@@ -44,7 +44,8 @@ namespace Production.Application.InventoryHandling
 			var inStock = material.Stock.MaterialInStock;
 
 			var productions = await _productionRepository.GetAll();
-			var selectedProductions = productions.Where(s => s.InjectionMold.MaterialId == material.Id);
+			var orderedProductions = productions.OrderBy(s => s.Start);
+			var selectedProductions = orderedProductions.Where(s => s.InjectionMold.MaterialId == material.Id);
 
 			foreach (var production in selectedProductions)
 			{

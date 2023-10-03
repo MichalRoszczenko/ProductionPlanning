@@ -54,6 +54,8 @@ namespace Production.Application.Services
 				.Build();
 
 			await _productionRepository.Create(productionToCreate);
+
+			await _materialInventoryHandler.CalculateDemands(production.InjectionMold.Material);
 		}
 
 		public async Task Remove(int productionId)
@@ -69,10 +71,7 @@ namespace Production.Application.Services
 
 			await _productionRepository.Remove(productionToRemove);
 
-			if (production.InjectionMold!.MaterialId != null)
-			{
-				await _materialInventoryHandler.CalculateDemands(production.InjectionMold.Material);
-			}
+			await _materialInventoryHandler.CalculateDemands(production.InjectionMold.Material);
 		}
 
 		public async Task Update(int productionId, ProductionDto productionDto)
@@ -89,6 +88,8 @@ namespace Production.Application.Services
 				.Build();
 
 			await _productionRepository.Commit();
+
+			await _materialInventoryHandler.CalculateDemands(production.InjectionMold.Material);
 		}
 
 		private async Task<InjectionMold> GetMoldAndMaterial(Guid moldId)
