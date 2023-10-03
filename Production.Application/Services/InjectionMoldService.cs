@@ -48,26 +48,36 @@ namespace Production.Application.Services
 		{
 			var mold = await _moldRepository.GetById(itemId);
 
-			mold!.Name = itemDto.Name;
-			mold.Producer = itemDto.Producer;
-			mold.Size = itemDto.Size;
-			mold.Consumption = itemDto.Consumption;
+			UpdateMoldProperties(mold!, itemDto);
 
-			if (itemDto.MaterialId != null)
+			await UpdateMaterialInfo(mold, itemDto);
+		}
+		
+		private void UpdateMoldProperties(InjectionMold mold, InjectionMoldDto moldDto)
+		{
+			mold!.Name = moldDto.Name;
+			mold.Producer = moldDto.Producer;
+			mold.Size = moldDto.Size;
+			mold.Consumption = moldDto.Consumption;
+		}
+
+		private async Task UpdateMaterialInfo(InjectionMold mold, InjectionMoldDto moldDto)
+		{
+			if (moldDto.MaterialId != null)
 			{
 				if (mold.MaterialId != null)
 				{
 					await VipeStockInfo((int)mold.MaterialId);
 				}
 
-				mold.MaterialId = itemDto.MaterialId;
-				mold.Material = await _materialRepository.GetById((int)itemDto.MaterialId!);
+				mold.MaterialId = moldDto.MaterialId;
+				mold.Material = await _materialRepository.GetById((int)moldDto.MaterialId!);
 				mold.Material.IsAssigned = true;
 			}
 
 			await _moldRepository.Commit();
 
-			if (itemDto.MaterialId != null || mold.Consumption == itemDto.Consumption)
+			if (moldDto.MaterialId != null || mold.Consumption == moldDto.Consumption)
 			{
 				await _materialHandler.CalculateDemands(mold.Material!);
 			}
