@@ -4,6 +4,32 @@ namespace Production.Application.Tests.TestsData.InventoryHandlingTestData
 {
     public class CalculateDemandsTestData : IEnumerable<object[]>
     {
+        private List<Domain.Entities.Production> CreateProduction()
+        {
+            var prodList = new List<Domain.Entities.Production>();
+
+			for (int i = 0; i<4;i++)
+            {
+				var prod = new Domain.Entities.Production()
+				{
+					Start = DateTime.Now,
+					End = DateTime.Now.AddHours(3),
+					InjectionMold = new Domain.Entities.InjectionMold()
+					{
+						MaterialId = 1,
+						Consumption = 25
+					},
+					MaterialStatus = new Domain.Entities.MaterialStatus()
+					{
+						MaterialIsAvailable = false,
+					}
+				};
+				prodList.Add(prod);
+            }
+
+            return prodList;
+		}
+
         public IEnumerator<object[]> GetEnumerator()
         {
             yield return new object[]
@@ -17,48 +43,11 @@ namespace Production.Application.Tests.TestsData.InventoryHandlingTestData
                         PlannedMaterialDemand = 400
                     }
                 },
-                new List<Domain.Entities.Production>()
-                {
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {   
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    }
-                },
+                CreateProduction()
+,
                 new bool[] {true,true,true,true}
-            }; 
-            
+            };
+
             yield return new object[]
             {
                 new Domain.Entities.Material()
@@ -70,46 +59,9 @@ namespace Production.Application.Tests.TestsData.InventoryHandlingTestData
                         PlannedMaterialDemand = 400
                     }
                 },
-                new List<Domain.Entities.Production>()
-                {
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {   
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    }
-                },
-                new bool[] {true,true,true,false}
+                CreateProduction(),
+
+				new bool[] {true,true,true,false}
             };
 
             yield return new object[]
@@ -123,48 +75,10 @@ namespace Production.Application.Tests.TestsData.InventoryHandlingTestData
                         PlannedMaterialDemand = 400
                     }
                 },
-                new List<Domain.Entities.Production>()
-                {
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {   
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    }
-                },
+                CreateProduction(),
                 new bool[] { false, false, false, false}
-            };            
-            
+            };
+
             yield return new object[]
             {
                 new Domain.Entities.Material()
@@ -176,48 +90,10 @@ namespace Production.Application.Tests.TestsData.InventoryHandlingTestData
                         PlannedMaterialDemand = 400
                     }
                 },
-                new List<Domain.Entities.Production>()
-                {
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {   
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    }
-                },
-                new bool[] { true, true, false, false}
-            };         
-            
+				CreateProduction(),
+				new bool[] { true, true, false, false}
+            };
+
             yield return new object[]
             {
                 new Domain.Entities.Material()
@@ -229,46 +105,8 @@ namespace Production.Application.Tests.TestsData.InventoryHandlingTestData
                         PlannedMaterialDemand = 400
                     }
                 },
-                new List<Domain.Entities.Production>()
-                {
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {   
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    }
-                },
-                new bool[] { true, true, true, false}
+				CreateProduction(),
+				new bool[] { true, true, true, false}
             };
 
             yield return new object[]
@@ -282,48 +120,10 @@ namespace Production.Application.Tests.TestsData.InventoryHandlingTestData
                         PlannedMaterialDemand = 400
                     }
                 },
-                new List<Domain.Entities.Production>()
-                {
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {   
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    }
-                },
-                new bool[] { false, false, false, false}
-            }; 
-            
+				CreateProduction(),
+				new bool[] { false, false, false, false}
+            };
+
             yield return new object[]
             {
                 new Domain.Entities.Material()
@@ -335,48 +135,10 @@ namespace Production.Application.Tests.TestsData.InventoryHandlingTestData
                         PlannedMaterialDemand = 400
                     }
                 },
-                new List<Domain.Entities.Production>()
-                {
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {   
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    }
-                },
-                new bool[] { true, true, true, false}
-            };            
-                     
+				CreateProduction(),
+				new bool[] { true, true, true, false}
+            };
+
             yield return new object[]
             {
                 new Domain.Entities.Material()
@@ -388,46 +150,8 @@ namespace Production.Application.Tests.TestsData.InventoryHandlingTestData
                         PlannedMaterialDemand = 400
                     }
                 },
-                new List<Domain.Entities.Production>()
-                {
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {   
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    },
-                    new Domain.Entities.Production()
-                    {
-                        InjectionMold = new Domain.Entities.InjectionMold() { MaterialId = 1 },
-                        MaterialStatus = new Domain.Entities.MaterialStatus()
-                        {
-                            MaterialUsage = 100,
-                            MaterialIsAvailable = false,
-                        }
-                    }
-                },
-                new bool[] { true, true, true, true}
+				CreateProduction(),
+				new bool[] { true, true, true, true}
             };
         }
 

@@ -103,6 +103,10 @@ namespace Production.Application.Tests.InventoryHandlers
 
         private static MaterialInventoryHandler GetMaterialHandlerWithMockedProductions(List<Domain.Entities.Production> productions)
         {
+            foreach (var production in productions)
+            {
+                production.ProductionTimeCalculation();
+            }
             var mockIProductionRepository = new Mock<IProductionRepository>();
             mockIProductionRepository.Setup(x => x.GetAll()).ReturnsAsync(productions);
             var materialhandler = new MaterialInventoryHandler(mockIProductionRepository.Object);
