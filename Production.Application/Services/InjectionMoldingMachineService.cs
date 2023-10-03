@@ -3,6 +3,7 @@ using Production.Application.Dtos;
 using Production.Application.Interfaces;
 using Production.Domain.Entities;
 using Production.Domain.Interfaces;
+using System.Reflection.PortableExecutable;
 
 namespace Production.Application.Services
 {
@@ -39,12 +40,17 @@ namespace Production.Application.Services
 		{
 			var machine = await _machineRepository.GetById(itemId);
 
-			machine!.Name = itemDto.Name;
-			machine.Size = itemDto.Size;
-			machine.Tonnage = itemDto.Tonnage;
-			machine.Online = itemDto.Online;
+			UpdateMachineProperties(machine!, itemDto);
 
 			await _machineRepository.Commit();
+		}
+
+		public void UpdateMachineProperties(InjectionMoldingMachine machine, InjectionMoldingMachineDto machineDto)
+		{
+			machine!.Name = machineDto.Name;
+			machine.Size = machineDto.Size;
+			machine.Tonnage = machineDto.Tonnage;
+			machine.Online = machineDto.Online;
 		}
 
 		public async Task Create(InjectionMoldingMachineDto itemDto)
