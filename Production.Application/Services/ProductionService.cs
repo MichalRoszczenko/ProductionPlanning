@@ -2,6 +2,7 @@
 using AutoMapper;
 using Production.Application.Dtos;
 using Production.Application.Interfaces;
+using Production.Domain.Entities;
 
 namespace Production.Application.Services
 {
@@ -45,12 +46,11 @@ namespace Production.Application.Services
 		public async Task Create(ProductionDto productionDto)
 		{
 			var production = _mapper.Map<Domain.Entities.Production>(productionDto);
-			var mold = await _injectionMoldRepository.GetById(production.InjectionMoldId);
-			var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
+			production.InjectionMold = await GetMoldAndMaterial(production.InjectionMoldId);
 
 			var productionToCreate = _productionBuilder.Init(production)
 				.CalculateProductionTime()
-				.AddMaterialStatus(mold!, material)
+				.AddMaterialStatus(production.InjectionMold, production.InjectionMold.Material)
 				.Build();
 
 			await _productionRepository.Create(productionToCreate);
@@ -59,38 +59,44 @@ namespace Production.Application.Services
 		public async Task Remove(int productionId)
 		{
 			var production = await _productionRepository.GetById(productionId);
-			var mold = await _injectionMoldRepository.GetById(production.InjectionMoldId);
-			var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
+			production.InjectionMold = await GetMoldAndMaterial(production.InjectionMoldId);
 
 			var productionToRemove = _productionBuilder
 				.Init(production)
 				.CalculateProductionTime()
-				.RemoveMaterialDemands(mold!, material)
+				.RemoveMaterialDemands(production.InjectionMold, production.InjectionMold.Material)
 				.Build();
 
 			await _productionRepository.Remove(productionToRemove);
 
-			if (mold!.MaterialId != null)
+			if (production.InjectionMold!.MaterialId != null)
 			{
-				await _materialInventoryHandler.CalculateDemands(material);
+				await _materialInventoryHandler.CalculateDemands(production.InjectionMold.Material);
 			}
 		}
 
 		public async Task Update(int productionId, ProductionDto productionDto)
 		{
 			var production = await _productionRepository.GetById(productionId);
-			var mold = await _injectionMoldRepository.GetById(production.InjectionMoldId);
-			var material = await _materialRepository.GetByMoldId(production.InjectionMoldId);
+			production.InjectionMold = await GetMoldAndMaterial(production.InjectionMoldId);
 
 			_productionBuilder
 				.Init(production)
 				.CalculateProductionTime()
-				.RemoveMaterialDemands(mold!, material)
+				.RemoveMaterialDemands(production.InjectionMold, production.InjectionMold.Material)
 				.UpdateProduction(productionDto)
-				.AddMaterialStatus(mold!,material)
+				.AddMaterialStatus(production.InjectionMold!, production.InjectionMold.Material)
 				.Build();
 
 			await _productionRepository.Commit();
+		}
+
+		private async Task<InjectionMold> GetMoldAndMaterial(Guid moldId)
+		{
+			var mold = await _injectionMoldRepository.GetById(moldId);
+			mold!.Material = await _materialRepository.GetByMoldId(moldId);
+
+			return mold;
 		}
 	}
 }
