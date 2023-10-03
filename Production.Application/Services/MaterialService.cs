@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Production.Application.Dtos;
 using Production.Application.Interfaces;
+using Production.Domain.Entities;
 using Production.Domain.Interfaces;
 
 namespace Production.Application.Services
@@ -43,15 +44,20 @@ namespace Production.Application.Services
 		{
 			var material = await _repository.GetById(materialId);
 
+			UpdateMaterialProperties(material, materialDto);
+
+			await _materialHandler.CalculateDemands(material);
+
+			await _repository.Commit();
+		}
+
+		private void UpdateMaterialProperties(Material material, MaterialDto materialDto)
+		{
 			material.Name = materialDto.Name;
 			material.Type = materialDto.Type;
 			material.Cost = materialDto.Cost;
 			material.Description = materialDto.Description;
 			material.Stock.MaterialInStock = materialDto.MaterialInStock;
-
-			await _materialHandler.CalculateDemands(material);
-
-			await _repository.Commit();
 		}
 
 		public async Task Remove(int materialId)
