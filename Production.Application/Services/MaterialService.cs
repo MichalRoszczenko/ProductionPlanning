@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Production.Application.Dtos;
+using Production.Application.Exceptions;
 using Production.Application.Interfaces;
 using Production.Domain.Entities;
 using Production.Domain.Interfaces;
@@ -63,6 +64,9 @@ namespace Production.Application.Services
 		public async Task Remove(int materialId)
 		{
 			var material = await _repository.GetById(materialId);
+
+			if (material.IsAssigned)
+				throw new ItemInUseException("This material cannot be deleted because it's assigned to the injection mold.");
 
 			await _materialHandler.RemoveMaterialFromProductions(material);
 
