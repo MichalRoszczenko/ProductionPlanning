@@ -6,6 +6,7 @@ using Production.Application.Dtos;
 using Production.Application.Interfaces;
 using Production.Application.InventoryHandling;
 using Production.Application.Mappings;
+using Production.Application.Middleware;
 using Production.Application.Services;
 using Production.Application.Validators;
 
@@ -21,6 +22,7 @@ namespace Production.Application.Extensions
             services.AddScoped<IDatabaseCrudService<MaterialDto, int>, MaterialService>();
             services.AddScoped<IProductionBuilder, ProductionBuilder>();
             services.AddScoped<IMaterialInventoryHandler, MaterialInventoryHandler>();
+            services.AddScoped<ErrorHandlingMiddleware>();
             services.AddAutoMapper(typeof(ProductionMappingProfile));
 
             services.AddValidatorsFromAssemblyContaining<ProductionDtoValidator>()

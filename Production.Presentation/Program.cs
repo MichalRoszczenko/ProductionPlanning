@@ -1,6 +1,7 @@
 using Production.Infrastructure.Extensions;
 using Production.Application.Extensions;
 using Production.Infrastructure.Seeders;
+using Production.Application.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
