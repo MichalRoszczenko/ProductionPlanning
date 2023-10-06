@@ -43,9 +43,7 @@ namespace Production.Application.InventoryHandling
 			material.Stock.PlannedMaterialDemand = 0;
 			var inStock = material.Stock.MaterialInStock;
 
-			var productions = await _productionRepository.GetAll();
-			var orderedProductions = productions.OrderBy(s => s.Start);
-			var selectedProductions = orderedProductions.Where(s => s.InjectionMold.MaterialId == material.Id);
+			var selectedProductions = await GetScheduledMaterialProductions(material.Id);
 
 			foreach (var production in selectedProductions)
 			{
@@ -59,6 +57,15 @@ namespace Production.Application.InventoryHandling
 				if (inStock >= 0) production.MaterialStatus.MaterialIsAvailable = true;
 				else production.MaterialStatus.MaterialIsAvailable = false;
 			}
+		}
+
+		private async Task<IEnumerable<Domain.Entities.Production>> GetScheduledMaterialProductions(int materialId)
+		{
+			var productions = await _productionRepository.GetAll();
+			var orderedProductions = productions.OrderBy(s => s.Start);
+			var selectedProductions = orderedProductions.Where(s => s.InjectionMold.MaterialId == materialId);
+
+			return selectedProductions;
 		}
 
 		public async Task RemoveMaterialFromProductions(Material material)
