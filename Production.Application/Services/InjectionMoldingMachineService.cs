@@ -3,7 +3,6 @@ using Production.Application.Dtos;
 using Production.Application.Interfaces;
 using Production.Domain.Entities;
 using Production.Domain.Interfaces;
-using System.Reflection.PortableExecutable;
 
 namespace Production.Application.Services
 {
