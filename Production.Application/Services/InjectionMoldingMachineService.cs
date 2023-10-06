@@ -45,7 +45,7 @@ namespace Production.Application.Services
 			await _machineRepository.Commit();
 		}
 
-		public void UpdateMachineProperties(InjectionMoldingMachine machine, InjectionMoldingMachineDto machineDto)
+		private void UpdateMachineProperties(InjectionMoldingMachine machine, InjectionMoldingMachineDto machineDto)
 		{
 			machine!.Name = machineDto.Name;
 			machine.Size = machineDto.Size;
